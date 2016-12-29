@@ -1,4 +1,5 @@
 package cl.udec.ingsoftware.proyecto_is;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 
@@ -16,9 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 import com.google.android.gms.appindexing.Action;
@@ -29,6 +35,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TabHost tabs;
+    private ListView lista;
 
     DBconnect bd;
     Catalogo catalogo;
@@ -69,11 +76,28 @@ public class MainActivity extends AppCompatActivity
         spec.setIndicator("Itinerario");
         tabs.addTab(spec);
 
+        lista = (ListView) findViewById(R.id.id_lista1);
+        ArrayList falso = new ArrayList();
+        falso.add("Mati");
+        falso.add("Mera");
+        lista.setAdapter(new ListAdapter(this,falso));
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                String strText = textView.getText().toString();
+                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+                intent.putExtra("Titulo",strText);
+                startActivity(intent);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Este boton crea un itinerario", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -89,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     @Override

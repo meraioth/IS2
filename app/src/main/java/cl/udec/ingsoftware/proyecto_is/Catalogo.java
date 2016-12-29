@@ -29,12 +29,12 @@ public class Catalogo {
     public Catalogo() throws SQLException {
         itinerarios = new ArrayList<Itinerario>();
         sucursales = new ArrayList<Sucursal>();
-        dBconnect = new DBconnect();
+        /*dBconnect = new DBconnect();
         dBconnect.start();
         ResultSet rs = dBconnect.query("SELECT * FROM SUCURSAL;");
         rs.next();
         System.out.println(rs.getArray(0));
-        dBconnect.end();
+        dBconnect.end();*/
 
     }
 
