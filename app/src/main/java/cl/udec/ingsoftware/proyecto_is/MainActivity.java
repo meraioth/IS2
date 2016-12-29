@@ -1,4 +1,5 @@
 package cl.udec.ingsoftware.proyecto_is;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,9 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -26,8 +32,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TabHost tabs;
+    private ListView lista,lista1;
 
-    private SearchView search;
+
     Catalogo catalogo;
     private GoogleApiClient client;
     @Override
@@ -36,9 +43,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         catalogo = new Catalogo();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        search = (SearchView) findViewById(R.id.search);
         setSupportActionBar(toolbar);
-        toolbar.addView(search);
         //tabhost
         tabs = (TabHost) findViewById(R.id.tabhost);
         tabs.setup();
@@ -52,7 +57,41 @@ public class MainActivity extends AppCompatActivity
         spec.setContent(R.id.tab2);
         spec.setIndicator("Itinerario");
         tabs.addTab(spec);
+        catalogo.connect();
 
+        lista = (ListView) findViewById(R.id.id_lista1);
+        lista1 = (ListView) findViewById(R.id.id_lista2);
+        ArrayList servicios = catalogo.servicios_to_array();
+        ArrayList itinerarios = catalogo.itinerarios_to_array();
+        ArrayList falso = new ArrayList();
+        falso.add("Mati");
+        falso.add("Mera");
+        lista.setAdapter(new ListAdapter(this,servicios));
+        lista1.setAdapter(new ListAdapter(this,itinerarios));
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                String strText = textView.getText().toString();
+                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+                intent.putExtra("Titulo",strText);
+                startActivity(intent);
+            }
+        });
+        lista1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                String strText = textView.getText().toString();
+                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+                intent.putExtra("Titulo",strText);
+                startActivity(intent);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +206,11 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+    private void vista_login(){
+        Intent intent = new Intent(this, Login.class);
+
+        startActivity(intent);
     }
 
 }

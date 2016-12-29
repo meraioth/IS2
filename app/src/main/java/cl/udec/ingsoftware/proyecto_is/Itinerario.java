@@ -11,10 +11,29 @@ public class Itinerario {
     private String nombre;
     private ArrayList<Servicio> servicios;
     private int id;
+    private String duracion;
 
-    public Itinerario(String nombre){
+    public Itinerario(String nombre,int id){
         servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
+        this.id = id;
+        this.duracion = duracion;
+        DBconnect db = new DBconnect();
+        String q = "select itinerario.id, servicio.descripcion, orden.orden ,servicio.id , servicio.nombre_servicio " +
+                "from itinerario , orden , servicio " +
+                "where itinerario.id=orden.id_itinerario and servicio.id=orden.id_servicio and itinerario.id =" +id+
+                " order by itinerario.id, orden.orden;";
+        db.query(q);
+        ResultSet rs = db.getResult();
+        try {
+            while (rs.next()){
+                //System.out.println("asd"+rs.getString("nombre"));
+                Servicio servicio = new Servicio(rs.getString("nombre_servicio"),rs.getString("descripcion"));
+                servicios.add(servicio);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId(){

@@ -40,6 +40,9 @@ public class Sucursal{
         }
         return res;
     }
+    public String getNombre(){
+        return this.nombre;
+    }
 
     public ArrayList get_info(){
         ArrayList info = new ArrayList();

@@ -8,12 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static android.R.id.message;
 
 public class Login extends AppCompatActivity {
     Button b1,b2;
     EditText ed1,ed2;
-    DBconnect db;
+    DBconnect db,db1;
     public final static String EXTRA_MESSAGE = "cl.udec.ingsoftware.proyecto_is.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,31 +25,47 @@ public class Login extends AppCompatActivity {
         b1 = (Button)findViewById(R.id.button_login);
         ed1 = (EditText)findViewById(R.id.mail);
         ed2 = (EditText)findViewById(R.id.pass);
-        db = new DBconnect();
+
 
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean login= db.query_user(ed1.getText().toString(),ed2.getText().toString());
-                if(login){
-                    if(db.query_empresario(ed1.getText().toString(),ed2.getText().toString())){
-                        vista_empresario(ed1.getText().toString());
-                        Toast.makeText(getApplicationContext(),
-                                "Redirecting...",Toast.LENGTH_SHORT).show();
-                    }else{
-                        vista_turista(ed1.getText().toString());
-                        Toast.makeText(getApplicationContext(),
-                                "Redirecting...",Toast.LENGTH_SHORT).show();
-                    }
+                    db = new DBconnect();
+                    db1=new DBconnect();
+                    String cons = "SELECT * FROM usuario where usuario.email like '"+
+                            ed1.getText().toString()+"' and usuario.password like '"+ed2.getText().toString()+"';";
+                    db.query(cons);
+                    ResultSet rs = db.getResult();
+                try {
+                    if (rs.next()){
+                        String id =rs.getString("id");
+                        System.out.println(id);
+                        String consu =  "SELECT * FROM empresario where id ="+id+";";
+                        System.out.println(consu);
+                        db1.query(consu);
+                        ResultSet rs1 = db1.getResult();
+                        if(rs1.next()){
 
-                }else{
-                    Toast.makeText(getApplicationContext(),
-                            "Fallo verificación...",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),
+                             "Redirecting...",Toast.LENGTH_SHORT).show();
+                            vista_empresario(id);
+                        }else
+                        {
+                            vista_turista(id);
+                           Toast.makeText(getApplicationContext(),
+                                "Redirecting...",Toast.LENGTH_SHORT).show();
 
+
+                        }
+
+                    }else Toast.makeText(getApplicationContext(),
+                    "Fallo verificación...",Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
 
-                }
+            }
             });
     }
 

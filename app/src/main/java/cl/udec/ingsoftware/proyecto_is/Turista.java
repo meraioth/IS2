@@ -11,15 +11,15 @@ public class Turista extends Usuario {
     public Turista(){
     }
 
-    public void crearItinerario(String nombreItinerario){
-        if(itinerarios.isEmpty()){
-            this.itinerarios = new ArrayList<Itinerario>();
-        }
-        Itinerario it = new Itinerario(nombreItinerario);
-        if(!existeNombre(nombreItinerario)){
-            itinerarios.add(it);
-        }
-    }
+//    public void crearItinerario(String nombreItinerario){
+//        if(itinerarios.isEmpty()){
+//            this.itinerarios = new ArrayList<Itinerario>();
+//        }
+//        Itinerario it = new Itinerario(nombreItinerario);
+//        if(!existeNombre(nombreItinerario)){
+//            itinerarios.add(it);
+//        }
+//    }
 
     boolean existeNombre(String nombreItinerario){
         boolean b = false;
