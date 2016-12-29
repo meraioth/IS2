@@ -1,4 +1,5 @@
 package cl.udec.ingsoftware.proyecto_is;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            vista_login();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -164,6 +165,11 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+    private void vista_login(){
+        Intent intent = new Intent(this, Login.class);
+
+        startActivity(intent);
     }
 
 }
