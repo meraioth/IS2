@@ -52,4 +52,14 @@ public class DBconnect {
         ResultSet rs = stmt.executeQuery(query) ;
         return rs.getString( "nombre" );
      }
+
+    public boolean query_user(String user, String pass) {
+
+
+        return false;
+    }
+
+    public boolean query_empresario(String s, String s1) {
+        return true;
+    }
 }
