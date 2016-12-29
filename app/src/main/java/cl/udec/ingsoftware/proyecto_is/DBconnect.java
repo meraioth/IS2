@@ -3,24 +3,32 @@ package cl.udec.ingsoftware.proyecto_is;
 /**
  * Created by meraioth on 28-12-16.
  */
+import java.sql.Array;
 import java.sql.DriverManager ;
 import java.sql.Connection ;
 import java.sql.SQLException ;
 import java.sql.Statement ;
 import java.sql.ResultSet ;
+import java.util.ArrayList;
+
 public class DBconnect {
 
-    Connection conn;
-    String consulta;
-    ResultSet result;
-    public DBconnect() {
+    private Connection conn;
+    private String consulta;
+    private ResultSet result;
 
-    }
+    public DBconnect(){}
 
-
-    public ResultSet query(String aux)  {
+    public void query(String aux){
         consulta=aux;
         sqlThread.start();
+        try {
+            sqlThread.join(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public ResultSet getResult(){
         return result;
     }
 
@@ -46,7 +54,7 @@ public class DBconnect {
                 //En el stsql se puede agregar cualquier consulta SQL deseada
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(consulta);
-                result= rs;
+                result = rs;
                 conn.close();
             } catch (SQLException se) {
                 System.out.println("oops! No se puede conectar. Error: " + se.toString());
