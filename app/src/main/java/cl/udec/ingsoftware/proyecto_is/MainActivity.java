@@ -31,7 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TabHost tabs;
-    private ListView lista;
+    private ListView lista,lista1;
 
 
     Catalogo catalogo;
@@ -56,13 +56,30 @@ public class MainActivity extends AppCompatActivity
         spec.setContent(R.id.tab2);
         spec.setIndicator("Itinerario");
         tabs.addTab(spec);
+        catalogo.connect();
 
         lista = (ListView) findViewById(R.id.id_lista1);
+        lista1 = (ListView) findViewById(R.id.id_lista2);
+        ArrayList servicios = catalogo.servicios_to_array();
+        ArrayList itinerarios = catalogo.itinerarios_to_array();
         ArrayList falso = new ArrayList();
         falso.add("Mati");
         falso.add("Mera");
-        lista.setAdapter(new ListAdapter(this,falso));
+        lista.setAdapter(new ListAdapter(this,servicios));
+        lista1.setAdapter(new ListAdapter(this,itinerarios));
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                String strText = textView.getText().toString();
+                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+                intent.putExtra("Titulo",strText);
+                startActivity(intent);
+            }
+        });
+        lista1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,6 +113,8 @@ public class MainActivity extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
+
+
 
     @Override
     public void onBackPressed() {

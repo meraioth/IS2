@@ -40,9 +40,23 @@ public class Catalogo {
         ResultSet rs = dBconnect.getResult();
         try {
             while (rs.next()){
-                System.out.println("asd"+rs.getString("nombre"));
-                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getString("id"),
-                        rs.getString())
+                //System.out.println("asd"+rs.getString("nombre"));
+                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
+                        rs.getInt("sello_de_turismo"));
+                sucursales.add(sucursal);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        dBconnect = new DBconnect();
+        dBconnect.query("SELECT * FROM itinerario");
+        rs = dBconnect.getResult();
+        try {
+            while (rs.next()){
+                //System.out.println("asd"+rs.getString("nombre"));
+                Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
+                itinerarios.add(it);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,6 +89,31 @@ public class Catalogo {
             if (res) {
                 It.add(S);
             }
+        }
+        return It;
+    }
+
+    public ArrayList servicios_to_array() {
+        ArrayList It = new ArrayList();
+        Iterator<Sucursal> iterator = sucursales.iterator();
+        Sucursal S;
+        boolean res;
+        while (iterator.hasNext()) {
+            S = iterator.next();
+                It.add(S.getNombre());
+
+        }
+        return It;
+    }
+    public ArrayList itinerarios_to_array() {
+        ArrayList It = new ArrayList();
+        Iterator<Itinerario> iterator = itinerarios.iterator();
+        Itinerario S;
+        boolean res;
+        while (iterator.hasNext()) {
+            S = iterator.next();
+            It.add(S.getNombre());
+
         }
         return It;
     }
