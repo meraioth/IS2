@@ -40,6 +40,7 @@ public class Catalogo {
         try {
             while (rs.next()){
                 System.out.println("asd"+rs.getString("nombre"));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TabHost;
 
 import java.sql.*;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TabHost tabs;
 
-
+    private SearchView search;
     Catalogo catalogo;
     private GoogleApiClient client;
     @Override
@@ -35,7 +36,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         catalogo = new Catalogo();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        search = (SearchView) findViewById(R.id.search);
         setSupportActionBar(toolbar);
+        toolbar.addView(search);
         //tabhost
         tabs = (TabHost) findViewById(R.id.tabhost);
         tabs.setup();
