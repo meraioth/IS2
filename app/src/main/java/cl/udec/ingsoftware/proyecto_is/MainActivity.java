@@ -42,17 +42,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
-
-
-
-
-
-
         sqlThread.start();
         catalogo = new Catalogo();
 //        bd = new DBconnect();
@@ -213,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                 System.out.println("oops! No se puede conectar. Error: " + se.toString());
             }
             catch (ClassNotFoundException e) {
-                System.out.println("oops! No se encuentra la clase. Error: " + e.getMessage());
+                System.out.println("oops! No se encuentra la clasej. Error: " + e.getMessage());
             }
         }
     };
