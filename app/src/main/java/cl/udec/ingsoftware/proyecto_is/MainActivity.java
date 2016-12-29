@@ -23,12 +23,12 @@ Catalogo catalogo;
 
 
 
-        sqlThread.start();
+        //sqlThread.start();
         catalogo = new Catalogo();
-//        bd = new DBconnect();
-//        bd.start();
-//
-//        bd.end();
+        bd = new DBconnect();
+        bd.query("SELECT * FROM SUCURSAL;");
+
+        //bd.end();
     }
 
 

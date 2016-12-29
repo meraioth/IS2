@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
         ed1 = (EditText)findViewById(R.id.mail);
         ed2 = (EditText)findViewById(R.id.pass);
         db = new DBconnect();
-        db.start();
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
