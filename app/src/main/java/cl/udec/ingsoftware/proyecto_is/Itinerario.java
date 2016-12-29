@@ -13,7 +13,13 @@ public class Itinerario {
     private String nombre;
     private ArrayList<Servicio> servicios;
     private String duracion;
+    private  int orden;
 
+    public Itinerario(String nombre, String duracion){
+        servicios = new ArrayList<Servicio>();
+        this.nombre=nombre;
+        this.duracion=duracion;
+    }
     public Itinerario(int id,String nombre,String duracion){
         servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
@@ -54,5 +60,38 @@ public class Itinerario {
             }
         }
         return res;
+    }
+    public boolean addServicio(String name){
+        DBconnect db = new DBconnect();
+        String q = "select  servicio.descripcion,servicio.id , servicio.nombre_servicio " +
+                "from servicio " +
+                "where servicio.nombre_servicio like '" +name+
+                "';";
+        System.out.println(q);
+        db.query(q);
+        ResultSet rs = db.getResult();
+        try {
+            while (rs.next()){
+                //System.out.println("asd"+rs.getString("nombre"));
+                Servicio servicio = new Servicio(rs.getString("nombre_servicio"),rs.getString("descripcion"));
+                servicios.add(servicio);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean writeDB(int id) {
+        DBconnect db = new DBconnect();
+        String q = "insert into itinerario (nombre,duracion,id_usuario) values('" +this.nombre+"','"+duracion+"',"+id+");";
+        System.out.println(q);
+
+        db.query(q);
+        ResultSet rs = db.getResult();
+
+//        return false;
+        return false;
     }
 }

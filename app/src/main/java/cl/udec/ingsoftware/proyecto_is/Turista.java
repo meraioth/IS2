@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 public class Turista extends Usuario {
     private ArrayList<Itinerario> itinerarios;
-    public Turista(){
+    Itinerario it;
+    int id;
+    public Turista(int id){
+        itinerarios=new ArrayList<Itinerario>();
+        this.id=id;
     }
 
 //    public void crearItinerario(String nombreItinerario){
@@ -29,5 +33,20 @@ public class Turista extends Usuario {
             }
         }
         return b;
+    }
+
+    public void crearItinerario(String nombre, String duracion) {
+        it = new Itinerario(nombre,duracion);
+    }
+
+    public void guardarItinerario() {
+        itinerarios.add(it);
+        it.writeDB(id);
+        //GUARDAR EN BD;
+    }
+
+    public void agregarServicioaItinerario(String seleccionado) {
+        it.addServicio(seleccionado);
+
     }
 }

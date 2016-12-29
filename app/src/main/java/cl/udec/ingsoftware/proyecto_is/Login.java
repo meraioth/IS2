@@ -39,7 +39,7 @@ public class Login extends AppCompatActivity {
                     ResultSet rs = db.getResult();
                 try {
                     if (rs.next()){
-                        String id =rs.getString("id");
+                        int id =rs.getInt("id");
                         System.out.println(id);
                         String consu =  "SELECT * FROM empresario where id ="+id+";";
                         System.out.println(consu);
@@ -69,14 +69,14 @@ public class Login extends AppCompatActivity {
             });
     }
 
-    private void vista_empresario(String message){
+    private void vista_empresario(int message){
         Intent intent = new Intent(this, Vista_empresario.class);
         //EditText editText = (EditText) findViewById(R.id.edit_message);
 
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
-    private void vista_turista(String message){
+    private void vista_turista(int message){
         Intent intent = new Intent(this, Vista_turista.class);
         //EditText editText = (EditText) findViewById(R.id.edit_message);
 
