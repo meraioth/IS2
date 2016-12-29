@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is;
 
 import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,16 +27,26 @@ public class Catalogo {
         return r;
     }
 
-    public Catalogo() throws SQLException {
+    public Catalogo() {
+
         itinerarios = new ArrayList<Itinerario>();
         sucursales = new ArrayList<Sucursal>();
-        /*dBconnect = new DBconnect();
-        dBconnect.start();
-        ResultSet rs = dBconnect.query("SELECT * FROM SUCURSAL;");
-        rs.next();
-        System.out.println(rs.getArray(0));
-        dBconnect.end();*/
+        dBconnect = new DBconnect();
+    }
 
+    public void connect(){
+        dBconnect = new DBconnect();
+        dBconnect.query("SELECT * FROM sucursal");
+        ResultSet rs = dBconnect.getResult();
+        try {
+            while (rs.next()){
+                System.out.println("asd"+rs.getString("nombre"));
+                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getString("id"),
+                        rs.getString())
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Sucursal> busqueda_sucursal(String valor) {

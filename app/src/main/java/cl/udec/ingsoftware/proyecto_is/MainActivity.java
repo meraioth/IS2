@@ -2,9 +2,6 @@ package cl.udec.ingsoftware.proyecto_is;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
-
-
-
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,7 +23,6 @@ import android.widget.Toast;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -37,31 +33,16 @@ public class MainActivity extends AppCompatActivity
     private TabHost tabs;
     private ListView lista;
 
-    DBconnect bd;
-    Catalogo catalogo;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
+    Catalogo catalogo;
+    private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //sqlThread.start();
-        try {
-            catalogo = new Catalogo();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-//        bd = new DBconnect();
-//        bd.start();
-//
-//        bd.end();
+        catalogo = new Catalogo();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         //tabhost
         tabs = (TabHost) findViewById(R.id.tabhost);
         tabs.setup();
@@ -157,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            vista_login();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -196,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
+        catalogo.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
@@ -208,31 +190,10 @@ public class MainActivity extends AppCompatActivity
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+    private void vista_login(){
+        Intent intent = new Intent(this, Login.class);
 
+        startActivity(intent);
+    }
 
-    Thread sqlThread = new Thread() {
-        public void run() {
-            try {
-                Class.forName("org.postgresql.Driver");
-                // "jdbc:postgresql://IP:PUERTO/DB", "USER", "PASSWORD");
-                // Si estás utilizando el emulador de android y tenes el PostgreSQL en tu misma PC no utilizar 127.0.0.1 o localhost como IP, utilizar 10.0.2.2
-                Connection conn = DriverManager.getConnection(
-                        "jdbc:postgresql://plop.inf.udec.cl/Matias?currentSchema=is","matiasmedina", "Psmlgipxfq1");
-                System.out.println("entro");
-                //En el stsql se puede agregar cualquier consulta SQL deseada.
-                String stsql = "Select * from servicio;";
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(stsql);
-                rs.next();
-                System.out.println(rs.getString("nombre_servicio"));
-                //System.out.println( rs.getString(1) );
-                conn.close();
-            } catch (SQLException se) {
-                System.out.println("oops! No se puede conectar. Error: " + se.toString());
-            }
-            catch (ClassNotFoundException e) {
-                System.out.println("oops! No se encuentra la clasej. Error: " + e.getMessage());
-            }
-        }
-    };
 }

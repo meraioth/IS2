@@ -12,6 +12,7 @@ public class Itinerario {
     private ArrayList<Servicio> servicios;
 
     public Itinerario(String nombre){
+        servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
     }
 
