@@ -1,5 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,7 +15,7 @@ public class Itinerario {
     private int id;
     private String duracion;
 
-    public Itinerario(String nombre,int id){
+    public Itinerario(String nombre,int id,String duracion){
         servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
         this.id = id;

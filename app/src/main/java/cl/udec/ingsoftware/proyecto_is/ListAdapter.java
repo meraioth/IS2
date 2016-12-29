@@ -29,7 +29,8 @@ public class ListAdapter extends ArrayAdapter {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.layout_fila, null, true);
         TextView titulo = (TextView) rowView.findViewById(R.id.id_titulo);
-        titulo.setText(sucursales.get(position).toString());
+      //  Sucursal a = sucursales.get(position);
+        titulo.setText((CharSequence) sucursales.get(position));
         return rowView;
     }
 }

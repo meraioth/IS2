@@ -8,12 +8,12 @@ import java.util.Iterator;
  */
 
 public class Sucursal{
-    private boolean sello;
+    private int sello;
     private String nombre;
     private int id;
     private ArrayList<Servicio> servicios;
 
-    public Sucursal(int id,String nombre, boolean sello){
+    public Sucursal(int id,String nombre, int sello){
         this.nombre = nombre;
         this.sello = sello;
         this.id = id;
@@ -41,7 +41,7 @@ public class Sucursal{
         return res;
     }
     public String getNombre(){
-        return this.nombre;
+        return nombre;
     }
 
     public ArrayList get_info(){
@@ -52,4 +52,7 @@ public class Sucursal{
         return info;
     }
 
+    public void addServicio(Servicio ser) {
+        servicios.add(ser);
+    }
 }

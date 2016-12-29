@@ -61,13 +61,28 @@ public class MainActivity extends AppCompatActivity
 
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
-        ArrayList servicios = catalogo.servicios_to_array();
-        ArrayList itinerarios = catalogo.itinerarios_to_array();
         ArrayList falso = new ArrayList();
         falso.add("Mati");
         falso.add("Mera");
-        lista.setAdapter(new ListAdapter(this,servicios));
-        lista1.setAdapter(new ListAdapter(this,itinerarios));
+        lista.setAdapter(new ListAdapter(this,catalogo.servicios_to_array()));
+        lista1.setAdapter(new ListAdapter(this,catalogo.itinerarios_to_array()));
+        //busqueda
+        SearchView searchView = (SearchView) findViewById(R.id.search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ArrayList<Sucursal> ser = catalogo.busqueda_sucursal(query);
+                lista.setAdapter(new ListAdapter(MainActivity.this,ser));
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return true;
+            } });
+
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -155,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            vista_login();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

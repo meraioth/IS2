@@ -10,7 +10,7 @@ public class Servicio {
     private String descripcion;
 
 
-    public  Servicio(int id,String nombre, String descripcion){
+    public  Servicio(String nombre, String descripcion){
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
