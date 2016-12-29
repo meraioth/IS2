@@ -20,6 +20,10 @@ public class Sucursal{
         servicios = new ArrayList<Servicio>();
     }
 
+    public int getId(){
+        return id;
+    }
+
     public void setServicio(ArrayList<Servicio> servicios){
         this.servicios = (ArrayList<Servicio>) servicios.clone();
     }
