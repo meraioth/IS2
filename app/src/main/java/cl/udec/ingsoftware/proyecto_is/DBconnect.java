@@ -8,6 +8,8 @@ import java.sql.Connection ;
 import java.sql.SQLException ;
 import java.sql.Statement ;
 import java.sql.ResultSet ;
+import java.util.ArrayList;
+
 public class DBconnect {
 
     Connection conn;
@@ -22,7 +24,7 @@ public class DBconnect {
             // "jdbc:postgresql://IP:PUERTO/DB", "USER", "PASSWORD");
             // Si estás utilizando el emulador de android y tenes el PostgreSQL en tu misma PC no utilizar 127.0.0.1 o localhost como IP, utilizar 10.0.2.2
             conn = DriverManager.getConnection(
-                    "jdbc:postgresql://plop.inf.udec.cl/Matias","matiasmedina", "Psmlgipxfq1");
+                    "jdbc:postgresql://plop.inf.udec.cl/Matias?currentSchema=is","matiasmedina", "Psmlgipxfq1");
             System.out.println("entro");
             //En el stsql se puede agregar cualquier consulta SQL deseada.
             String stsql = "Select version()";
@@ -46,10 +48,19 @@ public class DBconnect {
         }
     }
 
-    public String query() throws SQLException {
-        String query = "SELECT *  FROM is.usuario ";
-        Statement stmt = conn.createStatement( ) ;
-        ResultSet rs = stmt.executeQuery(query) ;
-        return rs.getString( "nombre" );
+    public ResultSet query(String query) {
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement( );
+        } catch (SQLException se) {
+        System.out.println("oops! No se puede conectar. Error: " + se.toString());
+    }
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
      }
 }

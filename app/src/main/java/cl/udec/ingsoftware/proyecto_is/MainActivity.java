@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sqlThread.start();
-        catalogo = new Catalogo();
+        //sqlThread.start();
+        try {
+            catalogo = new Catalogo();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 //        bd = new DBconnect();
 //        bd.start();
 //
