@@ -63,19 +63,37 @@ public class Catalogo {
         }
     }
 
-    public ArrayList<Sucursal> busqueda_sucursal(String valor) {
-        ArrayList<Sucursal> Suc = new ArrayList<Sucursal>();
-        Iterator<Sucursal> iterator = sucursales.iterator();
-        boolean res;
-        while (iterator.hasNext()) {
-            Sucursal S = iterator.next();
-            res = S.isServicio(valor);
-            if (res) {
-                Suc.add(S);
+    public ArrayList get_itin_info(int id){
+        Iterator<Itinerario> iterator = itinerarios.iterator();
+        Itinerario It = null;
+        ArrayList info = new ArrayList();
+        while(iterator.hasNext()){
+            It = iterator.next();
+            if(It.getId() == id){
+                break;
             }
-
         }
-        return Suc;
+        if(It != null){
+            info = It.get_info();
+        }
+        return info;
+    }
+
+
+    public ArrayList get_suc_info(int id){
+        Iterator<Sucursal> iterator = sucursales.iterator();
+        Sucursal S = null;
+        ArrayList info = new ArrayList();
+        while(iterator.hasNext()){
+            S = iterator.next();
+            if(S.getId() == id){
+                break;
+            }
+        }
+        if(S != null){
+            info = S.get_info();
+        }
+        return info;
     }
 
     public ArrayList<Itinerario> busqueda_itinerario(String valor) {
@@ -93,6 +111,21 @@ public class Catalogo {
         return It;
     }
 
+    public ArrayList<Sucursal> busqueda_sucursal(String valor) {
+        ArrayList<Sucursal> Suc = new ArrayList<Sucursal>();
+        Iterator<Sucursal> iterator = sucursales.iterator();
+        boolean res;
+        while (iterator.hasNext()) {
+            Sucursal S = iterator.next();
+            res = S.isServicio(valor);
+            if (res) {
+                Suc.add(S);
+            }
+
+        }
+        return Suc;
+    }
+
     public ArrayList servicios_to_array() {
         ArrayList It = new ArrayList();
         Iterator<Sucursal> iterator = sucursales.iterator();
@@ -100,7 +133,7 @@ public class Catalogo {
         boolean res;
         while (iterator.hasNext()) {
             S = iterator.next();
-                It.add(S.getNombre());
+            It.add(S.getNombre());
 
         }
         return It;

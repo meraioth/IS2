@@ -12,18 +12,21 @@ import java.util.Iterator;
 public class Itinerario {
     private String nombre;
     private ArrayList<Servicio> servicios;
+    private int id;
     private String duracion;
-    private  int orden;
+
 
     public Itinerario(String nombre, String duracion){
         servicios = new ArrayList<Servicio>();
         this.nombre=nombre;
         this.duracion=duracion;
     }
-    public Itinerario(int id,String nombre,String duracion){
+
+    public Itinerario(String nombre,int id){
         servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
-        this.duracion=duracion;
+        this.id = id;
+        this.duracion = duracion;
         DBconnect db = new DBconnect();
         String q = "select itinerario.id, servicio.descripcion, orden.orden ,servicio.id , servicio.nombre_servicio " +
                 "from itinerario , orden , servicio " +
@@ -40,6 +43,10 @@ public class Itinerario {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getNombre(){
@@ -60,6 +67,14 @@ public class Itinerario {
             }
         }
         return res;
+
+    }
+
+    public ArrayList get_info(){
+        ArrayList info = new ArrayList();
+        info.add(nombre);
+        info.add(servicios);
+        return info;
     }
     public boolean addServicio(String name){
         DBconnect db = new DBconnect();

@@ -33,8 +33,6 @@ public class DBconnect {
     }
 
     public boolean query_user(String user, String pass) {
-
-
         return false;
     }
 

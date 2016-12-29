@@ -7,20 +7,25 @@ import java.util.Iterator;
  * Created by matisin on 28-12-16.
  */
 
-//public class Sucursal extends PuntoDeInteres{
 public class Sucursal{
-
-    private int id;
-    private int sello;
+    private boolean sello;
     private String nombre;
+    private int id;
     private ArrayList<Servicio> servicios;
 
-    //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, int sello){
-        //super(id,direccion,longitud,latitud);
+    public Sucursal(int id,String nombre, boolean sello){
         this.nombre = nombre;
         this.sello = sello;
-        this.id=id;
+        this.id = id;
+        servicios = new ArrayList<Servicio>();
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setServicio(ArrayList<Servicio> servicios){
+        this.servicios = (ArrayList<Servicio>) servicios.clone();
     }
 
     public boolean isServicio(String valor){
@@ -37,6 +42,14 @@ public class Sucursal{
     }
     public String getNombre(){
         return this.nombre;
+    }
+
+    public ArrayList get_info(){
+        ArrayList info = new ArrayList();
+        info.add(nombre);
+        info.add(sello);
+        info.add(servicios);
+        return info;
     }
 
 }
