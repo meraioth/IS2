@@ -5,4 +5,7 @@ package cl.udec.ingsoftware.proyecto_is;
  */
 
 public class Calificacion {
+   public Calificacion(){
+
+   }
 }
