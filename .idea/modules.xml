@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Proyecto_IS.iml" filepath="$PROJECT_DIR$/Proyecto_IS.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/postgresql/postgresql.iml" filepath="$PROJECT_DIR$/postgresql/postgresql.iml" />
-      <module fileurl="file://$PROJECT_DIR$/postgresql/postgresql.iml" filepath="$PROJECT_DIR$/postgresql/postgresql.iml" />
     </modules>
   </component>
 </project>

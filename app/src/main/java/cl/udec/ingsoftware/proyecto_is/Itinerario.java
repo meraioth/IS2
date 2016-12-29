@@ -10,10 +10,15 @@ import java.util.Iterator;
 public class Itinerario {
     private String nombre;
     private ArrayList<Servicio> servicios;
+    private int id;
 
     public Itinerario(String nombre){
         servicios = new ArrayList<Servicio>();
         this.nombre = nombre;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getNombre(){
@@ -34,5 +39,13 @@ public class Itinerario {
             }
         }
         return res;
+
+    }
+
+    public ArrayList get_info(){
+        ArrayList info = new ArrayList();
+        info.add(nombre);
+        info.add(servicios);
+        return info;
     }
 }

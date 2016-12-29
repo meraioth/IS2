@@ -62,6 +62,39 @@ public class Catalogo {
         return Suc;
     }
 
+    public ArrayList get_itin_info(int id){
+        Iterator<Itinerario> iterator = itinerarios.iterator();
+        Itinerario It = null;
+        ArrayList info = new ArrayList();
+        while(iterator.hasNext()){
+            It = iterator.next();
+            if(It.getId() == id){
+                break;
+            }
+        }
+        if(It != null){
+            info = It.get_info();
+        }
+        return info;
+    }
+
+
+    public ArrayList get_suc_info(int id){
+        Iterator<Sucursal> iterator = sucursales.iterator();
+        Sucursal S = null;
+        ArrayList info = new ArrayList();
+        while(iterator.hasNext()){
+            S = iterator.next();
+            if(S.getId() == id){
+                break;
+            }
+        }
+        if(S != null){
+            info = S.get_info();
+        }
+        return info;
+    }
+
     public ArrayList<Itinerario> busqueda_itinerario(String valor) {
         ArrayList<Itinerario> It = new ArrayList<Itinerario>();
         Iterator<Itinerario> iterator = itinerarios.iterator();
