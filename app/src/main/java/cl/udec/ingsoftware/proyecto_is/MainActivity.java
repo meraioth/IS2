@@ -7,16 +7,28 @@ import java.sql.*;
 
 public class MainActivity extends AppCompatActivity {
 DBconnect bd;
+Catalogo catalogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
+
+
+
+
         sqlThread.start();
+        catalogo = new Catalogo();
 //        bd = new DBconnect();
 //        bd.start();
 //
 //        bd.end();
-
     }
 
 
