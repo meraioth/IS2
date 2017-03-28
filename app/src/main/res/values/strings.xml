@@ -111,4 +111,8 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="ingresar_mail">Ingresar Mail</string>
+    <string name="example_udec_cl">example@udec.cl</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="password">Password</string>
 </resources>

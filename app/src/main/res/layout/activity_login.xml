@@ -15,13 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        tools:ignore="UselessParent">
 
         <TextView
-            android:text="Ingresar Mail"
+            android:text="@string/ingresar_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" />
+            android:id="@+id/ingresar_mail" />
 
         <EditText
             android:layout_width="match_parent"
@@ -29,25 +30,27 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/mail"
-            android:hint="example@udec.cl" />
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/example_udec_cl" />
 
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/ingresar_contraseña"
             tools:text="Ingresar Contraseña" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_design"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/pass"
-            android:hint="Password" />
+            android:hint="@string/password" />
 
         <Button
-            android:text="Ingresar"
+            android:text="@string/ingresar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick = "login"
