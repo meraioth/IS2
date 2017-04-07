@@ -156,9 +156,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_gallery) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.login) {
             vista_login();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.mapa_tematico) {
+            vista_mapa_tematico();
 
         } else if (id == R.id.nav_manage) {
 
@@ -171,6 +172,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void vista_mapa_tematico() {
+        Intent intent = new Intent(this, MapaTematico.class);
+
+        startActivity(intent);
     }
 
     /**
