@@ -38,29 +38,29 @@ public class Catalogo {
         dBconnect = new DBconnect();
         dBconnect.query("SELECT * FROM sucursal");
         ResultSet rs = dBconnect.getResult();
-//        try {
-//            while (rs.next()){
-//                //System.out.println("asd"+rs.getString("nombre"));
-//                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
-//                        rs.getInt("sello_de_turismo"));
-//                sucursales.add(sucursal);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            while (rs.next()){
+                //System.out.println("asd"+rs.getString("nombre"));
+                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
+                        rs.getInt("sello_de_turismo"));
+                sucursales.add(sucursal);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         dBconnect = new DBconnect();
         dBconnect.query("SELECT * FROM itinerario");
         rs = dBconnect.getResult();
-//        try {
-//            while (rs.next()){
-//                //System.out.println("asd"+rs.getString("nombre"));
-//                Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
-//                itinerarios.add(it);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            while (rs.next()){
+                //System.out.println("asd"+rs.getString("nombre"));
+                Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
+                itinerarios.add(it);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Sucursal> busqueda_sucursal(String valor) {

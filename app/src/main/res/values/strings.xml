@@ -115,4 +115,6 @@
     <string name="example_udec_cl">example@udec.cl</string>
     <string name="ingresar">Ingresar</string>
     <string name="password">Password</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_mapa_tematico">Map</string>
 </resources>
