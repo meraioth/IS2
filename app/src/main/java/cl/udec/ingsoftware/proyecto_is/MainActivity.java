@@ -1,5 +1,9 @@
 package cl.udec.ingsoftware.proyecto_is;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,14 +37,15 @@ public class MainActivity extends AppCompatActivity
     private TabHost tabs;
     private ListView lista,lista1;
 
-
+    DBlocal db_local;
     Catalogo catalogo;
     private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        catalogo = new Catalogo();
+        openfirst_time();
+        catalogo = new Catalogo(this.getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //tabhost
@@ -56,15 +61,13 @@ public class MainActivity extends AppCompatActivity
         spec.setContent(R.id.tab2);
         spec.setIndicator("Itinerario");
         tabs.addTab(spec);
+        savebdstatus();
         catalogo.connect();
 
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
         ArrayList servicios = catalogo.servicios_to_array();
         ArrayList itinerarios = catalogo.itinerarios_to_array();
-        ArrayList falso = new ArrayList();
-        falso.add("Mati");
-        falso.add("Mera");
         lista.setAdapter(new ListAdapter(this,servicios));
         lista1.setAdapter(new ListAdapter(this,itinerarios));
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,10 +76,8 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
                 String strText = textView.getText().toString();
-                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
-                intent.putExtra("Titulo",strText);
-                startActivity(intent);
+                ver_sucursal(strText);
+
             }
         });
         lista1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,10 +86,8 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
                 String strText = textView.getText().toString();
-                //Toast.makeText(getBaseContext(), strText, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
-                intent.putExtra("Titulo",strText);
-                startActivity(intent);
+                ver_itinerario(strText);
+
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -108,12 +107,47 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        System.out.print("conexion disponible :"+isNetworkAvailable()+"  .- ");
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+        SharedPreferences sp = getSharedPreferences("config_inicial",0);
+
+        String[] columnas = {
+                DBlocal.Persona._ID,
+                DBlocal.Persona.COL1,
+                DBlocal.Persona.COL2
+        };
+
+       // System.out.print(db_local.getDatabaseName()+ "   "+db_local.getReadableDatabase().query(DBlocal.Persona.TABLE_NAME,columnas,null,null,null,null,null,null).getColumnName(0));
+
     }
 
+    private void openfirst_time() {
+
+        SharedPreferences sp = getSharedPreferences("init",0);
+
+        if(sp.getBoolean("first",true)){ // segundo parametro es valor por defecto si es que no existe value "first"
+
+            db_local = new DBlocal(this.getApplicationContext());
+            sp.edit().putBoolean("first",false).commit();
+        }
+
+    }
+
+    private void ver_itinerario(String strText) {
+        Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+        intent.putExtra("Titulo",strText);
+        startActivity(intent);
+    }
+
+    private void ver_sucursal(String strText) {
+        Intent intent = new Intent(MainActivity.this,VisualizacionSucursal.class);
+        intent.putExtra("Titulo",strText);
+        startActivity(intent);
+    }
 
 
     @Override
@@ -203,7 +237,7 @@ public class MainActivity extends AppCompatActivity
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        catalogo.connect();
+        //catalogo.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
@@ -222,4 +256,20 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void savebdstatus(){
+        SharedPreferences sp = getSharedPreferences("config_inicial",0);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean("creacion_bd",true);
+
+        editor.commit();
+
+    }
 }

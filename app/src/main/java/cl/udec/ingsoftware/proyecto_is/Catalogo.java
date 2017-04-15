@@ -1,5 +1,8 @@
 package cl.udec.ingsoftware.proyecto_is;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
 import java.sql.Array;
@@ -16,6 +19,7 @@ public class Catalogo {
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private DBconnect dBconnect;
+    private Context cont;
 
     public Itinerario getItinerario(Itinerario it){
         Itinerario r = null;
@@ -27,18 +31,31 @@ public class Catalogo {
         return r;
     }
 
-    public Catalogo() {
+    public Catalogo(Context cont) {
 
         itinerarios = new ArrayList<Itinerario>();
         sucursales = new ArrayList<Sucursal>();
         dBconnect = new DBconnect();
+        this.cont=cont;
     }
 
     public void connect(){
+        SharedPreferences sp = cont.getSharedPreferences("config_inicial",0);
+        System.out.print("bd local creada? :"+sp.getBoolean("creacion_bd",false));
+        if(!sp.getBoolean("creacion_bd",false))
+        offline();
+       else
+            online();
+
+
+    }
+
+    private void online() {
         dBconnect = new DBconnect();
-        dBconnect.query("SELECT * FROM sucursal");
+        dBconnect.query("SELECT * FROM sucursal") ;
         ResultSet rs = dBconnect.getResult();
         try {
+            if(rs!= null)
             while (rs.next()){
                 //System.out.println("asd"+rs.getString("nombre"));
                 Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
@@ -53,6 +70,7 @@ public class Catalogo {
         dBconnect.query("SELECT * FROM itinerario");
         rs = dBconnect.getResult();
         try {
+            if(rs!=null)
             while (rs.next()){
                 //System.out.println("asd"+rs.getString("nombre"));
                 Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
@@ -61,6 +79,11 @@ public class Catalogo {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void offline() {
+
+
     }
 
     public ArrayList<Sucursal> busqueda_sucursal(String valor) {
