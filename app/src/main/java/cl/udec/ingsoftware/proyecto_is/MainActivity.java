@@ -115,11 +115,6 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sp = getSharedPreferences("config_inicial",0);
 
-        String[] columnas = {
-                DBlocal.Persona._ID,
-                DBlocal.Persona.COL1,
-                DBlocal.Persona.COL2
-        };
 
        // System.out.print(db_local.getDatabaseName()+ "   "+db_local.getReadableDatabase().query(DBlocal.Persona.TABLE_NAME,columnas,null,null,null,null,null,null).getColumnName(0));
 

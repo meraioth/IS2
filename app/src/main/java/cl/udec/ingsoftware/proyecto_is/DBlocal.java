@@ -1,6 +1,8 @@
 package cl.udec.ingsoftware.proyecto_is;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -10,46 +12,89 @@ import android.provider.BaseColumns;
  */
 
 public class DBlocal extends SQLiteOpenHelper {
-    private static final String TEXT_TYPE = " TEXT";
-    private static final String COMMA_SEP = ",";
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + Persona.TABLE_NAME + " (" +
-                    Persona._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    Persona.COL1 + TEXT_TYPE + COMMA_SEP+
-                    Persona.COL2 + TEXT_TYPE +
-                  " )";
+    /** Database name */
+    private static String DBNAME = "BDLugares";
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + Persona.TABLE_NAME;
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Local.sqlite";
+    /** Version number of the database */
+    private static int VERSION = 1;
 
+    /** Field 1 of the table locations, which is the primary key */
+    public static final String FIELD_ROW_ID = "_id";
 
+    /** Field 2 of the table locations, stores the latitude */
+    public static final String FIELD_LAT = "lat";
+
+    /** Field 3 of the table locations, stores the longitude*/
+    public static final String FIELD_LNG = "lng";
+
+    /** Field 4 of the table locations, stores the name*/
+    public static final String FIELD_NAME = "nombre";
+
+    /** Field 5 of the table locations, stores the seal*/
+    public static final String FIELD_SEAL = "sello_turismo";
+    /** Field 5 of the table locations, stores the zoom level of map*/
+    //public static final String FIELD_ZOOM = "zoom";
+
+    /** A constant, stores the the table name */
+    private static final String DATABASE_TABLE = "lugares";
+
+    /** An instance variable for SQLiteDatabase */
+    private SQLiteDatabase mDB;
+
+    /** Constructor */
     public DBlocal(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DBNAME, null, VERSION);
+        this.mDB = getWritableDatabase();
     }
 
-    //Método para crear la Tabla que recibe la consulta Transact-SQL
+    /** This is a callback method, invoked when the method getReadableDatabase() / getWritableDatabase() is called
+     * provided the database does not exists
+     * */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        String sql =     "create table " + DATABASE_TABLE + " ( " +
+                FIELD_ROW_ID + " integer primary key , " +
+                FIELD_LNG + " double , " +
+                FIELD_LAT + " double , " +
+                //FIELD_ZOOM + " text " +
+                " ) ";
+
+        db.execSQL(sql);
     }
 
-    //Método que elimina la tabla y vuelve a llamar al método que la crea
+    /** Inserts a new location to the table locations */
+    public long insert(ContentValues contentValues){
+        long rowID = mDB.insert(DATABASE_TABLE, null, contentValues);
+        return rowID;
+    }
+
+    /** Deletes all locations from the table */
+    public int del(){
+        int cnt = mDB.delete(DATABASE_TABLE, null , null);
+        return cnt;
+    }
+
+    /** Returns all the locations from the table */
+    public Cursor getAllLocations(){
+        return mDB.query(DATABASE_TABLE, new String[] { FIELD_ROW_ID,  FIELD_LAT , FIELD_LNG,  } , null, null, null, null, null);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
     }
-
-
-
-    public static abstract class Persona implements BaseColumns
-    {
-        public static final String TABLE_NAME = "Persona";
-        public static final String COL1 = "Nombre";
-        public static final String COL2 = "RUT";
-
-
+    public String getFieldLat(){
+        return FIELD_LAT;
     }
+    public String getFieldLng(){
+        return FIELD_LNG;
+    }
+    public String getFieldName(){
+        return FIELD_NAME;
+    }
+    public String getFieldSeal(){
+        return FIELD_SEAL;
+    }
+    /*public String getFieldZoom(){
+        return FIELD_ZOOM;
+    }*/
 }

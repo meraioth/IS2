@@ -1,7 +1,9 @@
 package cl.udec.ingsoftware.proyecto_is;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 
 import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
@@ -19,6 +21,7 @@ public class Catalogo {
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private DBconnect dBconnect;
+    private DBlocal local;
     private Context cont;
 
     public Itinerario getItinerario(Itinerario it){
@@ -36,6 +39,7 @@ public class Catalogo {
         itinerarios = new ArrayList<Itinerario>();
         sucursales = new ArrayList<Sucursal>();
         dBconnect = new DBconnect();
+        local = new DBlocal(cont);
         this.cont=cont;
     }
 
@@ -43,11 +47,9 @@ public class Catalogo {
         SharedPreferences sp = cont.getSharedPreferences("config_inicial",0);
         System.out.print("bd local creada? :"+sp.getBoolean("creacion_bd",false));
         if(!sp.getBoolean("creacion_bd",false))
-        offline();
+            offline();
        else
             online();
-
-
     }
 
     private void online() {
@@ -60,6 +62,13 @@ public class Catalogo {
                 //System.out.println("asd"+rs.getString("nombre"));
                 Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
                         rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(local.getFieldName(),rs.getString("nombre"));
+                contentValues.put("_id",rs.getInt("id"));
+                contentValues.put(local.getFieldLat(),rs.getString("latitud"));
+                contentValues.put(local.getFieldLng(),rs.getString("longitud"));
+                contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
+                local.insert(contentValues);
                 sucursales.add(sucursal);
             }
         } catch (SQLException e) {
@@ -82,8 +91,20 @@ public class Catalogo {
     }
 
     private void offline() {
+        Cursor c = local.getAllLocations();
+        if (c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                int id = c.getInt(0);
+                float latitud = c.getFloat(1);
+                float longitud = c.getFloat(2);
+                String nombre = c.getString(3);
+                String sello = c.getString(4);
+                Sucursal suc = new Sucursal(nombre,id,sello,latitud,longitud);
+                sucursales.add(suc);
 
-
+            } while(c.moveToNext());
+        }
     }
 
     public ArrayList<Sucursal> busqueda_sucursal(String valor) {
