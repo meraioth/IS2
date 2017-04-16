@@ -10,18 +10,29 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class MapaTematico extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private ArrayList<Sucursal> sucursales;
+    private Catalogo cat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        cat = new Catalogo(this.getApplicationContext());
+        cat.connect();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_tematico);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
 
@@ -37,10 +48,19 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        ArrayList<Sucursal> suc= cat.getSucursales();
+        LatLng aux=new LatLng(0,0);
+        float zoom = (float)8.5;
+        for (Sucursal x: suc) {
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            if (x.getLatitud() != (double) -1) {
+                aux = new LatLng(x.getLatitud(), x.getLongitud());
+                mMap.addMarker(new MarkerOptions().position(aux).title(x.getNombre()));
+                System.out.println("nombre: " + x.getNombre() + " lat:" + x.getLatitud() + " long:" + x.getLongitud());
+            }
+        }
+       // LatLng sydney = new LatLng(-34, 151);
+       // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.726562, -73.353960),zoom));
     }
 }

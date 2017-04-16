@@ -59,7 +59,7 @@ public class Catalogo {
             while (rs.next()){
                 //System.out.println("asd"+rs.getString("nombre"));
                 Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
-                        rs.getInt("sello_de_turismo"));
+                        rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
                 sucursales.add(sucursal);
             }
         } catch (SQLException e) {
@@ -139,5 +139,9 @@ public class Catalogo {
 
         }
         return It;
+    }
+
+    public ArrayList<Sucursal> getSucursales(){
+        return sucursales;
     }
 }

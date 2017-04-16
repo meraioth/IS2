@@ -49,7 +49,7 @@ public class DBconnect {
                 // "jdbc:postgresql://IP:PUERTO/DB", "USER", "PASSWORD");
                 // Si estás utilizando el emulador de android y tenes el PostgreSQL en tu misma PC no utilizar 127.0.0.1 o localhost como IP, utilizar 10.0.2.2
                 Connection conn = DriverManager.getConnection(
-                        "jdbc:postgresql://plop.inf.udec.cl/Matias?currentSchema=is", "matiasmedina", "Psmlgipxfq1");
+                        "jdbc:postgresql://plop.inf.udec.cl/Matias?currentSchema=is2", "matiasmedina", "Psmlgipxfq1");
                 System.out.println("entro");
                 //En el stsql se puede agregar cualquier consulta SQL deseada
                 Statement st = conn.createStatement();

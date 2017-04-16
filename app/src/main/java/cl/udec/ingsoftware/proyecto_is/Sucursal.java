@@ -11,16 +11,19 @@ import java.util.Iterator;
 public class Sucursal{
 
     private int id;
-    private int sello;
+    private String sello;
     private String nombre;
+    private  double latitud,longitud;
     private ArrayList<Servicio> servicios;
 
     //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, int sello){
+    public Sucursal(String nombre, int id, String sello,double latitud,double longitud){
         //super(id,direccion,longitud,latitud);
         this.nombre = nombre;
         this.sello = sello;
         this.id=id;
+        this.latitud=latitud;
+        this.longitud=longitud;
     }
 
     public boolean isServicio(String valor){
@@ -39,4 +42,11 @@ public class Sucursal{
         return this.nombre;
     }
 
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
 }
