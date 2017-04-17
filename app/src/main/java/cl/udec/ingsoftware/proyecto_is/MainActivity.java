@@ -24,6 +24,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity
 
     private void vista_mapa_tematico() {
         Intent intent = new Intent(this, MapaTematico.class);
+        intent.putExtra("catalogo", catalogo);
         startActivity(intent);
     }
 

@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 
 import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import java.util.Iterator;
  * Created by matisin on 28-12-16.
  */
 
-public class Catalogo {
+public class Catalogo implements Serializable{
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private DBconnect dBconnect;
