@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     private ListView lista,lista1;
 
     DBlocal db_local;
-    Catalogo catalogo;
+    private Catalogo catalogo;
     private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +107,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        System.out.print("conexion disponible :"+isNetworkAvailable()+"  .- ");
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         SharedPreferences sp = getSharedPreferences("config_inicial",0);
+        if(sp.getBoolean("internet",true)){
 
+        }
 
        // System.out.print(db_local.getDatabaseName()+ "   "+db_local.getReadableDatabase().query(DBlocal.Persona.TABLE_NAME,columnas,null,null,null,null,null,null).getColumnName(0));
 
@@ -205,7 +207,6 @@ public class MainActivity extends AppCompatActivity
 
     private void vista_mapa_tematico() {
         Intent intent = new Intent(this, MapaTematico.class);
-
         startActivity(intent);
     }
 

@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
@@ -45,8 +47,8 @@ public class Catalogo {
 
     public void connect(){
         SharedPreferences sp = cont.getSharedPreferences("config_inicial",0);
-        System.out.print("bd local creada? :"+sp.getBoolean("creacion_bd",false));
-        if(!sp.getBoolean("creacion_bd",false))
+        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
+        if(!isNetworkAvailable())
             offline();
        else
             online();
@@ -63,11 +65,11 @@ public class Catalogo {
                 Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
                         rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
                 ContentValues contentValues = new ContentValues();
+                //contentValues.put("_id",rs.getInt("id"));
                 contentValues.put(local.getFieldName(),rs.getString("nombre"));
-                contentValues.put("_id",rs.getInt("id"));
+                contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
                 contentValues.put(local.getFieldLat(),rs.getString("latitud"));
                 contentValues.put(local.getFieldLng(),rs.getString("longitud"));
-                contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
                 local.insert(contentValues);
                 sucursales.add(sucursal);
             }
@@ -96,13 +98,13 @@ public class Catalogo {
             //Recorremos el cursor hasta que no haya más registros
             do {
                 int id = c.getInt(0);
-                float latitud = c.getFloat(1);
-                float longitud = c.getFloat(2);
-                String nombre = c.getString(3);
-                String sello = c.getString(4);
+                float latitud = c.getFloat(3);
+                float longitud = c.getFloat(4);
+                String nombre = c.getString(1);
+                String sello = c.getString(2);
                 Sucursal suc = new Sucursal(nombre,id,sello,latitud,longitud);
                 sucursales.add(suc);
-
+                System.out.println("AGREGO LA WEA");
             } while(c.moveToNext());
         }
     }
@@ -164,5 +166,12 @@ public class Catalogo {
 
     public ArrayList<Sucursal> getSucursales(){
         return sucursales;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) cont.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

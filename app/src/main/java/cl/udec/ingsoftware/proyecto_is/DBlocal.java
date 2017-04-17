@@ -52,13 +52,13 @@ public class DBlocal extends SQLiteOpenHelper {
      * */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql =     "create table " + DATABASE_TABLE + " ( " +
-                FIELD_ROW_ID + " integer primary key , " +
+        String sql =     "create table if not exists " + DATABASE_TABLE + " ( " +
+                FIELD_ROW_ID + " integer primary key autoincrement, " +
+                FIELD_NAME + " text ," +
+                FIELD_SEAL + " text ," +
                 FIELD_LNG + " double , " +
-                FIELD_LAT + " double , " +
-                //FIELD_ZOOM + " text " +
+                FIELD_LAT + " double " +
                 " ) ";
-
         db.execSQL(sql);
     }
 
@@ -76,7 +76,7 @@ public class DBlocal extends SQLiteOpenHelper {
 
     /** Returns all the locations from the table */
     public Cursor getAllLocations(){
-        return mDB.query(DATABASE_TABLE, new String[] { FIELD_ROW_ID,  FIELD_LAT , FIELD_LNG,  } , null, null, null, null, null);
+        return mDB.query(DATABASE_TABLE, null , null, null, null, null, null);
     }
 
     @Override
