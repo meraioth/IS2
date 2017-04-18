@@ -22,7 +22,8 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
+        cat= MainActivity.catalogo;
+        //cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
         cat.connect();
 
         super.onCreate(savedInstanceState);
@@ -30,10 +31,18 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
+
+
+
+
         mapFragment.getMapAsync(this);
 
 
     }
+
+
+
 
 
     /**
@@ -48,6 +57,7 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        System.out.println("tipo de mapa :"+mMap.getMapType());
         ArrayList<Sucursal> suc= cat.getSucursales();
         LatLng aux=new LatLng(0,0);
         float zoom = (float)8.5;
@@ -59,6 +69,7 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("nombre: " + x.getNombre() + " lat:" + x.getLatitud() + " long:" + x.getLongitud());
             }
         }
+
        // LatLng sydney = new LatLng(-34, 151);
        // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.726562, -73.353960),zoom));

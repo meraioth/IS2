@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     private ListView lista,lista1;
 
     DBlocal db_local;
-    private Catalogo catalogo;
+    static Catalogo catalogo;
     private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
 
     private void vista_mapa_tematico() {
         Intent intent = new Intent(this, MapaTematico.class);
-        intent.putExtra("catalogo", catalogo);
+        //intent.putExtra("catalogo", catalogo);
         startActivity(intent);
     }
 

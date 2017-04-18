@@ -7,11 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.io.Serializable;
+
 /**
  * Created by meraioth on 12-04-17.
  */
 
-public class DBlocal extends SQLiteOpenHelper {
+public class DBlocal extends SQLiteOpenHelper implements Serializable{
     /** Database name */
     private static String DBNAME = "BDLugares";
 

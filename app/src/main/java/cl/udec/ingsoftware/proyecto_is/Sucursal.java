@@ -8,7 +8,7 @@ import java.util.Iterator;
  */
 
 //public class Sucursal extends PuntoDeInteres{
-public class Sucursal{
+public class Sucursal {
 
     private int id;
     private String sello;

@@ -20,7 +20,7 @@ import java.util.Iterator;
  * Created by matisin on 28-12-16.
  */
 
-public class Catalogo implements Serializable{
+public class Catalogo {
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private DBconnect dBconnect;
