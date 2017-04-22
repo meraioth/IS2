@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.data;
 
 /**
  * Created by matisin on 28-12-16.
@@ -9,7 +9,7 @@ public class PuntoDeInteres {
     private String direccion;
     private int longitud,latitud;
 
-    public PuntoDeInteres(String id, String direccion,int longitud, int latitud){
+    public PuntoDeInteres(String id, String direccion, int longitud, int latitud){
         this.id = id;
         this.direccion = direccion;
         this.longitud = longitud;

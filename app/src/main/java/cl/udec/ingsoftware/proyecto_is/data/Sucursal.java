@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,20 +8,24 @@ import java.util.Iterator;
  */
 
 //public class Sucursal extends PuntoDeInteres{
-public class Sucursal {
+public final class Sucursal{
 
     private int id;
-    private String sello;
+    private int sello;
     private String nombre;
-    private  double latitud,longitud;
+    private double latitud,longitud;
+    private String comuna;
+    private String rut_empresa;
     private ArrayList<Servicio> servicios;
 
     //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, String sello,double latitud,double longitud){
+    public Sucursal(int id, String nombre, int sello, String rut_empresa, String comuna , double latitud, double longitud){
         //super(id,direccion,longitud,latitud);
         this.nombre = nombre;
         this.sello = sello;
         this.id=id;
+        this.comuna = comuna;
+        this.rut_empresa = rut_empresa;
         this.latitud=latitud;
         this.longitud=longitud;
     }
@@ -38,6 +42,8 @@ public class Sucursal {
         }
         return res;
     }
+    public int getId(){ return this.id; }
+
     public String getNombre(){
         return this.nombre;
     }
@@ -48,5 +54,17 @@ public class Sucursal {
 
     public double getLongitud() {
         return longitud;
+    }
+
+    public int getSello() {
+        return sello;
+    }
+
+    public String getRutEmpresa() {
+        return rut_empresa;
+    }
+
+    public String getComuna() {
+        return comuna;
     }
 }

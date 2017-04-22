@@ -1,7 +1,5 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,10 +12,12 @@ public class Itinerario {
     private ArrayList<Servicio> servicios;
     private String duracion;
 
-    public Itinerario(int id,String nombre,String duracion){
-        servicios = new ArrayList<Servicio>();
+    public Itinerario(int id, String nombre, String duracion, ArrayList<Servicio> servicios){
+        this.servicios = servicios;
         this.nombre = nombre;
-        this.duracion=duracion;
+        this.duracion = duracion;
+        // TODO: SACAR DE ACA EL DB CONNECT y ponerlo como debería ser en data
+        /*
         DBconnect db = new DBconnect();
         String q = "select itinerario.id, servicio.descripcion, orden.orden ,servicio.id , servicio.nombre_servicio " +
                 "from itinerario , orden , servicio " +
@@ -33,12 +33,13 @@ public class Itinerario {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public String getNombre(){
         return this.nombre;
     }
+
     public void setNombre(String nombre){
         this.nombre = nombre;
     }

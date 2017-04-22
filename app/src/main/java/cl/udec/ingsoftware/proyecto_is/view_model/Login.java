@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.view_model;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static android.R.id.message;
+import cl.udec.ingsoftware.proyecto_is.R;
 
 public class Login extends AppCompatActivity {
     Button b1,b2;

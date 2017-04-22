@@ -1,15 +1,14 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.data.source.remote;
 
 /**
  * Created by meraioth on 28-12-16.
  */
-import java.sql.Array;
-import java.sql.DriverManager ;
-import java.sql.Connection ;
-import java.sql.SQLException ;
-import java.sql.Statement ;
-import java.sql.ResultSet ;
-import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBconnect {
 
@@ -28,12 +27,13 @@ public class DBconnect {
             e.printStackTrace();
         }
     }
+
+
     public ResultSet getResult(){
         return result;
     }
 
     public boolean query_user(String user, String pass) {
-
 
         return false;
     }

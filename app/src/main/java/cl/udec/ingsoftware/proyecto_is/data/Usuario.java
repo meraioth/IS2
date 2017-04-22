@@ -1,6 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
-
-import java.util.ArrayList;
+package cl.udec.ingsoftware.proyecto_is.data;
 
 /**
  * Created by matisin on 28-12-16.

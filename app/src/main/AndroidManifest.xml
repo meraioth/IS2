@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".view_model.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -33,11 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
-        <activity android:name=".Vista_empresario" />
-        <activity android:name=".Vista_turista" />
+        <activity android:name=".view_model.Login" />
+        <activity android:name=".view_model.Vista_empresario" />
+        <activity android:name=".view_model.Vista_turista" />
         <activity
-            android:name=".ScrollingActivity"
+            android:name=".view_model.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
@@ -48,7 +48,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".VisualizacionSucursal" />
+        <activity android:name=".view_model.VisualizacionSucursal" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -62,7 +62,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapaTematico"
+            android:name=".view_model.MapaTematico"
             android:label="@string/title_activity_mapa_tematico"></activity>
     </application>
 
