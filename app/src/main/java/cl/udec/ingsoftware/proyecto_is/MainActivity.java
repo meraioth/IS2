@@ -198,12 +198,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+            vista_osm();
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void vista_osm() {
+        Intent intent = new Intent(this, OSM.class);
+        //intent.putExtra("catalogo", catalogo);
+        startActivity(intent);
     }
 
     private void vista_mapa_tematico() {

@@ -9,7 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/osmdroid-android-4.2" />
             <option value="$PROJECT_DIR$/postgresql" />
+            <option value="$PROJECT_DIR$/slf4j-android-1.6.1-RC1" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
