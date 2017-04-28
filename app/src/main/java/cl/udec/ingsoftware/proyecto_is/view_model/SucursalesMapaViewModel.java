@@ -1,6 +1,5 @@
-package cl.udec.ingsoftware.proyecto_is.view_mdel;
+package cl.udec.ingsoftware.proyecto_is.view_model;
 
-import android.content.Context;
 import android.databinding.BaseObservable;
 
 /**
