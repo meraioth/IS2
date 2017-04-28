@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.2.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,7 +15,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        mavenLocal()
     }
 }
 
@@ -23,17 +22,16 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+// Define versions in a single place
 ext {
     // Sdk and tools
     minSdkVersion = 14
     targetSdkVersion = 25
     compileSdkVersion = 25
-    buildToolsVersion = '25.0.0'
+    buildToolsVersion = '25.0.3'
 
     // App dependencies
-    supportLibraryVersion = '24.2.0'
-    playServicesVersion = '9.8.0'
-    googleMapsVersion ='10.2.0'
+    supportLibraryVersion = '25.3.1'
     guavaVersion = '18.0'
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'
@@ -42,20 +40,9 @@ ext {
     runnerVersion = '0.5'
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
+    playServices = '10.2.1'
 }
 
-/*
- * Workaround for https://code.google.com/p/android/issues/detail?id=182715
- *
- * The Android Gradle plugin is creating DataBindingExportBuildInfoTasks for the instrumentation
- * APK that generates from the app APKs layouts. This creates duplicate classes in the app and
- * instrumentation APK which leads to
- *      java.lang.IllegalAccessError: Class ref in pre-verified class resolved to unexpected implementation
- * on older devices.
- *
- * The workaround is to get the DataBindingExportBuildInfoTasks tasks for the instrumentation APK
- * and delete the files right after it creates them.
- */
 subprojects {
     tasks.withType(com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask) { task ->
         if (task.name.endsWith("AndroidTest")) {
