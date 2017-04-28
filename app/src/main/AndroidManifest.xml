@@ -43,8 +43,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".mock.MapaBusquedaItinerarioActivity"
-            android:label="@string/title_activity_mapa_busqueda_itinerario"
+            android:name=".view.MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

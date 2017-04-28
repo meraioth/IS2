@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is.mock;
+package cl.udec.ingsoftware.proyecto_is.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,13 +15,13 @@ import android.view.MenuItem;
 
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class MapaBusquedaItinerarioActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapa_busqueda_itinerario);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,7 +57,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mapa_busqueda_itinerario, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
