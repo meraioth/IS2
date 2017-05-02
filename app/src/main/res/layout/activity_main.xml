@@ -22,11 +22,16 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:menu="@menu/bottom_navigation_mapa_busqueda_itinerario" />
+        android:layout_height="match_parent">
 
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_navigation_mapa_busqueda_itinerario" />
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
