@@ -1,6 +1,8 @@
 package cl.udec.ingsoftware.proyecto_is.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -12,13 +14,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    @Override
+        private BottomNavigationView.OnNavigationItemSelectedListener BNVListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.bottom_navigation_map:
+                        //TODO:CAMBIAR FRAGMENTO MAPA
+                        Toast toast = Toast.makeText(getApplicationContext(), "MAPA", Toast.LENGTH_SHORT);
+                        toast.show();
+                        return true;
+                    case R.id.bottom_navigation_search:
+                        //TODO:CAMBIAR FRAGMENTO BÚSQUEDA
+                        Toast toast2 = Toast.makeText(getApplicationContext(), "BUSCAR", Toast.LENGTH_SHORT);
+                        toast2.show();
+                        return true;
+                    case R.id.bottom_navigation_itinerary:
+                        //TODO:CAMBIAR FRAGMENTO ITINERARIOS
+                        Toast toast3 = Toast.makeText(getApplicationContext(), "ITINERARIO", Toast.LENGTH_SHORT);
+                        toast3.show();
+                        return true;
+                }
+                return false;
+            }
+        };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -33,6 +57,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(BNVListener);
     }
 
     @Override

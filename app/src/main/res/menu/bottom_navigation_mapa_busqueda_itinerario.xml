@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/bottom_navigation_map"
         android:enabled="true"
         android:icon="@drawable/ic_map_black_24dp"
         android:title="@string/title_fragment_maps"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/bottom_navigation_search"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/title_fragment_busqueda"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/bottom_navigation_itinerary"
         android:enabled="true"
         android:icon="@drawable/ic_format_list_bulleted_black_24dp"
         android:title="@string/title_fragment_itinerario"
