@@ -8,6 +8,9 @@
     tools:context="cl.udec.ingsoftware.proyecto_is.view.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
+    <FrameLayout
+        android:id="@+id/fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </android.support.constraint.ConstraintLayout>
