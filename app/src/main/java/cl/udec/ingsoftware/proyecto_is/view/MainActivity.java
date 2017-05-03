@@ -1,13 +1,10 @@
 package cl.udec.ingsoftware.proyecto_is.view;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,21 +24,23 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView.OnNavigationItemSelectedListener BNVListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             switch (item.getItemId()){
                 case R.id.bottom_navigation_map:
-                    //TODO:CAMBIAR FRAGMENTO MAPA
-                    Toast toast = Toast.makeText(getApplicationContext(), "MAPA", Toast.LENGTH_SHORT);
-                    toast.show();
+                    MapaFragment mapaFragment = new MapaFragment();
+                    fragmentTransaction.replace(R.id.fragment_holder, mapaFragment);
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.bottom_navigation_search:
-                    //TODO:CAMBIAR FRAGMENTO BÚSQUEDA
-                    Toast toast2 = Toast.makeText(getApplicationContext(), "BUSCAR", Toast.LENGTH_SHORT);
-                    toast2.show();
+                    BusquedaFragment busquedaFragment = new BusquedaFragment();
+                    fragmentTransaction.replace(R.id.fragment_holder, busquedaFragment);
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.bottom_navigation_itinerary:
-                    //TODO:CAMBIAR FRAGMENTO ITINERARIOS
-                    Toast toast3 = Toast.makeText(getApplicationContext(), "ITINERARIO", Toast.LENGTH_SHORT);
-                    toast3.show();
+                    ItinerarioFragment itinerarioFragment = new ItinerarioFragment();
+                    fragmentTransaction.replace(R.id.fragment_holder, itinerarioFragment);
+                    fragmentTransaction.commit();
                     return true;
             }
             return false;
@@ -66,15 +65,16 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(BNVListener);
 
-
-        /*
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Fragment busqueda = new BusquedaFragment();
-        fragmentTransaction.add(R.id.fragment_busqueda, busqueda);
-        fragmentTransaction.commit();*/
+        BusquedaFragment busquedaFragment = new BusquedaFragment();
+
+        fragmentTransaction.replace(R.id.fragment_holder, busquedaFragment);
+        fragmentTransaction.commit();
+
+
+
     }
 
     @Override
