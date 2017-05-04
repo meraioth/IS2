@@ -23,6 +23,15 @@ public final class PersistenceContract {
         public static final String COLUMN_NAME_LONG = "longitud";
     }
 
+    public static abstract class ServicioEntry implements BaseColumns {
+        public static final String TABLE_NAME = "servicio";
+        public static final String COLUMN_NAME_ENTRY_ID = "id";
+        public static final String COLUMN_NAME_NOMBRE = "nombre_servicio";
+        public static final String COLUMN_NAME_FOTO = "foto";
+        public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+
+    }
+
     //TODO: Agregar más definiciones de las tablas acá.
 
 }

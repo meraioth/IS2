@@ -111,6 +111,37 @@ public class SucursalesRepository implements SucursalesDataSource {
     }
 
     @Override
+    public void getSucursalesKeyword(@NonNull final LoadSucursalCallback callback,@NonNull final String key) {
+        checkNotNull(callback);
+        checkNotNull(key);
+
+        // Se responde con la caché si está disponible
+        if (mCachedSucursales != null && !mCacheIsDirty) {
+            callback.onSucursalLoaded(new ArrayList<>(mCachedSucursales.values()));
+            return;
+        }
+
+        if (mCacheIsDirty) {
+            // Si la cache está sucia se buscan los datos de internet
+            getSucursalesKeywordFromRemoteDataSource(callback,key);
+        } else {
+            // Si esta disponible, se traen los datos desde la bd local, si no, de internet
+            mSucursalLocalDataSource.getSucursalesKeyword(new LoadSucursalCallback(){
+                @Override
+                public void onSucursalLoaded(List<Sucursal> sucursales) {
+                    refreshCache(sucursales);
+                    callback.onSucursalLoaded(new ArrayList<>(mCachedSucursales.values()));
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    getSucursalesKeywordFromRemoteDataSource(callback,key);
+                }
+            },key);
+        }
+    }
+
+    @Override
     public void getSucursal(@NonNull final int sucursalId, @NonNull final GetSucursalCallback callback) {
         checkNotNull(sucursalId);
         checkNotNull(callback);
@@ -223,5 +254,22 @@ public class SucursalesRepository implements SucursalesDataSource {
         } else {
             return mCachedSucursales.get(id);
         }
+    }
+
+    private void getSucursalesKeywordFromRemoteDataSource(@NonNull final LoadSucursalCallback callback,@NonNull final String key) {
+        mSucursalRemoteDataSource.getSucursalesKeyword(new LoadSucursalCallback() {
+            @Override
+            public void onSucursalLoaded(List<Sucursal> sucursales) {
+                refreshCache(sucursales);
+                refreshLocalDataSource(sucursales);
+                callback.onSucursalLoaded(new ArrayList<>(mCachedSucursales.values()));
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        },key);
+
     }
 }

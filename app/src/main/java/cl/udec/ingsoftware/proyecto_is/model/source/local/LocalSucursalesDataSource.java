@@ -193,6 +193,11 @@ public class LocalSucursalesDataSource implements SucursalesDataSource {
     }
 
     @Override
+    public void getSucursalesKeyword(@NonNull LoadSucursalCallback callback, @NonNull String str) {
+
+    }
+
+    @Override
     public void deleteAllSucursales() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 

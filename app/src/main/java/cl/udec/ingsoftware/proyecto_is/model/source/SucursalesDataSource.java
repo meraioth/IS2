@@ -45,6 +45,8 @@ public interface SucursalesDataSource {
 
     void saveSucursal(@NonNull Sucursal sucursal);
 
+    void getSucursalesKeyword(final @NonNull LoadSucursalCallback callback,@NonNull String str);
+
     void deleteAllSucursales();
 
     void refreshSucursales();
