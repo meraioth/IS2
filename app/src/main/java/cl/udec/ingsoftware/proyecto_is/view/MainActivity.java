@@ -17,9 +17,18 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import cl.udec.ingsoftware.proyecto_is.R;
+import cl.udec.ingsoftware.proyecto_is.model.source.SucursalesRepository;
+import cl.udec.ingsoftware.proyecto_is.model.source.local.LocalSucursalesDataSource;
+import cl.udec.ingsoftware.proyecto_is.model.source.remote.RemoteSucursalesDataSource;
+import cl.udec.ingsoftware.proyecto_is.view_model.SucursaleViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private SucursaleViewModel mViewModel;
+    private SucursalesRepository repository;
+    private LocalSucursalesDataSource localRepository;
+    private RemoteSucursalesDataSource remoteRepository;
 
     private BottomNavigationView.OnNavigationItemSelectedListener BNVListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -46,6 +55,8 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
     };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +79,12 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        repository = new SucursalesRepository(new LocalSucursalesDataSource(getApplicationContext()),new RemoteSucursalesDataSource());
+        mViewModel = new SucursaleViewModel(repository,getApplicationContext());
+        mViewModel.loadTasks(true);
+
         BusquedaFragment busquedaFragment = new BusquedaFragment();
+        busquedaFragment.addModel(mViewModel);
 
         fragmentTransaction.replace(R.id.fragment_holder, busquedaFragment);
         fragmentTransaction.commit();

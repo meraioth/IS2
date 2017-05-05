@@ -23,7 +23,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "Tasks.db";
+    public static final String DATABASE_NAME = "sucursal.db";
 
     private static final String TEXT_TYPE = " TEXT";
 
@@ -47,7 +47,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     PersistenceContract.SucursalEntry.COLUMN_NAME_EMPRESA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
                     PersistenceContract.SucursalEntry.COLUMN_NAME_COMUNA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
                     PersistenceContract.SucursalEntry.COLUMN_NAME_LAT + DOUBLE_PRECISION_TYPE + COMMA_SEP +
-                    PersistenceContract.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE + COMMA_SEP +
+                    PersistenceContract.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE +
             " )";
 
 
