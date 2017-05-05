@@ -151,7 +151,42 @@ public class RemoteSucursalesDataSource implements SucursalesDataSource {
        }
    }
 
+    //Realiza búsqueda de sucursales por Comuna, Categoría y Servicio.
+    @Override
+    public void getSucursalesBusqueda(@NonNull LoadSucursalCallback callback, @NonNull String NomComuna, @NonNull String NomCategoria, @NonNull String NomServicio){
+        List<Sucursal> sucursales = new ArrayList<>();
 
+        dbconnect = new DBconnect();
+
+        String query = "select" +SucursalEntry.TABLE_NAME+ ".* from" +SucursalEntry.TABLE_NAME+ ", servicio, sucursal_servicio, servicio_categoria where"
+                +SucursalEntry.COLUMN_NAME_ENTRY_ID+ "= sucursal_servicio.id_sucursal and sucursal_servicio.id_servicio ="
+                +ServicioEntry.COLUMN_NAME_ENTRY_ID+ "and" +ServicioEntry.COLUMN_NAME_ENTRY_ID+ "= servicio_categoria.id_servicio and"
+                +SucursalEntry.COLUMN_NAME_COMUNA+ "like" +NomComuna+ "and nombre_categoria like" +NomCategoria+ "and servicio.nombre_servicio like" +NomServicio;
+        dbconnect.query(query) ;
+        ResultSet rs = dbconnect.getResult();
+
+        try {
+            if(rs!= null)
+                while (rs.next()){
+                    int id = rs.getInt(SucursalEntry.COLUMN_NAME_ENTRY_ID);
+                    String nombre = rs.getString(SucursalEntry.COLUMN_NAME_NOMBRE);
+                    int sello = rs.getInt(SucursalEntry.COLUMN_NAME_SELLO);
+                    String rut_empresa = rs.getString(SucursalEntry.COLUMN_NAME_EMPRESA);
+                    String comuna = rs.getString(SucursalEntry.COLUMN_NAME_COMUNA);
+                    double latitud = rs.getDouble(SucursalEntry.COLUMN_NAME_LAT);
+                    double longitud = rs.getDouble(SucursalEntry.COLUMN_NAME_LONG);
+                    Sucursal sucursal = new Sucursal(id, nombre, sello, rut_empresa, comuna, latitud, longitud);
+                    sucursales.add(sucursal);
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (sucursales.isEmpty()) {
+            callback.onDataNotAvailable();
+        } else {
+            callback.onSucursalLoaded(sucursales);
+        }
+    }
     @Override
     public void saveSucursal(@NonNull Sucursal sucursal) {
         //TODO: implementar si se necesita
