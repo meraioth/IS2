@@ -3,8 +3,6 @@ package cl.udec.ingsoftware.proyecto_is.model.source;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
