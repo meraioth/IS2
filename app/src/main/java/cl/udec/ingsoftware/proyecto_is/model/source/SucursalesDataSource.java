@@ -47,6 +47,8 @@ public interface SucursalesDataSource {
 
     void getSucursalesKeyword(final @NonNull LoadSucursalCallback callback,@NonNull String str);
 
+    void getSucursalesBusqueda(final @NonNull LoadSucursalCallback callback, @NonNull String NomComuna, @NonNull String NomCategoria, @NonNull String NomServicio);
+
     void deleteAllSucursales();
 
     void refreshSucursales();

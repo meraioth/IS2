@@ -5,4 +5,17 @@ package cl.udec.ingsoftware.proyecto_is.model;
  */
 
 public class Categoria {
+
+    private String nombre;
+
+    public  Categoria(String nombre_categoria){
+        this.nombre = nombre_categoria;
+    }
+
+    public boolean isCategoria(String valor){
+        return valor.equals(nombre);
+    }
+
+    public String getNombre(){
+        return this.nombre;
 }
