@@ -78,14 +78,14 @@ public class SucursalesRepository implements SucursalesDataSource {
      * <p>
      * Note: {@link SucursalesDataSource.LoadSucursalCallback#onDataNotAvailable()} es llamado cuando todas las fuentes
      * de datos fallan en buscar los datos.
-     */
-
+*/
     @Override
     public void getSucursales(@NonNull final LoadSucursalCallback callback) {
         checkNotNull(callback);
 
         // Se responde con la caché si está disponible
         if (mCachedSucursales != null && !mCacheIsDirty) {
+            System.out.println("local con cache");
             callback.onSucursalLoaded(new ArrayList<>(mCachedSucursales.values()));
             return;
         }
@@ -98,6 +98,7 @@ public class SucursalesRepository implements SucursalesDataSource {
             mSucursalLocalDataSource.getSucursales(new LoadSucursalCallback(){
                 @Override
                 public void onSucursalLoaded(List<Sucursal> sucursales) {
+                    System.out.println("local sin cache");
                     refreshCache(sucursales);
                     callback.onSucursalLoaded(new ArrayList<>(mCachedSucursales.values()));
                 }
@@ -105,7 +106,9 @@ public class SucursalesRepository implements SucursalesDataSource {
                 @Override
                 public void onDataNotAvailable() {
                     getSucursalesFromRemoteDataSource(callback);
+
                 }
+
             });
         }
     }
@@ -207,7 +210,7 @@ public class SucursalesRepository implements SucursalesDataSource {
 
     @Override
     public void refreshSucursales() {
-
+        mCacheIsDirty = true;
     }
 
     private void getSucursalesFromRemoteDataSource(@NonNull final LoadSucursalCallback callback) {

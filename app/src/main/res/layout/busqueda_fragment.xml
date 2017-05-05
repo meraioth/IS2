@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="cl.udec.ingsoftware.proyecto_is.view_model.SucursaleViewModel" />
+            type="cl.udec.ingsoftware.proyecto_is.view_model.SucursalerViewModel" />
 
         <variable
             name="view"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Buscar"
-                android:onClick="@{viewmodel::buscarSucursales}"
+
                 />
         </LinearLayout>
 

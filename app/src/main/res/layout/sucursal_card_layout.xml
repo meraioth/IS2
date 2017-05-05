@@ -8,7 +8,7 @@
             type="cl.udec.ingsoftware.proyecto_is.model.Sucursal" />
         <variable
             name="view_model"
-            type="cl.udec.ingsoftware.proyecto_is.view_model.SucursaleViewModel" />
+            type="cl.udec.ingsoftware.proyecto_is.view_model.SucursalerViewModel" />
     </data>
 
     <android.support.v7.widget.CardView

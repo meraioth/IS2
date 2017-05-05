@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,21 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import cl.udec.ingsoftware.proyecto_is.R;
 import cl.udec.ingsoftware.proyecto_is.model.source.SucursalesRepository;
 import cl.udec.ingsoftware.proyecto_is.model.source.local.LocalSucursalesDataSource;
 import cl.udec.ingsoftware.proyecto_is.model.source.remote.RemoteSucursalesDataSource;
-import cl.udec.ingsoftware.proyecto_is.view_model.SucursaleViewModel;
+import cl.udec.ingsoftware.proyecto_is.view_model.SucursalerViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SucursaleViewModel mViewModel;
+    private SucursalerViewModel mViewModel;
     private SucursalesRepository repository;
     private LocalSucursalesDataSource localRepository;
     private RemoteSucursalesDataSource remoteRepository;
+    BusquedaFragment busquedaFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener BNVListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity
                     fragmentTransaction.commit();
                     return true;
                 case R.id.bottom_navigation_search:
-                    BusquedaFragment busquedaFragment = new BusquedaFragment();
                     fragmentTransaction.replace(R.id.fragment_holder, busquedaFragment);
                     fragmentTransaction.commit();
                     return true;
@@ -79,11 +77,10 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        repository = new SucursalesRepository(new LocalSucursalesDataSource(getApplicationContext()),new RemoteSucursalesDataSource());
-        mViewModel = new SucursaleViewModel(repository,getApplicationContext());
-        mViewModel.loadTasks(true);
+        repository = SucursalesRepository.getInstance(RemoteSucursalesDataSource.getInstance(),LocalSucursalesDataSource.getInstance(this));
+        mViewModel = new SucursalerViewModel(repository,getApplicationContext());
 
-        BusquedaFragment busquedaFragment = new BusquedaFragment();
+        busquedaFragment = new BusquedaFragment();
         busquedaFragment.addModel(mViewModel);
 
         fragmentTransaction.replace(R.id.fragment_holder, busquedaFragment);

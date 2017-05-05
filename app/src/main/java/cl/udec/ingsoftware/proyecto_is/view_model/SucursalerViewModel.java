@@ -2,9 +2,13 @@ package cl.udec.ingsoftware.proyecto_is.view_model;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +21,11 @@ import cl.udec.ingsoftware.proyecto_is.model.source.SucursalesRepository;
 /**
  * Created by matisin on 24-04-17.
  */
-public class SucursaleViewModel extends BaseObservable {
+public class SucursalerViewModel extends BaseObservable {
 
     public final ObservableList<Sucursal> sucursales = new ObservableArrayList<>();
+
+    public final ObservableField<String> texto_busqueda = new ObservableField<>("");
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
@@ -29,7 +35,7 @@ public class SucursaleViewModel extends BaseObservable {
 
     private Context mContext; // To avoid leaks, this must be an Application Context.
 
-    public SucursaleViewModel(
+    public SucursalerViewModel(
             SucursalesRepository repository,
             Context context) {
         mContext = context.getApplicationContext(); // Force use of Application Context.
@@ -78,6 +84,14 @@ public class SucursaleViewModel extends BaseObservable {
             }
         });
     }
+
+
+    public void buscarSucursales(View view){
+        Toast toast = Toast.makeText(mContext, texto_busqueda.get(), Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+
 
 
 }
