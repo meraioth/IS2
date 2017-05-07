@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         openfirst_time();
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            vista_mapsforge();
 
         } else if (id == R.id.nav_send) {
             vista_osm();
@@ -205,6 +207,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void vista_mapsforge() {
+        Intent intent = new Intent(this, mapsforge.class);
+        //intent.putExtra("catalogo", catalogo);
+        startActivity(intent);
     }
 
     private void vista_osm() {
