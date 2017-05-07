@@ -1,9 +1,11 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Modelo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBconnect;
 
 /**
  * Created by matisin on 28-12-16.

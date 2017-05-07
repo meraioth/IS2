@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Actividades;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import java.io.File;
+
+import cl.udec.ingsoftware.proyecto_is.R;
 
 public class mapsforge extends Activity {
 

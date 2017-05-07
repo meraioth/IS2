@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Actividades.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -35,13 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
-        <activity android:name=".Vista_empresario" />
-        <activity android:name=".Vista_turista" />
-        <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Actividades.Login" />
+        <activity android:name=".Actividades.Vista_empresario" />
+        <activity android:name=".Actividades.Vista_turista" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -50,7 +46,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".VisualizacionSucursal" />
+        <activity android:name=".Actividades.VisualizacionSucursal" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -64,10 +60,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapaTematico"
+            android:name=".Actividades.MapaTematico"
             android:label="@string/title_activity_mapa_tematico" />
-        <activity android:name=".OSM" />
-        <activity android:name=".mapsforge"></activity>
+        <activity android:name=".Actividades.OSM" />
+        <activity android:name=".Actividades.mapsforge"></activity>
     </application>
 
 </manifest>

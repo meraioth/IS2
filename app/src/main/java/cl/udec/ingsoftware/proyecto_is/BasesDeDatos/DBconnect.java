@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.BasesDeDatos;
 
 /**
  * Created by meraioth on 28-12-16.

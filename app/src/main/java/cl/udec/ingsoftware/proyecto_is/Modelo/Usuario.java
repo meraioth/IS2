@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Modelo;
 
 import java.util.ArrayList;
 

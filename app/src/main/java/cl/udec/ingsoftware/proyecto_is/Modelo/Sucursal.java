@@ -1,7 +1,9 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Modelo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 
 /**
  * Created by matisin on 28-12-16.
@@ -48,5 +50,13 @@ public class Sucursal {
 
     public double getLongitud() {
         return longitud;
+    }
+
+    public ArrayList<Servicio> getServicios(){
+        return servicios;
+    }
+    public void setServicio(Servicio serv){
+        servicios.add(serv);
+
     }
 }

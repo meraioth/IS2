@@ -1,7 +1,9 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import cl.udec.ingsoftware.proyecto_is.R;
 
 public class Vista_empresario extends AppCompatActivity {
 

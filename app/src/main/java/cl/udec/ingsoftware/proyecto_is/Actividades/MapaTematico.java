@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+
+import cl.udec.ingsoftware.proyecto_is.Modelo.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.R;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 public class MapaTematico extends FragmentActivity implements OnMapReadyCallback {
 

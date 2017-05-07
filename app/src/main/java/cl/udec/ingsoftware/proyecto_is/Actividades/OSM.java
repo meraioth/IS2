@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
+
+import cl.udec.ingsoftware.proyecto_is.Modelo.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.R;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 
 public class OSM extends AppCompatActivity {

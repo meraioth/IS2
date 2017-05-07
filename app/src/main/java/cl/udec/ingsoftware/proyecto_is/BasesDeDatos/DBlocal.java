@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.BasesDeDatos;
 
 import android.content.ContentValues;
 import android.content.Context;

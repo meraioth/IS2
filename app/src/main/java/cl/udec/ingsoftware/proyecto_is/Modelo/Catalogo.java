@@ -1,4 +1,4 @@
-package cl.udec.ingsoftware.proyecto_is;
+package cl.udec.ingsoftware.proyecto_is.Modelo;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,15 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import org.postgresql.ssl.DbKeyStoreSocketFactory;
-
-import java.io.Serializable;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBconnect;
+import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 /**
  * Created by matisin on 28-12-16.
@@ -26,16 +27,17 @@ public class Catalogo {
     private DBconnect dBconnect;
     private DBlocal local;
     private Context cont;
-
-    public Itinerario getItinerario(Itinerario it){
-        Itinerario r = null;
-        for (int i = 0; i < itinerarios.size(); i++){
-            if(itinerarios.get(i) == it){
-                r = itinerarios.get(i);
-            }
-        }
-        return r;
-    }
+    private ResultSet rs;
+//TODO: sacar y colocar en modelo itinerario
+//    public Itinerario getItinerario(Itinerario it){
+//        Itinerario r = null;
+//        for (int i = 0; i < itinerarios.size(); i++){
+//            if(itinerarios.get(i) == it){
+//                r = itinerarios.get(i);
+//            }
+//        }
+//        return r;
+//    }
 
     public Catalogo(Context cont) {
 
@@ -45,52 +47,60 @@ public class Catalogo {
         local = new DBlocal(cont);
         this.cont=cont;
     }
-
+    //Carga Sucursales e itinerarios enteros.
     public void connect(){
         SharedPreferences sp = cont.getSharedPreferences("config_inicial",0);
-        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
+//        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
         if(!isNetworkAvailable())
             offline();
        else
             online();
     }
-
+    //Cuando catalogo sabe que hay internet va a la base de datos, trae las sucursales,los servicios y otro que se necesite y lo guarda local (verificar ultimo id de tabla log)
     private void online() {
-        dBconnect = new DBconnect();
-        dBconnect.query("SELECT * FROM sucursal") ;
-        ResultSet rs = dBconnect.getResult();
-        try {
-            if(rs!= null)
-            while (rs.next()){
-                //System.out.println("asd"+rs.getString("nombre"));
-                Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
-                        rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
-                ContentValues contentValues = new ContentValues();
-                //contentValues.put("_id",rs.getInt("id"));
-                contentValues.put(local.getFieldName(),rs.getString("nombre"));
-                contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
-                contentValues.put(local.getFieldLat(),rs.getString("latitud"));
-                contentValues.put(local.getFieldLng(),rs.getString("longitud"));
-                local.insert(contentValues);
-                sucursales.add(sucursal);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        RemoteSucursales();
+        RemoteItinerarios();
+    }
+//TODO: guardar itinerarios locales;
+    private void RemoteItinerarios() {
         dBconnect = new DBconnect();
         dBconnect.query("SELECT * FROM itinerario");
         rs = dBconnect.getResult();
         try {
             if(rs!=null)
-            while (rs.next()){
-                //System.out.println("asd"+rs.getString("nombre"));
-                Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
-                itinerarios.add(it);
-            }
+                while (rs.next()){
+                    //System.out.println("asd"+rs.getString("nombre"));
+                    Itinerario it = new Itinerario(rs.getInt("id"),rs.getString("nombre"),rs.getString("duracion"));
+                    itinerarios.add(it);
+                }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void RemoteSucursales() {
+        dBconnect = new DBconnect();
+        dBconnect.query("SELECT * FROM sucursal") ;
+        ResultSet rs = dBconnect.getResult();
+        try {
+            if(rs!= null)
+                while (rs.next()){
+                    //System.out.println("asd"+rs.getString("nombre"));
+                    Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
+                            rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
+                    ContentValues contentValues = new ContentValues();
+                    //contentValues.put("_id",rs.getInt("id"));
+                    contentValues.put(local.getFieldName(),rs.getString("nombre"));
+                    contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
+                    contentValues.put(local.getFieldLat(),rs.getString("latitud"));
+                    contentValues.put(local.getFieldLng(),rs.getString("longitud"));
+                    local.insert(contentValues);
+                    sucursales.add(sucursal);
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void offline() {
