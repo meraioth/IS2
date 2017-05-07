@@ -26,6 +26,7 @@ public class Sucursal {
         this.id=id;
         this.latitud=latitud;
         this.longitud=longitud;
+        servicios=new ArrayList<>();
     }
 
     public boolean isServicio(String valor){
@@ -55,8 +56,9 @@ public class Sucursal {
     public ArrayList<Servicio> getServicios(){
         return servicios;
     }
-    public void setServicio(Servicio serv){
+    public void addServicio(Servicio serv){
         servicios.add(serv);
 
     }
+    public int getId(){return id;}
 }

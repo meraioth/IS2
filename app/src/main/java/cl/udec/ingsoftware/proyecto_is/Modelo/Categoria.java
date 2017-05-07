@@ -5,4 +5,12 @@ package cl.udec.ingsoftware.proyecto_is.Modelo;
  */
 
 public class Categoria {
+    private String name;
+    public Categoria(String name){
+        this.name = name;
+    }
+    public String getNombre(){
+        return name;
+    }
+
 }

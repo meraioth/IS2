@@ -28,6 +28,7 @@ public class Catalogo {
     private DBlocal local;
     private Context cont;
     private ResultSet rs;
+    boolean actualizar;
 //TODO: sacar y colocar en modelo itinerario
 //    public Itinerario getItinerario(Itinerario it){
 //        Itinerario r = null;
@@ -53,15 +54,40 @@ public class Catalogo {
 //        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
         if(!isNetworkAvailable())
             offline();
-       else
-            online();
+       else {
+            sp = cont.getSharedPreferences("update",0);
+            int update = getLastUpdate();
+            System.out.println("Ultima Version BD:"+update);
+            actualizar=false;
+            //Si el ultimo entero guardado es distinto del ultimo guardado en la bd remota, hay q actualizar la información
+            if(sp.getInt("ultimo",1)!= update){
+                sp.edit().putInt("ultimo",update).commit();
+                actualizar=true;
+                online();
+            }else offline(); //si no hay actualización en bd ,trabaja en local y ahorra consumo de datos.
+
+        }
     }
     //Cuando catalogo sabe que hay internet va a la base de datos, trae las sucursales,los servicios y otro que se necesite y lo guarda local (verificar ultimo id de tabla log)
     private void online() {
+        System.out.println("Estoy online!!!!");
         RemoteSucursales();
         RemoteItinerarios();
     }
-//TODO: guardar itinerarios locales;
+
+    private int getLastUpdate() {
+        dBconnect.query("select max(update) from log;");
+        rs = dBconnect.getResult();
+        try {
+            if(rs!=null)
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //TODO: guardar itinerarios locales;
     private void RemoteItinerarios() {
         dBconnect = new DBconnect();
         dBconnect.query("SELECT * FROM itinerario");
@@ -80,22 +106,52 @@ public class Catalogo {
 
     private void RemoteSucursales() {
         dBconnect = new DBconnect();
-        dBconnect.query("SELECT * FROM sucursal") ;
+        dBconnect.query("select * " +
+                "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
+                "where sucursal.id = sucursal_servicio.id_sucursal " +
+                "and sucursal_servicio.id_servicio = servicio.id " +
+                "and servicio.id = servicio_categoria.id_servicio;") ;
         ResultSet rs = dBconnect.getResult();
         try {
             if(rs!= null)
                 while (rs.next()){
-                    //System.out.println("asd"+rs.getString("nombre"));
-                    Sucursal sucursal = new Sucursal(rs.getString("nombre"),rs.getInt("id"),
-                            rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
-                    ContentValues contentValues = new ContentValues();
-                    //contentValues.put("_id",rs.getInt("id"));
-                    contentValues.put(local.getFieldName(),rs.getString("nombre"));
-                    contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
-                    contentValues.put(local.getFieldLat(),rs.getString("latitud"));
-                    contentValues.put(local.getFieldLng(),rs.getString("longitud"));
-                    local.insert(contentValues);
-                    sucursales.add(sucursal);
+                    boolean existe_sucursal=false;
+                    //Crear Categoria
+                    Categoria cat=new Categoria(rs.getString(16));
+                    //Crear Servicio
+                    Servicio serv= new Servicio(rs.getString(10),rs.getString(12),cat);
+                    //Buscaar si existe la sucursal asociada al a tupla
+                    Sucursal sucursal;
+                    for (Sucursal suc:sucursales
+                         ) {
+                        if(rs.getString(1)==String.valueOf(suc.getId())){
+
+                            //Si existe la sucursal, añadimos el servicio
+                            suc.addServicio(serv);
+                            existe_sucursal=true;
+                        }
+                    }
+                    if(!existe_sucursal){
+                        //Si no existe la sucursal, se crea y se añade servicio
+                        sucursal = new Sucursal(rs.getString(2),rs.getInt(1),
+                                rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
+                        sucursal.addServicio(serv);
+                        sucursales.add(sucursal);
+
+                    }
+
+                    if(actualizar){
+                        //System.out.println("asd"+rs.getString("nombre"));
+                        ContentValues contentValues = new ContentValues();
+                        //contentValues.put("_id",rs.getInt("id"));
+                        contentValues.put(local.getFieldName(),rs.getString("nombre"));
+                        contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
+                        contentValues.put(local.getFieldLat(),rs.getString("latitud"));
+                        contentValues.put(local.getFieldLng(),rs.getString("longitud"));
+
+                        local.insert(contentValues);
+
+                    }
                 }
         } catch (SQLException e) {
             e.printStackTrace();
