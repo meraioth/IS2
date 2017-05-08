@@ -14,21 +14,22 @@
     tools:showIn="@layout/app_bar_main">
 
     <TabHost
+        android:id="@+id/tabhost"
         android:layout_width="200dip"
         android:layout_height="300dip"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:id="@+id/tabhost">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TabWidget
                 android:id="@android:id/tabs"
+                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -44,9 +45,9 @@
                     android:orientation="vertical">
 
                     <ListView
+                        android:id="@+id/id_lista1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/id_lista1"
                         android:visibility="visible" />
 
 
@@ -54,6 +55,21 @@
 
                 <LinearLayout
                     android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/id_lista2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -68,13 +84,12 @@
 
 
                     <ListView
+                        android:id="@+id/id_lista3"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/id_lista2"
-                         />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
             </FrameLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </TabHost>
 </RelativeLayout>
