@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is.Actividades;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -57,13 +58,20 @@ public class MainActivity extends AppCompatActivity
         //tab1
         TabHost.TabSpec spec = tabs.newTabSpec("Lugares");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("Lugares");
+        spec.setIndicator("",this.getResources().getDrawable(R.drawable.ic_menu_login));
+        //spec.setIndicator("Lugares");
+
         tabs.addTab(spec);
         //tab2
-        spec = tabs.newTabSpec("Itinerarios");
+        spec = tabs.newTabSpec("Mapa Tematico");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("Itinerario");
+        spec.setIndicator("Mapa Tematico");
         tabs.addTab(spec);
+        spec = tabs.newTabSpec("Busqueda");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("Busqueda");
+        tabs.addTab(spec);
+
         savebdstatus();
         catalogo.connect();
 

@@ -26,6 +26,8 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
  */
 
 public class Catalogo {
+    //TODO:Filtros serán aplicados aca. retornando solo strings a activites
+
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private DBconnect dBconnect;

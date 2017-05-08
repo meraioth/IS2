@@ -6,9 +6,9 @@ import android.provider.BaseColumns;
  * Created by meraioth on 07-05-17.
  */
 
-public class PersistenceContract {
+public class Contrato {
         // Constructor vacio para evitar que se instancie accidentalmente.
-        private PersistenceContract() {}
+        private Contrato() {}
 
         /* Inner class that defines the table contents */
         public static abstract class SucursalEntry implements BaseColumns {
