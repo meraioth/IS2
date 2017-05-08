@@ -1,9 +1,11 @@
-package cl.udec.ingsoftware.proyecto_is.Modelo;
+package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -14,7 +16,9 @@ import java.util.Iterator;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBconnect;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 /**
@@ -51,23 +55,47 @@ public class Catalogo {
     //Carga Sucursales e itinerarios enteros.
     public void connect(){
         SharedPreferences sp = cont.getSharedPreferences("config_inicial",0);
-//        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
-        if(!isNetworkAvailable())
+        System.out.println("bd local creada? :"+sp.getBoolean("creacion_bd",false));
+        if(!isNetworkAvailable()){
+            System.out.println("NO HAY INTERNET,BUSCA DATOS EN SQLITE");
             offline();
+        }
        else {
+            System.out.println("HAY INTERNET");
+
             sp = cont.getSharedPreferences("update",0);
             int update = getLastUpdate();
             System.out.println("Ultima Version BD:"+update);
             actualizar=false;
             //Si el ultimo entero guardado es distinto del ultimo guardado en la bd remota, hay q actualizar la información
-            if(sp.getInt("ultimo",1)!= update){
+            if(cont.getSharedPreferences("init",0).getBoolean("bd",false)==false){//esta es la primera carga
+                cont.getSharedPreferences("init",0).edit().putBoolean("bd",true).commit();
+                actualizar=true;
+                reset_local();
+                online();
+            }else if(sp.getInt("ultimo",1)!= update ){//si no es la primera carga,y hay cambios en bd remota
+                cont.getSharedPreferences("init",0).edit().putBoolean("bd",true).commit();
                 sp.edit().putInt("ultimo",update).commit();
                 actualizar=true;
+                reset_local();
                 online();
             }else offline(); //si no hay actualización en bd ,trabaja en local y ahorra consumo de datos.
 
         }
     }
+    //Metodo para resetear los datos del local para posterior inserción de ultima version del remoto, (ya que encontrar las diferencias es más engorroso que borrar e insertar)
+    private void reset_local() {
+        SQLiteDatabase db = local.getWritableDatabase();
+        db.delete("sucursal",null,null);
+        db.delete("servicio",null,null);
+        db.delete("sucursal_servicio",null,null);
+//        db.delete("servicio_categoria",null,null);
+        db.close();
+
+
+
+    }
+
     //Cuando catalogo sabe que hay internet va a la base de datos, trae las sucursales,los servicios y otro que se necesite y lo guarda local (verificar ultimo id de tabla log)
     private void online() {
         System.out.println("Estoy online!!!!");
@@ -79,8 +107,10 @@ public class Catalogo {
         dBconnect.query("select max(update) from log;");
         rs = dBconnect.getResult();
         try {
-            if(rs!=null)
-            return rs.getInt(1);
+            if(rs!=null){
+                rs.next();
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,14 +149,15 @@ public class Catalogo {
                     //Crear Categoria
                     Categoria cat=new Categoria(rs.getString(16));
                     //Crear Servicio
-                    Servicio serv= new Servicio(rs.getString(10),rs.getString(12),cat);
+                    Servicio serv= new Servicio(rs.getInt(9),rs.getString(10),rs.getString(12),cat);
                     //Buscaar si existe la sucursal asociada al a tupla
-                    Sucursal sucursal;
+                    Sucursal sucursal = new Sucursal(null,-1,null,-1,-1);
                     for (Sucursal suc:sucursales
                          ) {
                         if(rs.getString(1)==String.valueOf(suc.getId())){
 
                             //Si existe la sucursal, añadimos el servicio
+                            sucursal=suc;
                             suc.addServicio(serv);
                             existe_sucursal=true;
                         }
@@ -135,21 +166,47 @@ public class Catalogo {
                         //Si no existe la sucursal, se crea y se añade servicio
                         sucursal = new Sucursal(rs.getString(2),rs.getInt(1),
                                 rs.getString("sello_de_turismo"),rs.getDouble("latitud"),rs.getDouble("longitud"));
+                        System.out.println("Sucursal , nombre:"+sucursal.getNombre()+" latitud:"+sucursal.getLatitud()+" longitud: "+sucursal.getLongitud());
                         sucursal.addServicio(serv);
                         sucursales.add(sucursal);
 
                     }
 
                     if(actualizar){
-                        //System.out.println("asd"+rs.getString("nombre"));
-                        ContentValues contentValues = new ContentValues();
-                        //contentValues.put("_id",rs.getInt("id"));
-                        contentValues.put(local.getFieldName(),rs.getString("nombre"));
-                        contentValues.put(local.getFieldSeal(),rs.getString("sello_de_turismo"));
-                        contentValues.put(local.getFieldLat(),rs.getString("latitud"));
-                        contentValues.put(local.getFieldLng(),rs.getString("longitud"));
+                        //TODO:Guardar la misma información que fue traida del remoto al local
+                        SQLiteDatabase db = local.getWritableDatabase();
 
-                        local.insert(contentValues);
+
+
+//                        //System.out.println("asd"+rs.getString("nombre"));
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("id",sucursal.getId());
+                        contentValues.put("nombre",sucursal.getNombre());
+                        contentValues.put("sello_de_turismo",rs.getString("sello_de_turismo"));
+                        contentValues.put("latitud",sucursal.getLatitud());
+                        contentValues.put("longitud",sucursal.getLongitud());
+
+                        db.insert("sucursal", null, contentValues);
+
+                        contentValues = new ContentValues();
+                        contentValues.put("id",serv.getId());
+                        contentValues.put("nombre_servicio",serv.getNombre());
+                        //contentValues.put("descripcion",serv.getDescripcion());
+                        db.insert("servicio", null, contentValues);
+
+
+                        contentValues = new ContentValues();
+                        contentValues.put("id_sucursal",sucursal.getId());
+                        contentValues.put("id_servicio",serv.getId());
+                        db.insert("sucursal_servicio", null, contentValues);
+
+                        contentValues = new ContentValues();
+                        contentValues.put("id_servicio",serv.getId());
+                        contentValues.put("nombre_categoria",cat.getNombre());
+                        db.insert("servicio_categoria", null, contentValues);
+                        db.close();
+
+
 
                     }
                 }
@@ -160,7 +217,16 @@ public class Catalogo {
     }
 
     private void offline() {
-        Cursor c = local.getAllLocations();
+        //TODO: lo mismo que para el remoto pero con el local.
+        SQLiteDatabase db = local.getReadableDatabase();
+
+        String args[]=new String[2];
+        Cursor c = db.rawQuery("select * " +
+                "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
+                "where sucursal.id = sucursal_servicio.id_sucursal " +
+                "and sucursal_servicio.id_servicio = servicio.id " +
+                "and servicio.id = servicio_categoria.id_servicio;",null);
+//        Cursor c = local.getAllLocations();
         if (c.moveToFirst()) {
             //Recorremos el cursor hasta que no haya más registros
             do {
@@ -174,6 +240,8 @@ public class Catalogo {
                 System.out.println("AGREGO LA WEA");
             } while(c.moveToNext());
         }
+        db.close();
+
     }
 
     public ArrayList<Sucursal> busqueda_sucursal(String valor) {

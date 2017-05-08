@@ -13,7 +13,7 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 
-import cl.udec.ingsoftware.proyecto_is.Modelo.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 

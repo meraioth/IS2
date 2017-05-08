@@ -30,7 +30,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ListAdapter;
-import cl.udec.ingsoftware.proyecto_is.Modelo.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
 import cl.udec.ingsoftware.proyecto_is.R;
 

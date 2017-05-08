@@ -5,12 +5,13 @@ package cl.udec.ingsoftware.proyecto_is.Modelo;
  */
 
 public class Servicio {
-
+    private int id;
     private String nombre;
     private String descripcion;
     private Categoria cat;
 
-    public  Servicio(String nombre, String descripcion,Categoria categoria){
+    public  Servicio(int id,String nombre, String descripcion,Categoria categoria){
+        this.id=id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cat=categoria;
@@ -21,4 +22,14 @@ public class Servicio {
     }
     public Categoria getCategoria(){return cat;}
     public void setCategoria(Categoria cat){this.cat=cat;}
+    public int getId(){
+        return id;
+    }
+    public String getNombre(){
+        return nombre;
+
+    }
+    public String getDescripcion(){
+        return descripcion;
+    }
 }

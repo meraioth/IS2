@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import cl.udec.ingsoftware.proyecto_is.Modelo.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
@@ -27,6 +27,7 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
         cat= MainActivity.catalogo;
         //cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
         cat.connect();
+        sucursales=cat.getSucursales();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_tematico);
@@ -60,10 +61,10 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         System.out.println("tipo de mapa :"+mMap.getMapType());
-        ArrayList<Sucursal> suc= cat.getSucursales();
+        //ArrayList<Sucursal> suc= cat.getSucursales();
         LatLng aux=new LatLng(0,0);
         float zoom = (float)8.5;
-        for (Sucursal x: suc) {
+        for (Sucursal x: sucursales) {
 
             if (x.getLatitud() != (double) -1) {
                 aux = new LatLng(x.getLatitud(), x.getLongitud());
