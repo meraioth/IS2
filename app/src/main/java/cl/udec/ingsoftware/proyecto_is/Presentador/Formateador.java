@@ -3,8 +3,11 @@ package cl.udec.ingsoftware.proyecto_is.Presentador;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.sql.Array;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.Consultor;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
@@ -17,10 +20,6 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
  */
 
 public class Formateador {
-    private ArrayList<Itinerario> itinerarios;
-    private ArrayList<Sucursal> sucursales;
-    private ArrayList<Categoria> categorias;
-    private ArrayList<Servicio> Servicios;
     private Consultor consultor;
     private Context cont;
     private boolean primera_carga;
@@ -33,19 +32,22 @@ public class Formateador {
         version_local = cont.getSharedPreferences("update",0).getInt("ultimo",1);
     }
 
-    public ArrayList<Sucursal> getSucursales(){
+    public ArrayList<Sucursal> getSucursales() throws SQLException {
+        ArrayList<Sucursal> sucursales = new ArrayList<>();
+        ResultSet aux;
         if(primera_carga){
             setPrimera_carga();
-            ResultSet aux = consultor.getSucursalesRemoto();
+            aux = consultor.getSucursalesRemoto();
+            agregarSucursales(aux,sucursales);
 
         }else if(version_local!=consultor.getVersionRemoto()){
             setVersion_local();
             reset_local();
-            ResultSet aux = consultor.getSucursalesRemoto();
-
+            aux = consultor.getSucursalesRemoto();
+            agregarSucursales(aux, sucursales);
         }else{
             Cursor cursor= consultor.getSucursalesLocal();
-            //TODO:Hacer proceso de formato
+            agregarSucursales(cursor,sucursales);
         }
         return sucursales;
     }
@@ -65,6 +67,21 @@ public class Formateador {
     //TODO:Hacer este metodo asincrono
     private void setPrimera_carga() {
         cont.getSharedPreferences("update",0).edit().putInt("ultimo",consultor.getVersionRemoto()).commit();
+    }
+
+    void agregarSucursales(ResultSet aux, ArrayList<Sucursal> sucursales) throws SQLException {
+        while(aux.next()){
+            Sucursal sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getString("sello_de_turismo"),
+                    aux.getDouble("latitud"), aux.getDouble("longitud"));
+            sucursales.add(sucursal);
+        }
+    }
+    void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
+        while(aux.moveToNext()){
+            Sucursal sucursal = new Sucursal(aux.getString(0),aux.getInt(1),aux.getString(2),
+                    aux.getDouble(3), aux.getDouble(4));
+            sucursales.add(sucursal);
+        }
     }
 
     //TODO: Recibir Cursor (Local) y ResultSet (Remota) y formatea los datos , entregando conjunto de objetos. (Respalda información en SQLite)
