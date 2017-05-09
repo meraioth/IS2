@@ -11,13 +11,13 @@ import java.sql.Statement ;
 import java.sql.ResultSet ;
 import java.util.ArrayList;
 
-public class DBconnect {
+public class DBremoto {
 
     private Connection conn;
     private String consulta;
     private ResultSet result;
 
-    public DBconnect(){}
+    public DBremoto(){}
 
     public void query(String aux){
         consulta=aux;

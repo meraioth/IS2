@@ -11,13 +11,13 @@ import android.widget.Toast;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBconnect;
+import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class Login extends AppCompatActivity {
     Button b1,b2;
     EditText ed1,ed2;
-    DBconnect db,db1;
+    DBremoto db,db1;
     public final static String EXTRA_MESSAGE = "cl.udec.ingsoftware.proyecto_is.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class Login extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    db = new DBconnect();
-                    db1=new DBconnect();
+                    db = new DBremoto();
+                    db1=new DBremoto();
                     String cons = "SELECT * FROM usuario where usuario.email like '"+
                             ed1.getText().toString()+"' and usuario.password like '"+ed2.getText().toString()+"';";
                     db.query(cons);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -14,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBconnect;
+import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
@@ -30,7 +29,7 @@ public class Catalogo {
 
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
-    private DBconnect dBconnect;
+    private DBremoto dBremoto;
     private DBlocal local;
     private Context cont;
     private ResultSet rs;
@@ -50,7 +49,7 @@ public class Catalogo {
 
         itinerarios = new ArrayList<Itinerario>();
         sucursales = new ArrayList<Sucursal>();
-        dBconnect = new DBconnect();
+        dBremoto = new DBremoto();
         local = new DBlocal(cont);
         this.cont=cont;
     }
@@ -106,8 +105,8 @@ public class Catalogo {
     }
 
     private int getLastUpdate() {
-        dBconnect.query("select max(update) from log;");
-        rs = dBconnect.getResult();
+        dBremoto.query("select max(update) from log;");
+        rs = dBremoto.getResult();
         try {
             if(rs!=null){
                 rs.next();
@@ -121,9 +120,9 @@ public class Catalogo {
 
     //TODO: guardar itinerarios locales;
     private void RemoteItinerarios() {
-        dBconnect = new DBconnect();
-        dBconnect.query("SELECT * FROM itinerario");
-        rs = dBconnect.getResult();
+        dBremoto = new DBremoto();
+        dBremoto.query("SELECT * FROM itinerario");
+        rs = dBremoto.getResult();
         try {
             if(rs!=null)
                 while (rs.next()){
@@ -137,13 +136,13 @@ public class Catalogo {
     }
 
     private void RemoteSucursales() {
-        dBconnect = new DBconnect();
-        dBconnect.query("select * " +
+        dBremoto = new DBremoto();
+        dBremoto.query("select * " +
                 "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
                 "where sucursal.id = sucursal_servicio.id_sucursal " +
                 "and sucursal_servicio.id_servicio = servicio.id " +
                 "and servicio.id = servicio_categoria.id_servicio;") ;
-        ResultSet rs = dBconnect.getResult();
+        ResultSet rs = dBremoto.getResult();
         try {
             if(rs!= null)
                 while (rs.next()){
