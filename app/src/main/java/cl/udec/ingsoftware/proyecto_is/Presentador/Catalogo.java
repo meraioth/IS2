@@ -30,16 +30,6 @@ public class Catalogo {
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
     private Formateador formateador;
-//TODO: sacar y colocar en modelo itinerario
-//    public Itinerario getItinerario(Itinerario it){
-//        Itinerario r = null;
-//        for (int i = 0; i < itinerarios.size(); i++){
-//            if(itinerarios.get(i) == it){
-//                r = itinerarios.get(i);
-//            }
-//        }
-//        return r;
-//    }
 
     public Catalogo(Context cont) {
 
@@ -49,11 +39,20 @@ public class Catalogo {
     }
 
 
-    public void getSucursales() throws SQLException {
-        Iterator<Sucursal> it = formateador.getSucursales().iterator();
-        while (it.hasNext()){
-            sucursales.add(it.next());
+    public ArrayList getSucursales(){
+        ArrayList<Sucursal> suc = null;
+        try {
+            suc = formateador.getSucursales();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        ArrayList salida = new ArrayList();
+        for (Sucursal sucursal:suc
+             ) {
+            salida.add(sucursal.getNombre());
+        }
+        return salida;
     }
 }
 

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class DBlocal extends SQLiteOpenHelper implements Serializable{
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "sucursal.db";
+    public static final String DATABASE_NAME = "turismo.db";
 
     private static final String TEXT_TYPE = " TEXT";
 
@@ -38,8 +38,11 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
                     Contrato.SucursalEntry.COLUMN_NAME_EMPRESA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
                     Contrato.SucursalEntry.COLUMN_NAME_COMUNA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
                     Contrato.SucursalEntry.COLUMN_NAME_LAT + DOUBLE_PRECISION_TYPE + COMMA_SEP +
-                    Contrato.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE +
+                    Contrato.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE + COMMA_SEP +
+                    Contrato.SucursalEntry.COLUMN_NAME_DESCRIPCION + VARCHAR_TYPE + "(100)"+ COMMA_SEP+
+                    Contrato.SucursalEntry.COLUMN_NAME_FOTO + VARCHAR_TYPE + "(100)" +
                     " )";
+
     //TODO:FALTA AGREGAR DESCRIPCION Y FOTO
     private static final String SQL_CREATE_ENTRIES_SERVICIO =
             "CREATE TABLE " + Contrato.ServicioEntry.TABLE_NAME + " (" +

@@ -73,12 +73,11 @@ public class MainActivity extends AppCompatActivity
         tabs.addTab(spec);
 
         savebdstatus();
-        catalogo.connect();
 
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
-        ArrayList servicios = catalogo.servicios_to_array();
-        ArrayList itinerarios = catalogo.itinerarios_to_array();
+        ArrayList servicios = catalogo.getSucursales();
+        ArrayList itinerarios = catalogo.getSucursales();
         lista.setAdapter(new ListAdapter(this,servicios));
         lista1.setAdapter(new ListAdapter(this,itinerarios));
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {

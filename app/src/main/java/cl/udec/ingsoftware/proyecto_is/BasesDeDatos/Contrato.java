@@ -20,6 +20,10 @@ public class Contrato {
             public static final String COLUMN_NAME_COMUNA = "comuna";
             public static final String COLUMN_NAME_LAT = "latitud";
             public static final String COLUMN_NAME_LONG = "longitud";
+            public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+            public static final String COLUMN_NAME_FOTO = "foto";
+
+
         }
 
         public static abstract class ServicioEntry implements BaseColumns {

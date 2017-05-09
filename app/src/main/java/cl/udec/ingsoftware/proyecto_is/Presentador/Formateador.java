@@ -28,23 +28,30 @@ public class Formateador {
     public Formateador(Context cont){
         this.cont=cont;
         consultor=new Consultor(cont);
-        primera_carga = cont.getSharedPreferences("init",0).getBoolean("bd",false);
-        version_local = cont.getSharedPreferences("update",0).getInt("ultimo",1);
+        primera_carga = cont.getSharedPreferences("init",0).getBoolean("bd",true);
+        version_local = cont.getSharedPreferences("update",0).getInt("ultimo",0);
     }
 
     public ArrayList<Sucursal> getSucursales() throws SQLException {
         ArrayList<Sucursal> sucursales = new ArrayList<>();
-        ResultSet aux;
+        ResultSet resultSet;
+        System.out.println("PRIMERA CARGA:"+primera_carga);
+        System.out.println("version local bd:"+version_local);
+        System.out.println("version remoto db"+consultor.getVersionRemoto());
+
+
         if(primera_carga){
             setPrimera_carga();
-            aux = consultor.getSucursalesRemoto();
-            agregarSucursales(aux,sucursales);
+            resultSet = consultor.getSucursalesRemoto();
+            agregarSucursales(resultSet,sucursales);
+            consultor.respaldar_sucursales(resultSet);
 
         }else if(version_local!=consultor.getVersionRemoto()){
-            setVersion_local();
-            reset_local();
-            aux = consultor.getSucursalesRemoto();
-            agregarSucursales(aux, sucursales);
+            setVersion_local(consultor.getVersionRemoto());
+            consultor.reset_local();
+            resultSet = consultor.getSucursalesRemoto();
+            agregarSucursales(resultSet, sucursales);
+            consultor.respaldar_sucursales(resultSet);
         }else{
             Cursor cursor= consultor.getSucursalesLocal();
             agregarSucursales(cursor,sucursales);
@@ -54,19 +61,17 @@ public class Formateador {
 
 
 
-    //Borrar la base de datos local, para actualización
-    private void reset_local() {
-    }
 
-    //TODO:Hacer este metodo asincrono
-    private void setVersion_local() {
-        cont.getSharedPreferences("init",0).edit().putBoolean("bd",true).commit();
+
+
+    private void setVersion_local(int version_remoto) {
+        cont.getSharedPreferences("update",0).edit().putInt("ultimo",version_remoto).commit();
 
     }
 
-    //TODO:Hacer este metodo asincrono
     private void setPrimera_carga() {
-        cont.getSharedPreferences("update",0).edit().putInt("ultimo",consultor.getVersionRemoto()).commit();
+        cont.getSharedPreferences("init",0).edit().putBoolean("bd",false).commit();
+
     }
 
     void agregarSucursales(ResultSet aux, ArrayList<Sucursal> sucursales) throws SQLException {
@@ -76,6 +81,7 @@ public class Formateador {
             sucursales.add(sucursal);
         }
     }
+
     void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
         while(aux.moveToNext()){
             Sucursal sucursal = new Sucursal(aux.getString(0),aux.getInt(1),aux.getString(2),

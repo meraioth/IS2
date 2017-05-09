@@ -27,6 +27,7 @@ public class DBremoto {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
     public ResultSet getResult(){
         return result;

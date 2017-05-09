@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IS2.iml" filepath="$PROJECT_DIR$/IS2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/IS2_2.iml" filepath="$PROJECT_DIR$/IS2_2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/osmdroid-android-4.2/osmdroid-android-4.2.iml" filepath="$PROJECT_DIR$/osmdroid-android-4.2/osmdroid-android-4.2.iml" />
       <module fileurl="file://$PROJECT_DIR$/postgresql/postgresql.iml" filepath="$PROJECT_DIR$/postgresql/postgresql.iml" />

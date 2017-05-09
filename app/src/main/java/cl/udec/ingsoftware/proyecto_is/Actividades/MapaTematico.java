@@ -24,9 +24,9 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        cat= MainActivity.catalogo;
+        cat= new Catalogo(getApplicationContext());
         //cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
-        cat.connect();
+
         sucursales=cat.getSucursales();
 
         super.onCreate(savedInstanceState);
