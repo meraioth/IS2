@@ -6,8 +6,10 @@ package cl.udec.ingsoftware.proyecto_is.Modelo;
 
 public class Categoria {
     private String name;
-    public Categoria(String name){
+    private String descripcion;
+    public Categoria(String name,String descripcion){
         this.name = name;
+        this.descripcion = descripcion;
     }
     public String getNombre(){
         return name;
