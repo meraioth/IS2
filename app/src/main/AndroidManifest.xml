@@ -64,6 +64,17 @@
             android:label="@string/title_activity_mapa_tematico" />
         <activity android:name=".Actividades.OSM" />
         <activity android:name=".Actividades.mapsforge"></activity>
+        <activity
+            android:name=".Actividades.MapaBusquedaItinerarioActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
