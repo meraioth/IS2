@@ -80,11 +80,32 @@ public class Formateador {
 
 
     void agregarSucursales(ResultSet aux, ArrayList<Sucursal> sucursales) throws SQLException {
+        while(aux.next()) {
+            boolean existe_sucursal = false;
+            //Crear Categoria
+            Categoria cat = new Categoria(aux.getString(18),aux.getString(19));
+            //Crear Servicio
+            Servicio serv = new Servicio(aux.getInt(12), aux.getString(13), aux.getString(15), cat);
+            //Buscaar si existe la sucursal asociada al a tupla
+            Sucursal sucursal = new Sucursal(null, -1, null, -1, -1);
+            for (Sucursal suc : sucursales
+                    ) {
+                if (aux.getString(1) == String.valueOf(suc.getId())) {
 
-        while(aux.next()){
-            Sucursal sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getString("sello_de_turismo"),
-                    aux.getDouble("latitud"), aux.getDouble("longitud"));
-            sucursales.add(sucursal);
+                    //Si existe la sucursal, añadimos el servicio
+                    sucursal = suc;
+                    suc.addServicio(serv);
+                    existe_sucursal = true;
+                }
+            }
+            if (!existe_sucursal) {
+                //Si no existe la sucursal, se crea y se añade servicio
+                sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getString("sello_de_turismo"),
+                        aux.getDouble("latitud"), aux.getDouble("longitud"));
+                sucursal.addServicio(serv);
+                sucursales.add(sucursal);
+
+            }
         }
     }
 
@@ -95,7 +116,6 @@ public class Formateador {
             System.out.println("Tupla---->> id :" + aux.getInt(0) + " nombre:" + aux.getString(1) + " comuna:" + aux.getString(4));
 
             sucursales.add(sucursal);
-            System.out.println(sucursal.getNombre());
         }
     }
 

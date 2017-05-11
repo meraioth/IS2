@@ -74,7 +74,7 @@ public class Contrato {
             public static final String COLUMN_NAME_ID = "id";
             public static final String COLUMN_NAME_NOMBRE = "nombre";
             public static final String COLUMN_NAME_EMAIL = "email";
-            public static final String COLUMN_NAME_password = "password";
+            public static final String COLUMN_NAME_PASSWORD = "password";
             public static final String COLUMN_NAME_ROL = "rol";
 
         }

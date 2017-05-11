@@ -20,7 +20,7 @@ public class Consultor {
     public Consultor(Context cont){
         this.cont=cont;
         remoto = new DBremoto();
-        local = new DBlocal(cont);
+        local = new DBlocal(this.cont);
     }
 
 
@@ -34,16 +34,28 @@ public class Consultor {
 
     public void getItinerariosLocal(){};
 
-    public void getCategoriasLocal(){};
+    public Cursor getCategoriasLocal(){
+        SQLiteDatabase db = local.getReadableDatabase();
+        Cursor c = db.rawQuery("select * " +
+                "from categoria;",null);
 
-    public void getServiciosLocal(){};
+        return c;
+    };
+
+    public Cursor getServiciosLocal(){
+        SQLiteDatabase db = local.getReadableDatabase();
+        Cursor c = db.rawQuery("select * " +
+                "from servicio;",null);
+        return c;
+    };
 
     public ResultSet getSucursalesRemoto(){
-        remoto.query("select * " +
-                "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
-                "where sucursal.id = sucursal_servicio.id_sucursal " +
-                "and sucursal_servicio.id_servicio = servicio.id " +
-                "and servicio.id = servicio_categoria.id_servicio;") ;
+        remoto.query("select *\n" +
+                " from sucursal,sucursal_servicio,servicio ,servicio_categoria,categoria\n" +
+                "where sucursal.id=sucursal_servicio.id_sucursal and \n" +
+                "servicio.id=sucursal_servicio.id_servicio \n" +
+                "and servicio.id=servicio_categoria.id_servicio\n" +
+                "and servicio_categoria.nombre_categoria=categoria.nombre_categoria;") ;
         return remoto.getResult();
     };
 
@@ -85,6 +97,10 @@ public class Consultor {
         local.getWritableDatabase().delete("servicio",null,null);
         local.getWritableDatabase().delete("sucursal_servicio",null,null);
         local.getWritableDatabase().delete("servicio_categoria",null,null);
+        local.getWritableDatabase().delete("categoria",null,null);
+//        local.getWritableDatabase().delete("itinerario",null,null);
+//        local.getWritableDatabase().delete("orden",null,null);
+        local.getWritableDatabase().delete("usuario",null,null);
         local.getWritableDatabase().close();
 
     }
@@ -105,32 +121,36 @@ public class Consultor {
                 contentValues.put("descripcion", resultSet.getString(8));
                 contentValues.put("foto", resultSet.getString(9));
                 System.out.println("Tupla---->> id :" + resultSet.getInt(1) + " nombre:" + resultSet.getString(2) + " comuna:" + resultSet.getString(5));
-
-
                 local.getWritableDatabase().insert("sucursal", null, contentValues);
+
+                contentValues = new ContentValues();
+                contentValues.put("id",resultSet.getInt(12));
+                contentValues.put("nombre_servicio",resultSet.getString(13));
+                contentValues.put("descripcion",resultSet.getString(15));
+                local.getWritableDatabase().insert("servicio", null, contentValues);
+
+                contentValues = new ContentValues();
+                contentValues.put("id_sucursal",resultSet.getInt(10));
+                contentValues.put("id_servicio",resultSet.getInt(11));
+                local.getWritableDatabase().insert("sucursal_servicio", null, contentValues);
+
+                contentValues = new ContentValues();
+                contentValues.put("nombre_categoria",resultSet.getString(18));
+                contentValues.put("descripcion",resultSet.getString(19));
+                local.getWritableDatabase().insert("categoria", null, contentValues);
+
+                contentValues = new ContentValues();
+                contentValues.put("id_servicio",resultSet.getInt(16));
+                contentValues.put("nombre_categoria",resultSet.getString(17));
+                local.getWritableDatabase().insert("servicio_categoria", null, contentValues);
+
+
 
             }
         }
 
-//        contentValues = new ContentValues();
-//        contentValues.put("id",serv.getId());
-//        contentValues.put("nombre_servicio",serv.getNombre());
-//        //contentValues.put("descripcion",serv.getDescripcion());
-//        local.getWritableDatabase().insert("servicio", null, contentValues);
-//
-//
-//        contentValues = new ContentValues();
-//        contentValues.put("id_sucursal",sucursal.getId());
-//        contentValues.put("id_servicio",serv.getId());
-//        local.getWritableDatabase().insert("sucursal_servicio", null, contentValues);
-//
-//        contentValues = new ContentValues();
-//        contentValues.put("id_servicio",serv.getId());
-//        contentValues.put("nombre_categoria",cat.getNombre());
-//        local.getWritableDatabase().insert("servicio_categoria", null, contentValues);
         local.getWritableDatabase().close();
     }
 
 
-    //query1,query2
 }

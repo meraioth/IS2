@@ -47,7 +47,8 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
     private static final String SQL_CREATE_ENTRIES_SERVICIO =
             "CREATE TABLE " + Contrato.ServicioEntry.TABLE_NAME + " (" +
                     Contrato.ServicioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    Contrato.ServicioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" +
+                    Contrato.ServicioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" + COMMA_SEP+
+                    Contrato.SucursalEntry.COLUMN_NAME_DESCRIPCION + VARCHAR_TYPE + "(40)"+
                      " )";
     private static final String SQL_CREATE_ENTRIES_SUCURSAL_SERVICIO =
             "CREATE TABLE " + Contrato.Sucursal_ServicioEntry.TABLE_NAME + " (" +
@@ -55,37 +56,27 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
                     Contrato.Sucursal_ServicioEntry.COLUMN_NAME_ENTRY_ID_SERVICIO + INTEGER_TYPE +
                     " )";
 
-//
-//    private static final String SQL_CREATE_ENTRIES_SUCURSAL_SERVICIO =
-//            "CREATE TABLE " + Contrato.SucursalEntry.TABLE_NAME + " (" +
-//                    Contrato.SucursalEntry._ID + INTEGER_TYPE + " PRIMARY KEY," +
-//                    Contrato.SucursalEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_SELLO + INTEGER_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_EMPRESA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_COMUNA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_LAT + DOUBLE_PRECISION_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE +
-//                    " )";
-//
+
+    private static final String SQL_CREATE_ENTRIES_CATEGORIA =
+            "CREATE TABLE " + Contrato.CategoriaEntry.TABLE_NAME + " (" +
+                    Contrato.CategoriaEntry.COLUMN_NAME_NOMBRE_CATEGORIA + VARCHAR_TYPE+ "(20)" + " PRIMARY KEY," +
+                    Contrato.CategoriaEntry.COLUMN_NAME_DESCRIPCION + VARCHAR_TYPE+ "(100)" +
+                    " )";
+
     private static final String SQL_CREATE_ENTRIES_SERVICIO_CATEGORIA =
             "CREATE TABLE " + Contrato.Servicio_CategoriaEntry.TABLE_NAME + " (" +
                     Contrato.Servicio_CategoriaEntry.COLUMN_NAME_ENTRY_ID_SERVICIO + INTEGER_TYPE + COMMA_SEP +
                     Contrato.Servicio_CategoriaEntry.COLUMN_NAME_NOMBRE_CATEGORIA + VARCHAR_TYPE + "(50)" +
                     " )";
-//    private static final String SQL_CREATE_ENTRIES_CATEGORIA =
-//            "CREATE TABLE " + Contrato.SucursalEntry.TABLE_NAME + " (" +
-//                    Contrato.SucursalEntry._ID + INTEGER_TYPE + " PRIMARY KEY," +
-//                    Contrato.SucursalEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_SELLO + INTEGER_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_EMPRESA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_COMUNA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_LAT + DOUBLE_PRECISION_TYPE + COMMA_SEP +
-//                    Contrato.SucursalEntry.COLUMN_NAME_LONG + DOUBLE_PRECISION_TYPE +
-//                    " )";
-//
-//
+    private static final String SQL_CREATE_ENTRIES_USUARIO=
+            "CREATE TABLE " + Contrato.UsuarioEntry.TABLE_NAME +"("+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY " + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE+ "(80)" + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_EMAIL + VARCHAR_TYPE + "(50)"+ COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_PASSWORD + VARCHAR_TYPE + "(50)" +COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ROL + INTEGER_TYPE +" )";
+
+
 
 
     //TODO: agregar más tablas como SQL_CREATE_ENTRIES acá.
@@ -99,7 +90,9 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
         db.execSQL(SQL_CREATE_ENTRIES_SUCURSAL);
         db.execSQL(SQL_CREATE_ENTRIES_SERVICIO);
         db.execSQL(SQL_CREATE_ENTRIES_SUCURSAL_SERVICIO);
+        db.execSQL(SQL_CREATE_ENTRIES_CATEGORIA);
         db.execSQL(SQL_CREATE_ENTRIES_SERVICIO_CATEGORIA);
+        db.execSQL(SQL_CREATE_ENTRIES_USUARIO);
 
     }
 
