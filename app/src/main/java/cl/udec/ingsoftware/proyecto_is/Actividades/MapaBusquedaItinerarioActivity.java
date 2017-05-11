@@ -8,15 +8,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import java.io.Serializable;
+
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener {
 
     private BusquedaFragment busquedaFragment;
 
-    FragmentTransaction fragmentTransaction;
+    private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
+    private static Catalogo catalogo;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,14 +55,15 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        catalogo = new Catalogo(this.getApplicationContext());
+        busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
-        //TODO: recordar que hay que cambiar parametros cuando se implementen los reales, como el repositorio
-        busquedaFragment = BusquedaFragment.newInstance("null","null");
-
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
         fragmentTransaction.commit();
+
+
     }
 
     @Override

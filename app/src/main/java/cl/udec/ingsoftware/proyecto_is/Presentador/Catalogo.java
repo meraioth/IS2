@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
  * Created by matisin on 28-12-16.
  */
 
-public class Catalogo {
+public class Catalogo implements Serializable {
     //TODO:Filtros serán aplicados aca. retornando solo strings a activites
 
     private ArrayList<Itinerario> itinerarios;
@@ -52,7 +53,7 @@ public class Catalogo {
              ) {
             salida.add(sucursal.getNombre());
         }
-        return salida;
+        return suc;
     }
 }
 
