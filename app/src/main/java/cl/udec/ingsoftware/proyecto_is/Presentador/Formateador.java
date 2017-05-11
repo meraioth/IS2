@@ -2,6 +2,8 @@ package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.Array;
 import java.sql.ResultSet;
@@ -35,46 +37,50 @@ public class Formateador {
     public ArrayList<Sucursal> getSucursales() throws SQLException {
         ArrayList<Sucursal> sucursales = new ArrayList<>();
         ResultSet resultSet;
-        System.out.println("PRIMERA CARGA:"+primera_carga);
+        Log.d("Primera Carga", String.valueOf(primera_carga));
+        //System.out.println("PRIMERA CARGA:"+primera_carga);
         System.out.println("version local bd:"+version_local);
-        System.out.println("version remoto db"+consultor.getVersionRemoto());
+        System.out.println("version remoto db:"+consultor.getVersionRemoto());
 
 
         if(primera_carga){
+            Toast.makeText(cont,"Primera Carga",Toast.LENGTH_SHORT).show();
+            setVersion_local(consultor.getVersionRemoto());
             setPrimera_carga();
             resultSet = consultor.getSucursalesRemoto();
             agregarSucursales(resultSet,sucursales);
+//            imprimir_resultado(resultSet);
             consultor.respaldar_sucursales(resultSet);
 
         }else if(version_local!=consultor.getVersionRemoto()){
+            Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
             setVersion_local(consultor.getVersionRemoto());
             consultor.reset_local();
             resultSet = consultor.getSucursalesRemoto();
             agregarSucursales(resultSet, sucursales);
             consultor.respaldar_sucursales(resultSet);
         }else{
+            Toast.makeText(cont,"Cargando Local",Toast.LENGTH_SHORT).show();
             Cursor cursor= consultor.getSucursalesLocal();
             agregarSucursales(cursor,sucursales);
         }
         return sucursales;
     }
 
+    private void imprimir_resultado(ResultSet resultSet) throws SQLException {
+            if(resultSet!=null) resultSet.first();
+            while (resultSet.next()) {
+                for(int i=1;i<5;i++){
+                    System.out.print(resultSet.getString(i));
+                }
+                System.out.println("");
 
-
-
-
-
-    private void setVersion_local(int version_remoto) {
-        cont.getSharedPreferences("update",0).edit().putInt("ultimo",version_remoto).commit();
-
+            }
     }
 
-    private void setPrimera_carga() {
-        cont.getSharedPreferences("init",0).edit().putBoolean("bd",false).commit();
-
-    }
 
     void agregarSucursales(ResultSet aux, ArrayList<Sucursal> sucursales) throws SQLException {
+
         while(aux.next()){
             Sucursal sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getString("sello_de_turismo"),
                     aux.getDouble("latitud"), aux.getDouble("longitud"));
@@ -84,12 +90,24 @@ public class Formateador {
 
     void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
         while(aux.moveToNext()){
-            Sucursal sucursal = new Sucursal(aux.getString(0),aux.getInt(1),aux.getString(2),
-                    aux.getDouble(3), aux.getDouble(4));
+            Sucursal sucursal = new Sucursal(aux.getString(2),aux.getInt(1),aux.getString(3),
+                    aux.getDouble(6), aux.getDouble(7));
+            System.out.println("Tupla---->> id :" + aux.getInt(1) + " nombre:" + aux.getString(2) + " comuna:" + aux.getString(5));
+
             sucursales.add(sucursal);
+            System.out.println(sucursal.getNombre());
         }
     }
 
     //TODO: Recibir Cursor (Local) y ResultSet (Remota) y formatea los datos , entregando conjunto de objetos. (Respalda información en SQLite)
+    private void setVersion_local(int version_remoto) {
+        cont.getSharedPreferences("update",0).edit().putInt("ultimo",version_remoto).commit();
+
+    }
+
+    private void setPrimera_carga() {
+        cont.getSharedPreferences("init",0).edit().putBoolean("bd",false).commit();
+
+    }
 
 }

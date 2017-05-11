@@ -28,10 +28,7 @@ public class Consultor {
     public Cursor getSucursalesLocal(){
         SQLiteDatabase db = local.getReadableDatabase();
         Cursor c = db.rawQuery("select * " +
-                "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
-                "where sucursal.id = sucursal_servicio.id_sucursal " +
-                "and sucursal_servicio.id_servicio = servicio.id " +
-                "and servicio.id = servicio_categoria.id_servicio;",null);
+                "from sucursal;",null);
         return c;
     };
 
@@ -43,7 +40,10 @@ public class Consultor {
 
     public ResultSet getSucursalesRemoto(){
         remoto.query("select * " +
-                "from sucursal;") ;
+                "from sucursal, servicio, sucursal_servicio, servicio_categoria " +
+                "where sucursal.id = sucursal_servicio.id_sucursal " +
+                "and sucursal_servicio.id_servicio = servicio.id " +
+                "and servicio.id = servicio_categoria.id_servicio;") ;
         return remoto.getResult();
     };
 
@@ -90,8 +90,10 @@ public class Consultor {
     }
 
     public void respaldar_sucursales(ResultSet resultSet) throws SQLException {
+        System.out.println("GUARDANDO REGISTROS ################");
 
-        if(resultSet!= null)
+        if(resultSet!= null){
+            resultSet.first();
             while (resultSet.next()) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("id", resultSet.getInt(1));
@@ -102,10 +104,14 @@ public class Consultor {
                 contentValues.put("longitud", resultSet.getDouble(7));
                 contentValues.put("descripcion", resultSet.getString(8));
                 contentValues.put("foto", resultSet.getString(9));
+                System.out.println("Tupla---->> id :" + resultSet.getInt(1) + " nombre:" + resultSet.getString(2) + " comuna:" + resultSet.getString(5));
 
 
                 local.getWritableDatabase().insert("sucursal", null, contentValues);
+
             }
+        }
+
 //        contentValues = new ContentValues();
 //        contentValues.put("id",serv.getId());
 //        contentValues.put("nombre_servicio",serv.getNombre());

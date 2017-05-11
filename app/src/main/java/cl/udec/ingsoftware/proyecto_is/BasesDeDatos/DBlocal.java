@@ -33,7 +33,7 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
     private static final String SQL_CREATE_ENTRIES_SUCURSAL =
             "CREATE TABLE " + Contrato.SucursalEntry.TABLE_NAME + " (" +
                     Contrato.SucursalEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    Contrato.SucursalEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" + COMMA_SEP +
+                    Contrato.SucursalEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(60)" + COMMA_SEP +
                     Contrato.SucursalEntry.COLUMN_NAME_SELLO + INTEGER_TYPE + COMMA_SEP +
                     Contrato.SucursalEntry.COLUMN_NAME_EMPRESA + VARCHAR_TYPE + "(20)" + COMMA_SEP +
                     Contrato.SucursalEntry.COLUMN_NAME_COMUNA + VARCHAR_TYPE + "(20)" + COMMA_SEP +

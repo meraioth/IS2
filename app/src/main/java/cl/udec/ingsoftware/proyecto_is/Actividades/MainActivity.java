@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
         ArrayList servicios = catalogo.getSucursales();
-        ArrayList itinerarios = catalogo.getSucursales();
+        //ArrayList itinerarios = catalogo.getSucursales();
         lista.setAdapter(new ListAdapter(this,servicios));
-        lista1.setAdapter(new ListAdapter(this,itinerarios));
+        //lista1.setAdapter(new ListAdapter(this,itinerarios));
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

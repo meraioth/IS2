@@ -48,27 +48,34 @@ public class Contrato {
 
         }
         public static abstract class CategoriaEntry implements BaseColumns {
-            public static final String TABLE_NAME = "servicio";
-            public static final String COLUMN_NAME_ENTRY_ID = "id";
-            public static final String COLUMN_NAME_NOMBRE = "nombre_servicio";
-            public static final String COLUMN_NAME_FOTO = "foto";
+            public static final String TABLE_NAME = "categoria";
+            public static final String COLUMN_NAME_NOMBRE_CATEGORIA = "nombre_categoria";
             public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
 
         }
         public static abstract class ItinerarioEntry implements BaseColumns {
-            public static final String TABLE_NAME = "servicio";
+            public static final String TABLE_NAME = "itinerario";
             public static final String COLUMN_NAME_ENTRY_ID = "id";
-            public static final String COLUMN_NAME_NOMBRE = "nombre_servicio";
-            public static final String COLUMN_NAME_FOTO = "foto";
-            public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+            public static final String COLUMN_NAME_NOMBRE = "nombre";
+            public static final String COLUMN_NAME_DURACION = "duracion";
+            public static final String COLUMN_NAME_ID_USUARIO = "id_usuario";
 
         }
         public static abstract class OrdenEntry implements BaseColumns {
-            public static final String TABLE_NAME = "servicio";
-            public static final String COLUMN_NAME_ENTRY_ID = "id";
-            public static final String COLUMN_NAME_NOMBRE = "nombre_servicio";
-            public static final String COLUMN_NAME_FOTO = "foto";
-            public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+            public static final String TABLE_NAME = "orden";
+            public static final String COLUMN_NAME_ID_ITINERARIO = "id_itinerario";
+            public static final String COLUMN_NAME_ID_SUCURSAL = "id_sucursal";
+            public static final String COLUMN_NAME_ORDEN = "orden";
+
+        }
+
+        public static abstract class UsuarioEntry implements BaseColumns {
+            public static final String TABLE_NAME = "usuario";
+            public static final String COLUMN_NAME_ID = "id";
+            public static final String COLUMN_NAME_NOMBRE = "nombre";
+            public static final String COLUMN_NAME_EMAIL = "email";
+            public static final String COLUMN_NAME_password = "password";
+            public static final String COLUMN_NAME_ROL = "rol";
 
         }
 

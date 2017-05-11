@@ -53,7 +53,9 @@ public class DBremoto {
                         "jdbc:postgresql://plop.inf.udec.cl/Matias?currentSchema=turismo", "matiasmedina", "Psmlgipxfq1");
                 System.out.println("entro");
                 //En el stsql se puede agregar cualquier consulta SQL deseada
-                Statement st = conn.createStatement();
+                Statement st = conn.createStatement(
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = st.executeQuery(consulta);
                 result = rs;
                 conn.close();
