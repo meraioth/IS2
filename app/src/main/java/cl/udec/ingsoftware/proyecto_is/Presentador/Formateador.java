@@ -90,9 +90,9 @@ public class Formateador {
 
     void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
         while(aux.moveToNext()){
-            Sucursal sucursal = new Sucursal(aux.getString(2),aux.getInt(1),aux.getString(3),
-                    aux.getDouble(6), aux.getDouble(7));
-            System.out.println("Tupla---->> id :" + aux.getInt(1) + " nombre:" + aux.getString(2) + " comuna:" + aux.getString(5));
+            Sucursal sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getString(2),
+                    aux.getDouble(5), aux.getDouble(6));
+            System.out.println("Tupla---->> id :" + aux.getInt(0) + " nombre:" + aux.getString(1) + " comuna:" + aux.getString(4));
 
             sucursales.add(sucursal);
             System.out.println(sucursal.getNombre());
