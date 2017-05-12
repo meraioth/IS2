@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        openfirst_time();
+        //openfirst_time();
         catalogo = new Catalogo(this.getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         spec.setIndicator("Busqueda");
         tabs.addTab(spec);
 
-        savebdstatus();
+        //savebdstatus();
 
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);
                 String strText = textView.getText().toString();
                 ver_sucursal(strText);
 

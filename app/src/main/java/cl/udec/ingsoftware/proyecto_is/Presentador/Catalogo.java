@@ -12,7 +12,9 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
@@ -48,5 +50,40 @@ public class Catalogo implements Serializable {
         }
         return nombresSucursales;
     }
+
+    public  ArrayList getCategorias(){
+        Set<String> cat = new HashSet<String>();
+        ArrayList<String> categoria= new ArrayList<String>();
+        for (Sucursal suc: sucursales
+             ) {
+            for (Servicio serv:suc.getServicios()
+                 ) {
+                cat.add(serv.getCategoria().getNombre());
+            }
+        }
+        for (String str:cat
+             ) {
+            categoria.add(str);
+        }
+        return categoria;
+    }
+
+    public  ArrayList getServicios(){
+        Set<String> ser = new HashSet<String>();
+        ArrayList<String> servicios= new ArrayList<String>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                ser.add(serv.getNombre());
+            }
+        }
+        for (String str:ser
+                ) {
+            servicios.add(str);
+        }
+        return servicios;
+    }
+
 }
 
