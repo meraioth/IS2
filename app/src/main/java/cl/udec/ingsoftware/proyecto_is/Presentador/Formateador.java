@@ -89,11 +89,10 @@ public class Formateador {
             //Crear Servicio
             Servicio serv = new Servicio(aux.getInt(12), aux.getString(13), aux.getString(15), cat);
             //Buscaar si existe la sucursal asociada al a tupla
-            Sucursal sucursal = new Sucursal(null, -1, null, -1, -1);
+            Sucursal sucursal;
             for (Sucursal suc : sucursales) {
                 if (aux.getString(1) == String.valueOf(suc.getId())) {
                     //Si existe la sucursal, añadimos el servicio
-                    sucursal = suc;
                     suc.addServicio(serv);
                     existe_sucursal = true;
                 }
@@ -104,18 +103,33 @@ public class Formateador {
                         aux.getDouble("latitud"), aux.getDouble("longitud"));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
-
             }
         }
     }
 
     void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
         while(aux.moveToNext()){
-            Sucursal sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getString(2),
-                    aux.getDouble(5), aux.getDouble(6));
-            System.out.println("Tupla---->> id :" + aux.getInt(0) + " nombre:" + aux.getString(1) + " comuna:" + aux.getString(4));
-
-            sucursales.add(sucursal);
+            boolean existe_sucursal = false;
+            //Crear Categoria
+            Categoria cat = new Categoria(aux.getString(17),aux.getString(18));
+            //Crear Servicio
+            Servicio serv = new Servicio(aux.getInt(11), aux.getString(12), aux.getString(14), cat);
+            //Buscaar si existe la sucursal asociada al a tupla
+            Sucursal sucursal;
+            for (Sucursal suc : sucursales) {
+                if (aux.getString(0) == String.valueOf(suc.getId())) {
+                    //Si existe la sucursal, añadimos el servicio
+                    suc.addServicio(serv);
+                    existe_sucursal = true;
+                }
+            }
+            if (!existe_sucursal) {
+                //Si no existe la sucursal, se crea y se añade servicio
+                sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getString(2),
+                        aux.getDouble(5), aux.getDouble(6));
+                sucursal.addServicio(serv);
+                sucursales.add(sucursal);
+            }
         }
     }
 
