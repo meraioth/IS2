@@ -90,10 +90,8 @@ public class Formateador {
             Servicio serv = new Servicio(aux.getInt(12), aux.getString(13), aux.getString(15), cat);
             //Buscaar si existe la sucursal asociada al a tupla
             Sucursal sucursal = new Sucursal(null, -1, null, -1, -1);
-            for (Sucursal suc : sucursales
-                    ) {
+            for (Sucursal suc : sucursales) {
                 if (aux.getString(1) == String.valueOf(suc.getId())) {
-
                     //Si existe la sucursal, añadimos el servicio
                     sucursal = suc;
                     suc.addServicio(serv);

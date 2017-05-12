@@ -40,20 +40,15 @@ public class Catalogo implements Serializable {
     }
 
 
-    public ArrayList getSucursales(){
-        ArrayList<Sucursal> suc = null;
-        try {
-            suc = formateador.getSucursales();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ArrayList getSucursales() throws SQLException {
+        sucursales = formateador.getSucursales();
+        ArrayList<String> nombresSucursales = new ArrayList<String>();
+        Iterator<Sucursal> it = sucursales.iterator();
+        while(it.hasNext()){
+            Sucursal actual = it.next();
+            nombresSucursales.add(actual.getNombre());
         }
-
-        ArrayList salida = new ArrayList();
-        for (Sucursal sucursal:suc
-             ) {
-            salida.add(sucursal.getNombre());
-        }
-        return suc;
+        return nombresSucursales;
     }
 }
 
