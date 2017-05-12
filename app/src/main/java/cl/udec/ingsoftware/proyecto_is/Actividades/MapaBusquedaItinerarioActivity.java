@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -57,7 +58,11 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(1).setChecked(true);
 
-        catalogo = new Catalogo(this.getApplicationContext());
+        try {
+            catalogo = new Catalogo(this.getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
 
         fragmentManager = getSupportFragmentManager();

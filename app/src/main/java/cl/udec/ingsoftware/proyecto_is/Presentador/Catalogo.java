@@ -36,7 +36,7 @@ public class Catalogo implements Serializable {
 
     public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
-        itinerarios = new ArrayList<Itinerario>();
+        itinerarios = formateador.getItinerarios();
         sucursales = formateador.getSucursales();
     }
 
@@ -68,6 +68,8 @@ public class Catalogo implements Serializable {
         return categoria;
     }
 
+
+
     public  ArrayList getServicios(){
         Set<String> ser = new HashSet<String>();
         ArrayList<String> servicios= new ArrayList<String>();
@@ -76,6 +78,26 @@ public class Catalogo implements Serializable {
             for (Servicio serv:suc.getServicios()
                     ) {
                 ser.add(serv.getNombre());
+            }
+        }
+        for (String str:ser
+                ) {
+            servicios.add(str);
+        }
+        return servicios;
+    }
+
+    public  ArrayList getServiciosBusqueda(String categoria){
+        Set<String> ser = new HashSet<String>();
+        ArrayList<String> servicios= new ArrayList<String>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                if(serv.getCategoria().getNombre()==categoria){
+                    ser.add(serv.getNombre());
+                }
+
             }
         }
         for (String str:ser

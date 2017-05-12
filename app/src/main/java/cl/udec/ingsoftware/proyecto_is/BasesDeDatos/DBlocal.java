@@ -76,6 +76,14 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
                     Contrato.UsuarioEntry.COLUMN_NAME_PASSWORD + VARCHAR_TYPE + "(50)" +COMMA_SEP+
                     Contrato.UsuarioEntry.COLUMN_NAME_ROL + INTEGER_TYPE +" )";
 
+    private static final String SQL_CREATE_ENTRIES_ITINERARIO=
+            "CREATE TABLE " + Contrato.UsuarioEntry.TABLE_NAME +"("+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY " + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE+ "(80)" + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_EMAIL + VARCHAR_TYPE + "(50)"+ COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_PASSWORD + VARCHAR_TYPE + "(50)" +COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ROL + INTEGER_TYPE +" )";
+
 
 
 
