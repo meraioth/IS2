@@ -32,16 +32,14 @@ public class Catalogo implements Serializable {
     private ArrayList<Sucursal> sucursales;
     private Formateador formateador;
 
-    public Catalogo(Context cont) {
-
-        itinerarios = new ArrayList<Itinerario>();
-        sucursales = new ArrayList<Sucursal>();
+    public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
+        itinerarios = new ArrayList<Itinerario>();
+        sucursales = formateador.getSucursales();
     }
 
 
     public ArrayList getSucursales() throws SQLException {
-        sucursales = formateador.getSucursales();
         ArrayList<String> nombresSucursales = new ArrayList<String>();
         Iterator<Sucursal> it = sucursales.iterator();
         while(it.hasNext()){
