@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#ff4081</color>
     <color name="color_fondo_lugar">#2e7107</color>
+    <color name="letra_card_sucursal">#ffffff</color>
 </resources>
