@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -24,18 +26,15 @@ import cl.udec.ingsoftware.proyecto_is.R;
  * Use the {@link BusquedaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusquedaFragment extends Fragment implements View.OnClickListener {
+public class BusquedaFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener, SucursalAdapter.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PRESENTADOR = "presentador";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private SearchView mBusqueda;
 
     private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
 
     private OnSucursalSelectedListener mSucursalListener;
     private Catalogo mPresentador;
@@ -75,17 +74,18 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_busqueda, container, false);
 
-
-        //mBusqueda = (SearchView) view.findViewById(R.id.busqueda);
-        //mBusqueda.setOnClickListener(this);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_sucursales);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
 
         SucursalAdapter adapter = new SucursalAdapter(mPresentador.getSucursales());
+        adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
+
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_busqueda);
+        mBusqueda = (SearchView) view.findViewById(R.id.busqueda_sucursales);
+        mBusqueda.setOnQueryTextListener(this);
 
         return view;
     }
@@ -123,6 +123,23 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
         }
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Toast.makeText(this.getContext(), query, Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public void onItemClick(int id) {
+        mSucursalListener.OnSucursalSelected(id);
+    }
+
     public interface OnSucursalSelectedListener {
         void OnSucursalSelected(int posicion);
     }

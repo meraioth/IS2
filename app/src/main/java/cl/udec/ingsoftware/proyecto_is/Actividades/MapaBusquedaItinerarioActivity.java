@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -54,6 +55,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().getItem(1).setChecked(true);
 
         catalogo = new Catalogo(this.getApplicationContext());
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
@@ -68,6 +70,6 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     @Override
     public void OnSucursalSelected(int posicion) {
-        //TODO: rellenar método que es llamado desde el fragment
+        System.out.println(posicion);
     }
 }
