@@ -2,6 +2,8 @@ package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ public class Formateador {
         Log.d("Primera Carga", String.valueOf(primera_carga));
         //System.out.println("PRIMERA CARGA:"+primera_carga);
         System.out.println("version local bd:"+version_local);
-        System.out.println("version remoto db:"+consultor.getVersionRemoto());
+        //System.out.println("version remoto db:"+consultor.getVersionRemoto());
 
 
         if(primera_carga){
@@ -52,7 +54,7 @@ public class Formateador {
 //            imprimir_resultado(resultSet);
             consultor.respaldar_sucursales(resultSet);
 
-        }else if(version_local!=consultor.getVersionRemoto()){
+        }else if(isNetworkAvailable() && version_local!=consultor.getVersionRemoto() ){
             Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
             setVersion_local(consultor.getVersionRemoto());
             consultor.reset_local();
@@ -128,6 +130,13 @@ public class Formateador {
     private void setPrimera_carga() {
         cont.getSharedPreferences("init",0).edit().putBoolean("bd",false).commit();
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) cont.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
