@@ -27,8 +27,12 @@ public class Consultor {
     //TODO:Instanciar BDS, Solo metodos vacios, SQL va aquí
     public Cursor getSucursalesLocal(){
         SQLiteDatabase db = local.getReadableDatabase();
-        Cursor c = db.rawQuery("select * " +
-                "from sucursal;",null);
+        Cursor c = db.rawQuery("select *\n" +
+                " from sucursal,sucursal_servicio,servicio ,servicio_categoria,categoria\n" +
+                "where sucursal.id=sucursal_servicio.id_sucursal and \n" +
+                "servicio.id=sucursal_servicio.id_servicio \n" +
+                "and servicio.id=servicio_categoria.id_servicio\n" +
+                "and servicio_categoria.nombre_categoria=categoria.nombre_categoria;",null);
         return c;
     };
 
