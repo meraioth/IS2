@@ -98,29 +98,15 @@ public class Consultor {
         return 0;
 
     }
-    public void reset_local(int caso){
-
-        switch (caso){
-            case 0:
-                local.getWritableDatabase().delete("sucursal",null,null);
-                local.getWritableDatabase().delete("servicio",null,null);
-                local.getWritableDatabase().delete("sucursal_servicio",null,null);
-                local.getWritableDatabase().delete("servicio_categoria",null,null);
-                local.getWritableDatabase().delete("categoria",null,null);
-                break;
-            case 1:
-
-                break;
-            case 2:
-                local.getWritableDatabase().delete("usuario",null,null);
-                break;
-
-
-
-        }
-//          local.getWritableDatabase().delete("itinerario",null,null);
+    public void reset_local(){
+        local.getWritableDatabase().delete("sucursal",null,null);
+        local.getWritableDatabase().delete("servicio",null,null);
+        local.getWritableDatabase().delete("sucursal_servicio",null,null);
+        local.getWritableDatabase().delete("servicio_categoria",null,null);
+        local.getWritableDatabase().delete("categoria",null,null);
+//        local.getWritableDatabase().delete("itinerario",null,null);
 //        local.getWritableDatabase().delete("orden",null,null);
-
+        local.getWritableDatabase().delete("usuario",null,null);
         local.getWritableDatabase().close();
 
     }
@@ -172,30 +158,5 @@ public class Consultor {
         local.getWritableDatabase().close();
     }
 
-    public void respaldar_Itinerario(ResultSet resultSet) throws SQLException {
-        System.out.println("GUARDANDO REGISTROS ################");
-
-        if(resultSet!= null){
-            resultSet.first();
-            while (resultSet.next()) {
-//                ContentValues contentValues = new ContentValues();
-//                contentValues.put("id", resultSet.getInt(1));
-//                contentValues.put("nombre", resultSet.getString(2));
-//                contentValues.put("sello_de_turismo", resultSet.getString(3));
-//                contentValues.put("comuna", resultSet.getString(5));
-//                contentValues.put("latitud", resultSet.getDouble(6));
-//                contentValues.put("longitud", resultSet.getDouble(7));
-//                contentValues.put("descripcion", resultSet.getString(8));
-//                contentValues.put("foto", resultSet.getString(9));
-//                System.out.println("Tupla---->> id :" + resultSet.getInt(1) + " nombre:" + resultSet.getString(2) + " comuna:" + resultSet.getString(5));
-//                local.getWritableDatabase().insert("sucursal", null, contentValues);
-
-
-
-            }
-        }
-
-        local.getWritableDatabase().close();
-    }
 
 }
