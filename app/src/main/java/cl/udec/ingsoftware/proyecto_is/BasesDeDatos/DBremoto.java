@@ -21,26 +21,26 @@ public class DBremoto {
 
     public void query(String aux){
         consulta=aux;
-        sqlThread.start();
-        try {
-            sqlThread.join(0);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+//        if(sqlThread.getState()== Thread.State.NEW){
+            sqlThread.start();
+            try {
+                sqlThread.join(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+//        }else {
+//            Thread sqlthread = sqlThread;
+//            sqlthread.start();
+//        }
+
+
+
 
     }
     public ResultSet getResult(){
         return result;
-    }
-
-    public boolean query_user(String user, String pass) {
-
-
-        return false;
-    }
-
-    public boolean query_empresario(String s, String s1) {
-        return true;
     }
 
     Thread sqlThread = new Thread() {

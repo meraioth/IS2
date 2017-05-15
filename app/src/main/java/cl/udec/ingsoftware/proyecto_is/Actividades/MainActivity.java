@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.google.android.gms.appindexing.Action;
@@ -48,8 +49,12 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        openfirst_time();
-        catalogo = new Catalogo(this.getApplicationContext());
+        //openfirst_time();
+        try {
+            catalogo = new Catalogo(this.getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //tabhost
@@ -72,11 +77,16 @@ public class MainActivity extends AppCompatActivity
         spec.setIndicator("Busqueda");
         tabs.addTab(spec);
 
-        savebdstatus();
+        //savebdstatus();
 
         lista = (ListView) findViewById(R.id.id_lista1);
         lista1 = (ListView) findViewById(R.id.id_lista2);
-        ArrayList servicios = catalogo.getSucursales();
+        ArrayList servicios = null;
+        try {
+            servicios = catalogo.getSucursales();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //ArrayList itinerarios = catalogo.getSucursales();
         lista.setAdapter(new ListAdapter(this,servicios));
         //lista1.setAdapter(new ListAdapter(this,itinerarios));
@@ -84,7 +94,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.id_titulo);;
+                TextView textView = (TextView) view.findViewById(R.id.id_titulo);
                 String strText = textView.getText().toString();
                 ver_sucursal(strText);
 

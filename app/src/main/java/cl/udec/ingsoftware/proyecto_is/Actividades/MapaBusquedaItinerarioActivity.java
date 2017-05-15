@@ -1,6 +1,5 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
@@ -74,9 +74,11 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         mToolbar = (Toolbar) findViewById(R.id.toolbar_busqueda);
         setSupportActionBar(mToolbar);
 
-        catalogo = new Catalogo(this.getApplicationContext());
-
-        //inicialización de fragments
+        try {
+            catalogo = new Catalogo(this.getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
         itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();

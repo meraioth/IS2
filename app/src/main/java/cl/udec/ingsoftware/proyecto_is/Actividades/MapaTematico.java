@@ -10,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -24,10 +25,18 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        cat= new Catalogo(getApplicationContext());
+        try {
+            cat= new Catalogo(getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
 
-        sucursales=cat.getSucursales();
+        try {
+            sucursales=cat.getSucursales();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_tematico);

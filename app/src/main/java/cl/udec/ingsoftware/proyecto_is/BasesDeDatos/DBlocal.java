@@ -48,7 +48,8 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
             "CREATE TABLE " + Contrato.ServicioEntry.TABLE_NAME + " (" +
                     Contrato.ServicioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY," +
                     Contrato.ServicioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE + "(50)" + COMMA_SEP+
-                    Contrato.SucursalEntry.COLUMN_NAME_DESCRIPCION + VARCHAR_TYPE + "(40)"+
+                    Contrato.ServicioEntry.COLUMN_NAME_DESCRIPCION + VARCHAR_TYPE + "(40)"+COMMA_SEP+
+                    Contrato.ServicioEntry.COLUMN_NAME_FOTO + VARCHAR_TYPE + "(50)"+
                      " )";
     private static final String SQL_CREATE_ENTRIES_SUCURSAL_SERVICIO =
             "CREATE TABLE " + Contrato.Sucursal_ServicioEntry.TABLE_NAME + " (" +
@@ -69,6 +70,14 @@ public class DBlocal extends SQLiteOpenHelper implements Serializable{
                     Contrato.Servicio_CategoriaEntry.COLUMN_NAME_NOMBRE_CATEGORIA + VARCHAR_TYPE + "(50)" +
                     " )";
     private static final String SQL_CREATE_ENTRIES_USUARIO=
+            "CREATE TABLE " + Contrato.UsuarioEntry.TABLE_NAME +"("+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY " + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE+ "(80)" + COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_EMAIL + VARCHAR_TYPE + "(50)"+ COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_PASSWORD + VARCHAR_TYPE + "(50)" +COMMA_SEP+
+                    Contrato.UsuarioEntry.COLUMN_NAME_ROL + INTEGER_TYPE +" )";
+
+    private static final String SQL_CREATE_ENTRIES_ITINERARIO=
             "CREATE TABLE " + Contrato.UsuarioEntry.TABLE_NAME +"("+
                     Contrato.UsuarioEntry.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY " + COMMA_SEP+
                     Contrato.UsuarioEntry.COLUMN_NAME_NOMBRE + VARCHAR_TYPE+ "(80)" + COMMA_SEP+

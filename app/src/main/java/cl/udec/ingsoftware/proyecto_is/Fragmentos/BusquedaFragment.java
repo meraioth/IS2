@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
@@ -100,7 +101,12 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
 
-        SucursalAdapter adapter = new SucursalAdapter(mPresentador.getSucursales());
+        SucursalAdapter adapter = null;
+        try {
+            adapter = new SucursalAdapter(mPresentador.getSucursales());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         return view;
