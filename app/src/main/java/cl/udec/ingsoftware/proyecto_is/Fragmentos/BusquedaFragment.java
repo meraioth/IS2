@@ -3,11 +3,15 @@ package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -66,6 +70,23 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         if (getArguments() != null) {
             mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
         }
+        setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_busqueda, menu);
+        MenuItem searchItem = menu.findItem(R.id.busqueda_sucursal);
+        if(searchItem == null){
+            System.out.println("no hay");
+        }else{
+            System.out.println("si hay"+searchItem.getItemId());
+        }
+
+        mBusqueda = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mBusqueda.setOnQueryTextListener(this);
     }
 
     @Override
@@ -82,11 +103,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         SucursalAdapter adapter = new SucursalAdapter(mPresentador.getSucursales());
         adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
-
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_busqueda);
-        mBusqueda = (SearchView) view.findViewById(R.id.busqueda_sucursales);
-        mBusqueda.setOnQueryTextListener(this);
-
         return view;
     }
 
@@ -108,7 +124,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
             mSucursalListener = (OnSucursalSelectedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnBusuqedaAvanzadaInteractionListener");
         }
     }
 
@@ -126,7 +142,8 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this.getContext(), query, Toast.LENGTH_SHORT).show();
+        mBusqueda.clearFocus();
+        mBusqueda.onActionViewCollapsed();
         return false;
     }
 

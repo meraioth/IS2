@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_busqueda"
             android:layout_width="match_parent"
@@ -25,10 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:color="@color/letra_card_sucursal"
+                app:queryHint="@string/busqueda_hint"
                 android:gravity=""
             />
 
-        </android.support.v7.widget.Toolbar>
+
+
+        </android.support.v7.widget.Toolbar>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_sucursales"

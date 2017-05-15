@@ -121,4 +121,15 @@
     <string name="password">Password</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_mapa_tematico">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancelar">cancelar</string>
+    <string name="aceptar">aceptar</string>
+    <string name="busqueda_hint">\"¿Qué estás buscando?\"</string>
+    <string name="categoria_texto_busqueda">Categoria...</string>
+    <string name="servicio_texto_busqueda">Servicios...</string>
+    <string name="comuna_texto_busqueda">Comuna...</string>
+    <string name="busqueda_avanzada_titulo">Busqueda Avanzada</string>
+    <string name="busqueda_titulo">Buscar</string>
 </resources>
