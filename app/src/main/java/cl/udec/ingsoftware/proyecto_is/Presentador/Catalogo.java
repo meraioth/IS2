@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+import android.util.Pair;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -14,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
@@ -22,12 +26,14 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 
 /**
  * Created by matisin on 28-12-16.
  */
 
 public class Catalogo implements Serializable {
+
     //TODO:Filtros serán aplicados aca. retornando solo strings a activites
 
     private ArrayList<Itinerario> itinerarios;
@@ -41,14 +47,16 @@ public class Catalogo implements Serializable {
     }
 
 
-    public ArrayList getSucursales() throws SQLException {
-        ArrayList<String> nombresSucursales = new ArrayList<String>();
-        Iterator<Sucursal> it = sucursales.iterator();
-        while (it.hasNext()) {
-            Sucursal actual = it.next();
-            nombresSucursales.add(actual.getNombre());
+     public ArrayList getTripletasOfSucursales()throws SQLException {
+        ArrayList<Tripleta> info= new ArrayList<Tripleta>();
+
+        for (Sucursal suc: sucursales) {
+            //Log.e("Image", suc.getImagen());
+            Tripleta tri = new Tripleta(suc.getId(),suc.getNombre(),suc.getImagen());
+            info.add(tri);
         }
-        return nombresSucursales;
+        Log.e("e", String.valueOf(info.size()));
+        return info;
     }
 
     public ArrayList getBuscarKeyword(String arg) {
@@ -80,7 +88,6 @@ public class Catalogo implements Serializable {
         }
         return categoria;
     }
-
 
 
     public  ArrayList getServicios(){
@@ -119,5 +126,8 @@ public class Catalogo implements Serializable {
         }
         return servicios;
     }
+
+
+
 
 }

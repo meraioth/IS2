@@ -103,7 +103,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
 
         SucursalAdapter adapter = null;
         try {
-            adapter = new SucursalAdapter(mPresentador.getSucursales());
+            adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales());
         } catch (SQLException e) {
             e.printStackTrace();
         }

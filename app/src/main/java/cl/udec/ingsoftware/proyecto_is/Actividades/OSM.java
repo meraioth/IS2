@@ -60,7 +60,7 @@ public class OSM extends AppCompatActivity {
 
         ArrayList<Sucursal> suc= null;
         try {
-            suc = cat.getSucursales();
+            suc = cat.getTripletasOfSucursales();
         } catch (SQLException e) {
             e.printStackTrace();
         }

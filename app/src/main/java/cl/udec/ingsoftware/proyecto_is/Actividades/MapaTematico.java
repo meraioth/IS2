@@ -33,7 +33,7 @@ public class MapaTematico extends FragmentActivity implements OnMapReadyCallback
         //cat = (Catalogo) getIntent().getSerializableExtra("catalogo");
 
         try {
-            sucursales=cat.getSucursales();
+            sucursales=cat.getTripletasOfSucursales();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Modelo;
 
+import android.media.Image;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -17,9 +19,11 @@ public class Sucursal {
     private String nombre;
     private  double latitud,longitud;
     private ArrayList<Servicio> servicios;
+    private String imagen;
+    private String descripcion;
 
     //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, int sello,double latitud,double longitud){
+    public Sucursal(String nombre, int id, int sello,double latitud,double longitud, String image, String descri){
         //super(id,direccion,longitud,latitud);
         this.nombre = nombre;
         this.sello = sello;
@@ -27,6 +31,8 @@ public class Sucursal {
         this.latitud=latitud;
         this.longitud=longitud;
         servicios=new ArrayList<>();
+        this.imagen = image;
+        this.descripcion = descri;
     }
 
     public boolean isServicio(String valor){
@@ -64,4 +70,7 @@ public class Sucursal {
 
     }
     public int getId(){return id;}
+
+    public String getImagen(){return imagen;}
+    public String getDescripcion(){return descripcion;}
 }

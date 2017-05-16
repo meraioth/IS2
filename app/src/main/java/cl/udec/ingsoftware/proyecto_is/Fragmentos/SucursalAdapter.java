@@ -1,8 +1,10 @@
 package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
 import android.content.Context;
+import android.os.StrictMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +15,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 import cl.udec.ingsoftware.proyecto_is.R;
+import cl.udec.ingsoftware.proyecto_is.util.AsyncTaskLoadImage;
 
 
 public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.SucursalViewHolder>{
 
-    private List<Sucursal> sucursales;
+    private List<Tripleta> sucursales;
     private Context context;
     private OnItemClickListener mListener;
 
-    SucursalAdapter(List<Sucursal> sucursales){
+    SucursalAdapter(List<Tripleta> sucursales){
         this.sucursales = sucursales;
     }
 
@@ -37,8 +41,11 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
 
     @Override
     public void onBindViewHolder(SucursalViewHolder holder, int position) {
-        holder.mTitulo.setText(sucursales.get(position).getNombre());
-        holder.mId = sucursales.get(position).getId();
+        holder.mTitulo.setText(sucursales.get(position).get_name());
+        holder.mId = sucursales.get(position).get_id();
+        String url = sucursales.get(position).get_image();
+        Log.e("a", url);
+        new AsyncTaskLoadImage(holder.mFoto).execute(url);
         holder.setOnItemClickListener(mListener);
     }
 

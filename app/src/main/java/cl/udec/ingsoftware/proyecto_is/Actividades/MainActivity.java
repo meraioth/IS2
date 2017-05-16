@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         lista1 = (ListView) findViewById(R.id.id_lista2);
         ArrayList servicios = null;
         try {
-            servicios = catalogo.getSucursales();
+            servicios = catalogo.getTripletasOfSucursales();
         } catch (SQLException e) {
             e.printStackTrace();
         }

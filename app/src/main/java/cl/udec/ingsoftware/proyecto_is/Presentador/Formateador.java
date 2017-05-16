@@ -60,7 +60,7 @@ public class Formateador {
         }else if(isNetworkAvailable() && version_local[0]!=consultor.getVersionRemoto() ){
             Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
             setVersion_local(consultor.getVersionRemoto(),0);
-            consultor.reset_local(0);
+            consultor.reset_local();
             resultSet = consultor.getSucursalesRemoto();
             agregarSucursales(resultSet, sucursales);
             consultor.respaldar_sucursales(resultSet);
@@ -102,8 +102,8 @@ public class Formateador {
             }
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
-                sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getString("sello_de_turismo"),
-                        aux.getDouble("latitud"), aux.getDouble("longitud"));
+                sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getInt("sello_de_turismo"),
+                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto"), aux.getString("descripcion"));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -128,8 +128,8 @@ public class Formateador {
             }
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
-                sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getString(2),
-                        aux.getDouble(5), aux.getDouble(6));
+                sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getInt(2),
+                        aux.getDouble(5), aux.getDouble(6), aux.getString(8), aux.getString(7));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -179,15 +179,15 @@ public class Formateador {
             resultSet = consultor.getSucursalesRemoto();
             agregarItinerarios(resultSet,itinerarios);
 //            imprimir_resultado(resultSet);
-            consultor.respaldar_Itinerario(resultSet);
+            //consultor.respaldar_Itinerario(resultSet);
 
         }else if(isNetworkAvailable() && version_local[1]!=consultor.getVersionRemoto() ){
             Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
             setVersion_local(consultor.getVersionRemoto(),1);
-            consultor.reset_local(1);
+            consultor.reset_local();
             resultSet = consultor.getItinerariosRemoto();
             agregarItinerarios(resultSet, itinerarios);
-            consultor.respaldar_Itinerario(resultSet);
+            //consultor.respaldar_Itinerario(resultSet);
         }else{
             Toast.makeText(cont,"Cargando Local",Toast.LENGTH_SHORT).show();
             Cursor cursor= consultor.getItinerariosLocal();
