@@ -20,12 +20,13 @@ public class OnlyOneSucursal implements Serializable {
     private Sucursal sucursal;
     int id;
 
-    public OnlyOneSucursal(Context cont, int id) {
-        this.id = id;
+    public OnlyOneSucursal(Context cont) {
         sucursales = null;
         formateador = new Formateador(cont);
         sucursal = null;
+    }
 
+    public void getData(){
         //Extraemos todas las sucursales
         try {
             sucursales = formateador.getSucursales();
@@ -39,7 +40,10 @@ public class OnlyOneSucursal implements Serializable {
                 sucursal = su;
             }
         }
+    }
 
+    public void setId(int id){
+        this.id = id;
     }
 
     public String get_name(){
@@ -56,6 +60,10 @@ public class OnlyOneSucursal implements Serializable {
 
     public double get_longitud(){
         return sucursal.getLongitud();
+    }
+
+    public String get_descripcion() {
+        return sucursal.getDescripcion();
     }
 
     public ArrayList get_servicios(){

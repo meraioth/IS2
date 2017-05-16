@@ -1,5 +1,6 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.OnlyOneSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener {
@@ -31,6 +33,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
     private static Catalogo catalogo;
+    private OnlyOneSucursal mPresentadorSucursal;
 
     private SearchView mBusqueda;
     private Toolbar mToolbar;
@@ -80,6 +83,9 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        mPresentadorSucursal = new OnlyOneSucursal(this.getApplicationContext());
+
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
         itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
@@ -93,8 +99,12 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void OnSucursalSelected(int posicion) {
-        System.out.println(posicion);
+    public void OnSucursalSelected(int id) {
+        mPresentadorSucursal.setId(id);
+        mPresentadorSucursal.getData();
+        Intent intent = new Intent(this,VisualizacionSucursal.class);
+        //intent.putExtra(VisualizacionSucursal.ARG_PRESENTADOR,mPresentadorSucursal);
+        startActivity(intent);
     }
 
     @Override
