@@ -56,4 +56,3 @@ public class Catalogo implements Serializable {
         return suc;
     }
 }
-
