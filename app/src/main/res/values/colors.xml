@@ -5,4 +5,6 @@
     <color name="colorAccent">#ff4081</color>
     <color name="color_fondo_lugar">#2e7107</color>
     <color name="letra_card_sucursal">#ffffff</color>
+    <color name="color_icono_visualizacion_sucursal">#ffffff</color>
+    <color name="color_letra_sucursal_descripcion">#000000</color>
 </resources>
