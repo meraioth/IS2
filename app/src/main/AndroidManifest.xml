@@ -25,16 +25,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Actividades.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--<activity-->
+            <!--android:name=".Actividades.MainActivity"-->
+            <!--android:label="@string/title_activity_main"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <!--</activity>-->
         <activity android:name=".Actividades.Login" />
         <activity android:name=".Actividades.Vista_empresario" />
         <activity android:name=".Actividades.Vista_turista" />
@@ -72,8 +68,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
+            </intent-filter>
         </activity>
     </application>
 

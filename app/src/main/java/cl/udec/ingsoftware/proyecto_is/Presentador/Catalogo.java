@@ -12,7 +12,9 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
@@ -32,27 +34,90 @@ public class Catalogo implements Serializable {
     private ArrayList<Sucursal> sucursales;
     private Formateador formateador;
 
-    public Catalogo(Context cont) {
-
-        itinerarios = new ArrayList<Itinerario>();
-        sucursales = new ArrayList<Sucursal>();
+    public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
+        itinerarios = new ArrayList<Itinerario>();
+        sucursales = formateador.getSucursales();
     }
 
 
-    public ArrayList getSucursales(){
-        ArrayList<Sucursal> suc = null;
-        try {
-            suc = formateador.getSucursales();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ArrayList getSucursales() throws SQLException {
+        ArrayList<String> nombresSucursales = new ArrayList<String>();
+        Iterator<Sucursal> it = sucursales.iterator();
+        while (it.hasNext()) {
+            Sucursal actual = it.next();
+            nombresSucursales.add(actual.getNombre());
         }
+        return nombresSucursales;
+    }
 
-        ArrayList salida = new ArrayList();
-        for (Sucursal sucursal:suc
+    public ArrayList getBuscarKeyword(String arg) {
+        ArrayList<Sucursal> Sucursales = new ArrayList<>();
+        ArrayList<String> Resp = new ArrayList<String>();
+
+        for (Sucursal sucursal:Sucursales) {
+            if (sucursal.getNombre() == arg){
+                Resp.add(sucursal.getNombre());
+            }
+        }
+        return Resp;
+    }
+
+
+    public  ArrayList getCategorias(){
+        Set<String> cat = new HashSet<String>();
+        ArrayList<String> categoria= new ArrayList<String>();
+        for (Sucursal suc: sucursales
              ) {
-            salida.add(sucursal.getNombre());
+            for (Servicio serv:suc.getServicios()
+                 ) {
+                cat.add(serv.getCategoria().getNombre());
+            }
         }
-        return suc;
+        for (String str:cat
+             ) {
+            categoria.add(str);
+        }
+        return categoria;
     }
+
+
+
+    public  ArrayList getServicios(){
+        Set<String> ser = new HashSet<String>();
+        ArrayList<String> servicios= new ArrayList<String>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                ser.add(serv.getNombre());
+            }
+        }
+        for (String str:ser
+                ) {
+            servicios.add(str);
+        }
+        return servicios;
+    }
+
+    public  ArrayList getServiciosBusqueda(String categoria){
+        Set<String> ser = new HashSet<String>();
+        ArrayList<String> servicios= new ArrayList<String>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                if(serv.getCategoria().getNombre()==categoria){
+                    ser.add(serv.getNombre());
+                }
+
+            }
+        }
+        for (String str:ser
+                ) {
+            servicios.add(str);
+        }
+        return servicios;
+    }
+
 }

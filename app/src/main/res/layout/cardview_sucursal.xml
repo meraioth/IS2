@@ -6,23 +6,37 @@
         android:id="@+id/card_view_sucursal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titulo_sucursal"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_title_margin" />
+                android:layout_height="@dimen/card_title_margin"
+                android:background="@color/colorPrimary">
+
+                <TextView
+                    android:id="@+id/titulo_sucursal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:gravity="left"
+                    android:layout_gravity="center"
+                    android:textColor="@color/letra_card_sucursal"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/imagen_sucursal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_image_margin"
-                android:layout_below="@id/titulo_sucursal">
+                android:layout_below="@id/titulo_sucursal"
+                android:clickable="true"
+                android:src="@drawable/not_found">
                 </ImageView>
 
         </LinearLayout>

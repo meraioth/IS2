@@ -3,6 +3,7 @@ package cl.udec.ingsoftware.proyecto_is.Actividades;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +58,12 @@ public class OSM extends AppCompatActivity {
 
     private List<OverlayItem> getarray() {
 
-        ArrayList<Sucursal> suc= cat.getSucursales();
-
+        ArrayList<Sucursal> suc= null;
+        try {
+            suc = cat.getSucursales();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         anotherOverlayItemArray = new ArrayList<OverlayItem>();
