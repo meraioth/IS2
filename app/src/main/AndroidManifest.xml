@@ -57,10 +57,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
+        <!--<activity
             android:name=".Actividades.MapaTematico"
             android:label="@string/title_activity_mapa_tematico" />
-        <activity android:name=".Actividades.OSM" />
+        <activity android:name=".Actividades.OSM" /> -->
         <activity android:name=".Actividades.mapsforge"></activity>
         <activity
             android:name=".Actividades.MapaBusquedaItinerarioActivity"

@@ -8,11 +8,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
+import org.w3c.dom.Text;
+
+import cl.udec.ingsoftware.proyecto_is.Presentador.OnlyOneSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class VisualizacionSucursal extends AppCompatActivity {
     public static final String ARG_PRESENTADOR = "presentador";
+    private int mId;
     private PresentadorSucursal mPresentador;
     private String mTitulo;
     private ImageView mSelloTurismo;
@@ -26,7 +29,8 @@ public class VisualizacionSucursal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizacion_sucursal);
         Intent intent = getIntent();
-        //mPresentador = (PresentadorSucursal) intent.getSerializableExtra(ARG_PRESENTADOR);
+        this.mId = intent.getIntExtra(ARG_PRESENTADOR,0);
+        //mPresentador = (OnlyOneSucursal) intent.getSerializableExtra(ARG_PRESENTADOR);
 
         mDescripcion = (TextView) findViewById(R.id.descripcion_sucursal);
       //  mDescripcion.setText(mPresentador.get_descripcion());

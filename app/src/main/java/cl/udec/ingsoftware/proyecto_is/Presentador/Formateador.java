@@ -42,7 +42,7 @@ public class Formateador {
     public ArrayList<Sucursal> getSucursales() throws SQLException {
         ArrayList<Sucursal> sucursales = new ArrayList<>();
         ResultSet resultSet;
-        Log.d("Primera Carga", String.valueOf(primera_carga[0]));
+        Log.e("Primera Carga", String.valueOf(primera_carga[0]));
         //System.out.println("PRIMERA CARGA:"+primera_carga);
         System.out.println("version local sucursal:"+version_local[0]);
         //System.out.println("version remoto db:"+consultor.getVersionRemoto());
@@ -80,7 +80,6 @@ public class Formateador {
                     System.out.print(resultSet.getString(i));
                 }
                 System.out.println("");
-
             }
     }
 
@@ -161,8 +160,6 @@ public class Formateador {
 
 
     }
-
-
 
     public ArrayList<Itinerario> getItinerarios() throws SQLException {
         ArrayList<Itinerario> itinerarios = new ArrayList<>();
