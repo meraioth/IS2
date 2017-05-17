@@ -15,6 +15,7 @@ import cl.udec.ingsoftware.proyecto_is.R;
 
 public class VisualizacionSucursal extends AppCompatActivity {
     public static final String ARG_PRESENTADOR = "presentador";
+    private int mId;
     private OnlyOneSucursal mPresentador;
     private String mTitulo;
     private ImageView mSelloTurismo;
@@ -28,9 +29,9 @@ public class VisualizacionSucursal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizacion_sucursal);
         Intent intent = getIntent();
-        //mPresentador = (OnlyOneSucursal) intent.getSerializableExtra(ARG_PRESENTADOR);
-
+        this.mId = intent.getIntExtra(ARG_PRESENTADOR,0);
+        mPresentador = new OnlyOneSucursal(getApplicationContext(),mId);
         mDescripcion = (TextView) findViewById(R.id.descripcion_sucursal);
-      //  mDescripcion.setText(mPresentador.get_descripcion());
+        mDescripcion.setText(mPresentador.get_descripcion());
     }
 }

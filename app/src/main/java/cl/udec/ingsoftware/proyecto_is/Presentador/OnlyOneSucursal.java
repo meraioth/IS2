@@ -20,14 +20,11 @@ public class OnlyOneSucursal implements Serializable {
     private Sucursal sucursal;
     int id;
 
-    public OnlyOneSucursal(Context cont) {
+    public OnlyOneSucursal(Context cont,int id) {
         sucursales = null;
         formateador = new Formateador(cont);
         sucursal = null;
-    }
-
-    public void getData(){
-        //Extraemos todas las sucursales
+        this.id = id;
         try {
             sucursales = formateador.getSucursales();
         } catch (SQLException e) {
@@ -40,11 +37,9 @@ public class OnlyOneSucursal implements Serializable {
                 sucursal = su;
             }
         }
+
     }
 
-    public void setId(int id){
-        this.id = id;
-    }
 
     public String get_name(){
         return sucursal.getNombre();
