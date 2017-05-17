@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -19,20 +18,22 @@ import java.sql.SQLException;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
-import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.MapaFragment;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
-import cl.udec.ingsoftware.proyecto_is.Presentador.OnlyOneSucursal;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener {
 
     private BusquedaFragment busquedaFragment;
+    private MapaFragment mapaFragment;
     private ItinerarioFragment itinerarioFragment;
     private BusquedaAvanzadaFragment busquedaAvanzadaFragment;
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
     private static Catalogo catalogo;
+    private PresentadorSucursal mPresentadorSucursal;
 
     private SearchView mBusqueda;
     private Toolbar mToolbar;
@@ -47,6 +48,8 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
             fragmentTransaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_mapa:
+                    fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, mapaFragment);
+                    fragmentTransaction.commit();
 
                     return true;
                 case R.id.navigation_busqueda:
@@ -82,6 +85,9 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        mPresentadorSucursal = new PresentadorSucursal(this.getApplicationContext());
+        mapaFragment = MapaFragment.newInstance((Serializable) catalogo);
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
         itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
@@ -96,8 +102,10 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     @Override
     public void OnSucursalSelected(int id) {
+        mPresentadorSucursal.setId(id);
+        mPresentadorSucursal.getData();
         Intent intent = new Intent(this,VisualizacionSucursal.class);
-        intent.putExtra(VisualizacionSucursal.ARG_PRESENTADOR,id);
+        //intent.putExtra(VisualizacionSucursal.ARG_PRESENTADOR,mPresentadorSucursal);
         startActivity(intent);
     }
 

@@ -3,6 +3,8 @@ package cl.udec.ingsoftware.proyecto_is.BasesDeDatos;
 /**
  * Created by meraioth on 28-12-16.
  */
+import android.util.Log;
+
 import java.sql.Array;
 import java.sql.DriverManager ;
 import java.sql.Connection ;
@@ -35,9 +37,6 @@ public class DBremoto {
 //            sqlthread.start();
 //        }
 
-
-
-
     }
     public ResultSet getResult(){
         return result;
@@ -57,6 +56,7 @@ public class DBremoto {
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = st.executeQuery(consulta);
+
                 result = rs;
                 conn.close();
             } catch (SQLException se) {

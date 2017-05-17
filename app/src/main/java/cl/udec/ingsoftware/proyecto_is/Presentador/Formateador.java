@@ -69,6 +69,7 @@ public class Formateador {
             Cursor cursor= consultor.getSucursalesLocal();
             agregarSucursales(cursor,sucursales);
         }
+
         return sucursales;
     }
 
