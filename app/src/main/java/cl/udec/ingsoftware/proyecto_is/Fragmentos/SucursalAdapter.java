@@ -44,7 +44,6 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
         holder.mTitulo.setText(sucursales.get(position).get_name());
         holder.mId = sucursales.get(position).get_id();
         String url = sucursales.get(position).get_image();
-        Log.e("a", url);
         new AsyncTaskLoadImage(holder.mFoto).execute(url);
         holder.setOnItemClickListener(mListener);
     }

@@ -48,14 +48,20 @@ public class Catalogo implements Serializable {
 
 
      public ArrayList getTripletasOfSucursales()throws SQLException {
-        ArrayList<Tripleta> info= new ArrayList<Tripleta>();
-
+        ArrayList<Tripleta> info = new ArrayList<Tripleta>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        int id;
+        //Log.e("id", String.valueOf(sucursales.size()));
         for (Sucursal suc: sucursales) {
-            //Log.e("Image", suc.getImagen());
-            Tripleta tri = new Tripleta(suc.getId(),suc.getNombre(),suc.getImagen());
-            info.add(tri);
+            id = suc.getId();
+            if (!ides.contains(id)){
+                ides.add(id);
+                Tripleta tri = new Tripleta(suc.getId(),suc.getNombre(),suc.getImagen());
+                info.add(tri);
+
+            }
         }
-        Log.e("e", String.valueOf(info.size()));
+
         return info;
     }
 
