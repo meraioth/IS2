@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-import cl.udec.ingsoftware.proyecto_is.Presentador.OnlyOneSucursal;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class VisualizacionSucursal extends AppCompatActivity {
