@@ -13,14 +13,14 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
  * Created by koskovi on 15-05-17.
  */
 
-public class OnlyOneSucursal implements Serializable {
+public class PresentadorSucursal implements Serializable {
 
     private ArrayList<Sucursal> sucursales;
     private Formateador formateador;
     private Sucursal sucursal;
     int id;
 
-    public OnlyOneSucursal(Context cont) {
+    public PresentadorSucursal(Context cont) {
         sucursales = null;
         formateador = new Formateador(cont);
         sucursal = null;
