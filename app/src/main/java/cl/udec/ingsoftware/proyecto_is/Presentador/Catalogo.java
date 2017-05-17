@@ -81,6 +81,7 @@ public class Catalogo implements Serializable {
     public  ArrayList getCategorias(){
         Set<String> cat = new HashSet<String>();
         ArrayList<String> categoria= new ArrayList<String>();
+        categoria.add("Todas");
         for (Sucursal suc: sucursales
              ) {
             for (Servicio serv:suc.getServicios()

@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +22,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
@@ -26,11 +32,9 @@ import cl.udec.ingsoftware.proyecto_is.R;
  * Created by meraioth on 16-05-17.
  */
 
-public class MapaFragment extends Fragment   {
+public class MapaFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private static final String ARG_PRESENTADOR = "presentador";
-
-
     private Catalogo mPresentador;
 
     @Override
@@ -39,6 +43,7 @@ public class MapaFragment extends Fragment   {
         if (getArguments() != null) {
             mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
         }
+
         setHasOptionsMenu(true);
 
     }
@@ -51,6 +56,21 @@ public class MapaFragment extends Fragment   {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
+        // Spinner element
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_categoria);
+        spinner.setOnItemSelectedListener(this);
+
+        List<String> categories = mPresentador.getCategorias();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+        spinner.setVisibility(View.VISIBLE);
+
+
 
         mMapView.onResume(); // needed to get the map to display immediately
 
@@ -69,12 +89,14 @@ public class MapaFragment extends Fragment   {
 //                googleMap.setMyLocationEnabled(true);
 
                 // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.726562, -73.353960),(float)8.5));
+
+//                LatLng sydney = new LatLng(-34, 151);
+//                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
 
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
@@ -112,6 +134,23 @@ public class MapaFragment extends Fragment   {
         args.putSerializable(ARG_PRESENTADOR,catalogo);
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 }
