@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.Serializable;
@@ -32,7 +34,7 @@ import cl.udec.ingsoftware.proyecto_is.R;
  * Created by meraioth on 16-05-17.
  */
 
-public class MapaFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class MapaFragment extends Fragment implements AdapterView.OnItemSelectedListener  {
 
     private static final String ARG_PRESENTADOR = "presentador";
     private Catalogo mPresentador;
@@ -84,6 +86,24 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
+
+                ArrayList latitudes = mPresentador.getLatitudes();
+                ArrayList longitudes = mPresentador.getLongitudes();
+                ArrayList nombre = mPresentador.getSucursales();
+
+                for(int i = 0;i<latitudes.size();i++){
+                    if((Double)latitudes.get(i)!=-1){
+                        Log.d("mapa :",nombre.get(i)+" "+latitudes.get(i)+longitudes.get(i));
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng((Double)latitudes.get(i),(Double)longitudes.get(i))).title((String)nombre.get(i)));
+                    }
+                }
+
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        return false;
+                    }
+                });
 
                 // For showing a move to my location button
 //                googleMap.setMyLocationEnabled(true);
@@ -143,14 +163,32 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-
+        if(item != "Todas")
+            filtrar(item);
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    private void filtrar(String item) {
+        googleMap.clear();
+        ArrayList latitudes = mPresentador.getLatitudes(item);
+        ArrayList longitudes = mPresentador.getLongitudes(item);
+        ArrayList nombre = mPresentador.getSucursales(item);
+        Log.d("Cantidad", String.valueOf(latitudes.size()));
+
+        for(int i = 0;i<latitudes.size();i++){
+            if((Double)latitudes.get(i)!=-1){
+                LatLng aux = new LatLng((double)latitudes.get(i),(double)longitudes.get(i));
+                googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)));
+            }
+        }
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 
 }

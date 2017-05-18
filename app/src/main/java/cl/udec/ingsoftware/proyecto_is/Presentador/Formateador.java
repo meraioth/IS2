@@ -116,6 +116,7 @@ public class Formateador {
             boolean existe_sucursal = false;
             //Crear Categoria
             Categoria cat = new Categoria(aux.getString(17),aux.getString(18));
+            Log.d("Nueva Cat",cat.getNombre());
             //Crear Servicio
             Servicio serv = new Servicio(aux.getInt(11), aux.getString(12), aux.getString(14), cat);
             //Buscaar si existe la sucursal asociada al a tupla

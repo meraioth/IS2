@@ -46,6 +46,28 @@ public class Catalogo implements Serializable {
         sucursales = formateador.getSucursales();
     }
 
+    public ArrayList getSucursales(){
+        ArrayList<String> sucursaless = new ArrayList();
+        for (Sucursal suc:sucursales
+             ) {
+            sucursaless.add(suc.getNombre());
+        }
+        return sucursaless;
+    }
+
+    public ArrayList getSucursales(String categoria){
+        ArrayList<String> sucursaless = new ArrayList();
+        for (Sucursal suc:sucursales
+                ) {
+            for(Servicio serv : suc.getServicios()){
+                if(serv.getCategoria().getNombre().compareTo(categoria) == 0){
+
+                    sucursaless.add(suc.getNombre());
+                }
+            }
+        }
+        return sucursaless;
+    }
 
      public ArrayList getTripletasOfSucursales()throws SQLException {
         ArrayList<Tripleta> info = new ArrayList<Tripleta>();
@@ -133,6 +155,65 @@ public class Catalogo implements Serializable {
         }
         return servicios;
     }
+
+    public ArrayList getLongitudes(){
+        ArrayList<Double> longitudes = new ArrayList<>();
+        for (Sucursal suc:sucursales
+                ) {
+            longitudes.add(suc.getLongitud());
+
+        }
+        return longitudes;
+
+    }
+
+    public ArrayList getLatitudes(){
+        ArrayList<Double> latitudes = new ArrayList<>();
+        for (Sucursal suc:sucursales
+                ) {
+            latitudes.add(suc.getLatitud());
+
+        }
+        return latitudes;
+
+    }
+
+    public ArrayList getLongitudes(String categoria){
+        ArrayList<Double> longitudes = new ArrayList<>();
+        for (Sucursal suc:sucursales
+                ) {
+            for(Servicio serv : suc.getServicios()){
+
+                if(serv.getCategoria().getNombre().compareTo(categoria) == 0){
+                    longitudes.add(suc.getLongitud());
+
+                }
+            }
+
+        }
+        return longitudes;
+
+    }
+
+    public ArrayList getLatitudes(String categoria){
+        ArrayList<Double> latitudes = new ArrayList<>();
+        for (Sucursal suc:sucursales
+                ) {
+            for (Servicio serv : suc.getServicios()) {
+//                System.out.println("sucursal no filtrada "+suc.getNombre()+" "+serv.getCategoria().getNombre() +" categoria:"+categoria +" equals: "+String.valueOf(serv.getCategoria().getNombre().compareTo(categoria) == 0 ));
+
+                if (serv.getCategoria().getNombre().compareTo(categoria) == 0 ){
+                    System.out.println("sucursal filtrada "+suc.getNombre()+" "+serv.getCategoria().getNombre());
+
+                    latitudes.add(suc.getLatitud());
+
+                }
+            }
+        }
+        return latitudes;
+
+    }
+
 
 
 
