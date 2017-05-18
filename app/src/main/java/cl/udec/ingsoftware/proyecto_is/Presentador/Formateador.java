@@ -108,6 +108,7 @@ public class Formateador {
                 sucursales.add(sucursal);
             }
         }
+        Log.d("SucursalesEn- Remoto",String.valueOf(sucursales.size()));
     }
 
     void agregarSucursales(Cursor aux, ArrayList<Sucursal> sucursales) throws SQLException {
@@ -134,6 +135,8 @@ public class Formateador {
                 sucursales.add(sucursal);
             }
         }
+        Log.d("SucursalesEn-Local",String.valueOf(sucursales.size()));
+
     }
 
     //TODO: Recibir Cursor (Local) y ResultSet (Remota) y formatea los datos , entregando conjunto de objetos. (Respalda información en SQLite)
