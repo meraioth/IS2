@@ -32,7 +32,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    private static Catalogo catalogo;
+    //private static Catalogo catalogo;
     private PresentadorSucursal mPresentadorSucursal;
 
     private SearchView mBusqueda;
@@ -80,16 +80,13 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         mToolbar = (Toolbar) findViewById(R.id.toolbar_busqueda);
         setSupportActionBar(mToolbar);
 
-        try {
-            catalogo = new Catalogo(this.getApplicationContext());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        mPresentadorSucursal = new PresentadorSucursal(this.getApplicationContext());
-        mapaFragment = MapaFragment.newInstance((Serializable) catalogo);
+        //mPresentadorSucursal = new PresentadorSucursal(this.getApplicationContext());
+        /*mapaFragment = MapaFragment.newInstance((Serializable) catalogo);
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);
-        itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);
+        itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);*/
+        mapaFragment = MapaFragment.newInstance();
+        busquedaFragment = BusquedaFragment.newInstance();
+        itinerarioFragment = ItinerarioFragment.newInstance();
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
@@ -102,10 +99,8 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     @Override
     public void OnSucursalSelected(int id) {
-        mPresentadorSucursal.setId(id);
-        mPresentadorSucursal.getData();
         Intent intent = new Intent(this,VisualizacionSucursal.class);
-        //intent.putExtra(VisualizacionSucursal.ARG_PRESENTADOR,mPresentadorSucursal);
+        intent.putExtra(VisualizacionSucursal.ARG_PRESENTADOR,id);
         startActivity(intent);
     }
 

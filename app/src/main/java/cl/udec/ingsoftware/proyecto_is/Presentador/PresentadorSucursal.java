@@ -20,10 +20,12 @@ public class PresentadorSucursal implements Serializable {
     private Sucursal sucursal;
     int id;
 
-    public PresentadorSucursal(Context cont) {
+    public PresentadorSucursal(Context cont,int id) {
+        this.id = id;
         sucursales = null;
         formateador = new Formateador(cont);
         sucursal = null;
+        getData();
     }
 
     public void getData(){
@@ -40,10 +42,6 @@ public class PresentadorSucursal implements Serializable {
                 sucursal = su;
             }
         }
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public String get_name(){
@@ -64,6 +62,10 @@ public class PresentadorSucursal implements Serializable {
 
     public String get_descripcion() {
         return sucursal.getDescripcion();
+    }
+
+    public String get_image(){
+        return sucursal.getImagen();
     }
 
     public ArrayList get_servicios(){

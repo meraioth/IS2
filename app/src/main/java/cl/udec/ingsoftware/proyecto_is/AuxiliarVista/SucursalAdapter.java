@@ -1,20 +1,16 @@
-package cl.udec.ingsoftware.proyecto_is.Fragmentos;
+package cl.udec.ingsoftware.proyecto_is.AuxiliarVista;
 
 import android.content.Context;
-import android.os.StrictMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 import cl.udec.ingsoftware.proyecto_is.R;
 import cl.udec.ingsoftware.proyecto_is.util.AsyncTaskLoadImage;
@@ -26,7 +22,7 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
     private Context context;
     private OnItemClickListener mListener;
 
-    SucursalAdapter(List<Tripleta> sucursales){
+    public SucursalAdapter(List<Tripleta> sucursales){
         this.sucursales = sucursales;
     }
 
@@ -66,6 +62,7 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
         public CardView mCardView;
         public TextView mTitulo;
         public ImageView mFoto;
+        public ImageView mSello;
         public int mId;
         private OnItemClickListener mListener;
 
@@ -74,6 +71,8 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
             mCardView = (CardView)itemView.findViewById(R.id.card_view_sucursal);
             mTitulo = (TextView)itemView.findViewById(R.id.titulo_sucursal);
             mFoto = (ImageView)itemView.findViewById(R.id.imagen_sucursal);
+            mSello = (ImageView) itemView.findViewById(R.id.sello_verde_card);
+            mFoto.setScaleType(ImageView.ScaleType.FIT_XY);
             final Context context = itemView.getContext();
             mCardView.setOnClickListener(this);
 

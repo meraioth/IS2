@@ -10,7 +10,7 @@
 
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_busqueda"
+        android:id="@+id/toolbar_sucursal"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -69,14 +69,9 @@
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:textColor="@color/color_letra_sucursal_descripcion"
-        android:text="ASDDSADSADSAd
-dsaDSADSADSAd
-dsadsaDSADSA
-dsadsadsadsadsadsadsa dsadsa sdadsad sad sa"
+        android:text=""
         android:textIsSelectable="false"
         android:textSize="20dp"
-
-        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -116,14 +111,14 @@ dsadsadsadsadsadsadsa dsadsa sdadsad sad sa"
 
         <ImageView
             android:id="@+id/sello_verde"
-            android:layout_width="82dp"
-            android:layout_height="141dp"
+            android:layout_width="85dp"
+            android:layout_height="160dp"
             android:src="@drawable/sello_verde"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="0dp" />
 

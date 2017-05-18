@@ -66,12 +66,16 @@ public class Catalogo implements Serializable {
     }
 
     public ArrayList getBuscarKeyword(String arg) {
-        ArrayList<Sucursal> Sucursales = new ArrayList<>();
-        ArrayList<String> Resp = new ArrayList<String>();
-
-        for (Sucursal sucursal:Sucursales) {
-            if (sucursal.getNombre() == arg){
-                Resp.add(sucursal.getNombre());
+        ArrayList<Tripleta> Resp = new ArrayList<>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        int id;
+        for (Sucursal sucursal: sucursales) {
+            if (sucursal.getNombre().contains(arg)){
+                id = sucursal.getId();
+                if (!ides.contains(id)){
+                    ides.add(id);
+                    Resp.add(new Tripleta(sucursal.getId(),sucursal.getNombre(),sucursal.getImagen()));
+                }
             }
         }
         return Resp;
