@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,12 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
+//            mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
+            try {
+                mPresentador=new Catalogo(this.getContext());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         setHasOptionsMenu(true);
@@ -54,6 +60,12 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        try {
+            mPresentador=new Catalogo(this.getContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -62,7 +74,7 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_categoria);
         spinner.setOnItemSelectedListener(this);
 
-        List<String> categories = mPresentador.getCategorias();
+        ArrayList<String> categories = mPresentador.getCategorias();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
@@ -160,14 +172,16 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-        if(item != "Todas")
+
             filtrar(item);
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
     private void filtrar(String item) {
+
         googleMap.clear();
+        if(item != "Todas"){
         ArrayList latitudes = mPresentador.getLatitudes(item);
         ArrayList longitudes = mPresentador.getLongitudes(item);
         ArrayList nombre = mPresentador.getSucursales(item);
@@ -177,6 +191,19 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
             if((Double)latitudes.get(i)!=-1){
                 LatLng aux = new LatLng((double)latitudes.get(i),(double)longitudes.get(i));
                 googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)));
+            }
+        }
+        }else {
+            ArrayList latitudes = mPresentador.getLatitudes();
+            ArrayList longitudes = mPresentador.getLongitudes();
+            ArrayList nombre = mPresentador.getSucursales();
+            Log.d("Cantidad", String.valueOf(latitudes.size()));
+
+            for(int i = 0;i<latitudes.size();i++){
+                if((Double)latitudes.get(i)!=-1){
+                    LatLng aux = new LatLng((double)latitudes.get(i),(double)longitudes.get(i));
+                    googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)));
+                }
             }
         }
 
