@@ -148,11 +148,8 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     }
 
 
-    public static MapaFragment newInstance(Serializable catalogo) {
+    public static MapaFragment newInstance() {
         MapaFragment fragment = new MapaFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PRESENTADOR,catalogo);
-        fragment.setArguments(args);
         return fragment;
     }
 

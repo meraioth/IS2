@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 /**
@@ -23,6 +24,7 @@ import cl.udec.ingsoftware.proyecto_is.R;
  */
 public class BusquedaAvanzadaFragment extends Fragment {
 
+
     private OnBusuqedaAvanzadaInteractionListener mListener;
     private Toolbar mToolbar;
 
@@ -32,7 +34,6 @@ public class BusquedaAvanzadaFragment extends Fragment {
 
     public static BusquedaAvanzadaFragment newInstance() {
         BusquedaAvanzadaFragment fragment = new BusquedaAvanzadaFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 

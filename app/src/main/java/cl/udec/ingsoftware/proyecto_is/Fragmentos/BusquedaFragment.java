@@ -8,17 +8,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
@@ -57,19 +60,19 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
      * @return A new instance of fragment BusquedaFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BusquedaFragment newInstance(Serializable presentador) {
+    public static BusquedaFragment newInstance() {
+
         BusquedaFragment fragment = new BusquedaFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PRESENTADOR,presentador);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
+        try {
+            mPresentador = new Catalogo(this.getContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         setHasOptionsMenu(true);
 
@@ -80,12 +83,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_busqueda, menu);
         MenuItem searchItem = menu.findItem(R.id.busqueda_sucursal);
-        if(searchItem == null){
-            System.out.println("no hay");
-        }else{
-            System.out.println("si hay"+searchItem.getItemId());
-        }
-
         mBusqueda = (SearchView) MenuItemCompat.getActionView(searchItem);
         mBusqueda.setOnQueryTextListener(this);
     }
@@ -148,6 +145,11 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        SucursalAdapter adapter = null;
+        adapter = new SucursalAdapter( mPresentador.getBuscarKeyword(query));
+        adapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(adapter);
+
         mBusqueda.clearFocus();
         mBusqueda.onActionViewCollapsed();
         return false;

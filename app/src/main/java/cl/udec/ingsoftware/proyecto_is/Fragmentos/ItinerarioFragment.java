@@ -41,15 +41,11 @@ public class ItinerarioFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param presentador Parameter 1.
      * @return A new instance of fragment ItinerarioFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ItinerarioFragment newInstance(Serializable presentador) {
+    public static ItinerarioFragment newInstance() {
         ItinerarioFragment fragment = new ItinerarioFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PRESENTADOR,presentador);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -97,6 +93,8 @@ public class ItinerarioFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
