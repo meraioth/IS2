@@ -61,7 +61,6 @@ public class Catalogo implements Serializable {
                 ) {
             for(Servicio serv : suc.getServicios()){
                 if(serv.getCategoria().getNombre().compareTo(categoria) == 0){
-
                     sucursaless.add(suc.getNombre());
                 }
             }
@@ -80,7 +79,6 @@ public class Catalogo implements Serializable {
                 ides.add(id);
                 Tripleta tri = new Tripleta(suc.getId(),suc.getNombre(),suc.getImagen());
                 info.add(tri);
-
             }
         }
 
@@ -193,7 +191,6 @@ public class Catalogo implements Serializable {
 
                 }
             }
-
         }
         return longitudes;
 

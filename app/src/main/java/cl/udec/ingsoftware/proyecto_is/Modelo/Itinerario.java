@@ -8,49 +8,39 @@ import java.util.Iterator;
  */
 
 public class Itinerario {
+    private int id;
     private String nombre;
-    private ArrayList<Servicio> servicios;
+    private int id_usuario;
     private String duracion;
+    private ArrayList<Sucursal> sucursales;
 
-    public Itinerario(int id,String nombre,String duracion){
-//        servicios = new ArrayList<Servicio>();
-//        this.nombre = nombre;
-//        this.duracion=duracion;
-//        DBremoto db = new DBremoto();
-//        String q = "select itinerario.id, servicio.descripcion, orden.orden ,servicio.id , servicio.nombre_servicio " +
-//                "from itinerario , orden , servicio " +
-//                "where itinerario.id=orden.id_itinerario and servicio.id=orden.id_servicio and itinerario.id =" +id+
-//                " order by itinerario.id, orden.orden;";
-//        db.query(q);
-//        ResultSet rs = db.getResult();
-//        try {
-//            while (rs.next()){
-//                //System.out.println("asd"+rs.getString("nombre"));
-//                Servicio servicio = new Servicio(rs.getString("nombre_servicio"),rs.getString("descripcion"));
-//                servicios.add(servicio);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    public Itinerario(int id,String nombre,String duracion, int id_usuario){
+        this.id = id;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.id_usuario = id_usuario;
+    }
+    public void inicializarSucursales(ArrayList<Sucursal> sucursales){
+        this.sucursales = sucursales;
     }
 
+    public int getId(){
+        return this.id;
+    }
     public String getNombre(){
         return this.nombre;
     }
+
+    public ArrayList<Sucursal> getSucursales(){
+        return this.sucursales;
+    }
+    public String getDuracion(){
+        return this.duracion;
+    }
+    public int getId_usuario(){
+        return this.id_usuario;
+    }
     public void setNombre(String nombre){
         this.nombre = nombre;
-    }
-
-    public boolean isServicio(String valor){
-        boolean res = false;
-        Iterator<Servicio> iterator = servicios.iterator();
-        while(iterator.hasNext()){
-            Servicio Ser = iterator.next();
-            res = Ser.isServicio(valor);
-            if(res){
-                return res;
-            }
-        }
-        return res;
     }
 }
