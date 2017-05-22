@@ -1,5 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Modelo;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -11,17 +13,17 @@ public class Itinerario {
     private int id;
     private String nombre;
     private int id_usuario;
-    private String duracion;
-    private ArrayList<Sucursal> sucursales;
+    private String estacion;
+    private ArrayList<Pair> sucursales_duracion;
 
-    public Itinerario(int id,String nombre,String duracion, int id_usuario){
+    public Itinerario(int id,String nombre, int id_usuario, String estacion){
         this.id = id;
         this.nombre = nombre;
-        this.duracion = duracion;
         this.id_usuario = id_usuario;
+        this.estacion = estacion;
     }
-    public void inicializarSucursales(ArrayList<Sucursal> sucursales){
-        this.sucursales = sucursales;
+    public void inicializarSucursales(ArrayList<Pair> sucursales){
+        this.sucursales_duracion = sucursales;
     }
 
     public int getId(){
@@ -31,11 +33,11 @@ public class Itinerario {
         return this.nombre;
     }
 
-    public ArrayList<Sucursal> getSucursales(){
-        return this.sucursales;
+    public ArrayList<Pair> getSucursales(){
+        return this.sucursales_duracion;
     }
-    public String getDuracion(){
-        return this.duracion;
+    public String getEstacion(){
+        return this.estacion;
     }
     public int getId_usuario(){
         return this.id_usuario;
