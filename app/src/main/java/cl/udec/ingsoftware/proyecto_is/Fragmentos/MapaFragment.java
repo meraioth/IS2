@@ -117,18 +117,8 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
                     }
                 });
 
-                // For showing a move to my location button
-//                googleMap.setMyLocationEnabled(true);
-
-                // For dropping a marker at a point on the Map
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.726562, -73.353960),(float)8.5));
 
-//                LatLng sydney = new LatLng(-34, 151);
-//                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-//                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
