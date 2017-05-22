@@ -21,9 +21,9 @@ public class Sucursal {
     private ArrayList<Servicio> servicios;
     private String imagen;
     private String descripcion;
-
+    private  String comuna;
     //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, int sello,double latitud,double longitud, String image, String descri){
+    public Sucursal(String nombre, int id, int sello, double latitud, double longitud, String image, String descri, String comuna){
         //super(id,direccion,longitud,latitud);
         this.nombre = nombre;
         this.sello = sello;
@@ -33,6 +33,8 @@ public class Sucursal {
         servicios=new ArrayList<>();
         this.imagen = image;
         this.descripcion = descri;
+        this.comuna=comuna;
+
     }
 
     public boolean isServicio(String valor){
@@ -73,4 +75,8 @@ public class Sucursal {
 
     public String getImagen(){return imagen;}
     public String getDescripcion(){return descripcion;}
+
+    public String getComuna() {
+        return comuna;
+    }
 }

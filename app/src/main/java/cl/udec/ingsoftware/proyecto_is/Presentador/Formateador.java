@@ -7,11 +7,9 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.Consultor;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
@@ -103,7 +101,7 @@ public class Formateador {
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
                 sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getInt("sello_de_turismo"),
-                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto"), aux.getString("descripcion"));
+                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto"), aux.getString("descripcion"),aux.getString("comuna"));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -131,7 +129,7 @@ public class Formateador {
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
                 sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getInt(2),
-                        aux.getDouble(5), aux.getDouble(6), aux.getString(8), aux.getString(7));
+                        aux.getDouble(5), aux.getDouble(6), aux.getString(8), aux.getString(7), aux.getString(4));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }

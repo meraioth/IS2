@@ -216,7 +216,75 @@ public class Catalogo implements Serializable {
     }
 
 
+    public ArrayList<String> getComunas() {
+        Set<String> com = new HashSet<String>();
+        ArrayList<String> comunas= new ArrayList<String>();
+        //comunas.add("Todas");
+        for (Sucursal suc: sucursales
+                ) {
 
+                com.add(suc.getComuna());
 
+        }
+        for (String str:com
+                ) {
+            comunas.add(str);
+        }
+        return comunas;
+    }
 
+    /**
+     * Metodo para buscar las categorías que esten presentes en la comuna "comuna"
+     * @param comuna
+     * @return Arreglo de String con categorias presentes en la comuna "Comuna"
+     */
+    public ArrayList getCategorias(String comuna) {
+
+        Set<String> cat = new HashSet<String>();
+        ArrayList<String> categoria= new ArrayList<String>();
+        categoria.add("Todas");
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                if(suc.getComuna().compareTo(comuna)==0)
+                cat.add(serv.getCategoria().getNombre());
+            }
+        }
+        for (String str:cat
+                ) {
+            categoria.add(str);
+        }
+        return categoria;
+
+    }
+
+    /**
+     * Metodo para filtrar las sucursales por comuna, categoria y servicio
+     * @param str_comuna
+     * @param str_categoria
+     * @param str_servicio
+     * @return Arreglo de tripletas
+     */
+    public ArrayList getTripletasOfSucursales(String str_comuna, String str_categoria, String str_servicio) {
+        ArrayList<Tripleta> info = new ArrayList<Tripleta>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        int id;
+        //Log.e("id", String.valueOf(sucursales.size()));
+        for (Sucursal suc: sucursales) {
+            id = suc.getId();
+            if (!ides.contains(id)){
+                ides.add(id);
+                for (Servicio serv:suc.getServicios()
+                     ) {
+                    if(suc.getComuna().compareTo(str_comuna)==0 && serv.getNombre().compareTo(str_servicio)==0 && serv.getCategoria().getNombre().compareTo(str_categoria)==0) {
+                        Tripleta tri = new Tripleta(suc.getId(), suc.getNombre(), suc.getImagen());
+                        info.add(tri);
+                    }
+                }
+            }
+        }
+
+        return info;
+    }
 }

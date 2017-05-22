@@ -49,6 +49,8 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
         return sucursales.size();
     }
 
+
+
     public interface OnItemClickListener{
         void onItemClick(int id);
     }
