@@ -42,7 +42,7 @@ public class Catalogo implements Serializable {
 
     public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
-        itinerarios = new ArrayList<Itinerario>();
+        itinerarios = formateador.getItinerarios();
         sucursales = formateador.getSucursales();
     }
 
@@ -166,7 +166,6 @@ public class Catalogo implements Serializable {
 
         }
         return longitudes;
-
     }
 
     public ArrayList getLatitudes(){
@@ -177,7 +176,6 @@ public class Catalogo implements Serializable {
 
         }
         return latitudes;
-
     }
 
     public ArrayList getLongitudes(String categoria){
@@ -193,7 +191,6 @@ public class Catalogo implements Serializable {
             }
         }
         return longitudes;
-
     }
 
     public ArrayList getLatitudes(String categoria){
@@ -212,11 +209,14 @@ public class Catalogo implements Serializable {
             }
         }
         return latitudes;
-
     }
 
-
-
-
+    public ArrayList<String> getItinerarios (){
+        ArrayList<String> nombreItinerarios = new ArrayList<>();
+        for (Itinerario itinerario : itinerarios){
+            nombreItinerarios.add(itinerario.getNombre());
+        }
+        return nombreItinerarios;
+    }
 
 }
