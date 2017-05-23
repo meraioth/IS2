@@ -56,7 +56,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param presentador Parameter 1.
      * @return A new instance of fragment BusquedaFragment.
      */
     // TODO: Rename and change types and number of parameters

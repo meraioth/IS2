@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
@@ -18,12 +19,16 @@ import cl.udec.ingsoftware.proyecto_is.util.AsyncTaskLoadImage;
 
 public class SucursalItinerarioAdapter extends RecyclerView.Adapter<SucursalItinerarioAdapter.SucursalItinerarioViewHolder>{
 
-    private List<Tripleta> sucursales;
+    private ArrayList<String> nombresucursales,fotosucursales;
+    private ArrayList<Integer> idsucursales;
     private Context context;
     private OnItemClickListener mListener;
 
-    public SucursalItinerarioAdapter(List<Tripleta> sucursales){
-        this.sucursales = sucursales;
+    public SucursalItinerarioAdapter(ArrayList nombresucursales,ArrayList fotosucursales, ArrayList idsucursales){
+        this.nombresucursales = nombresucursales;
+        this.idsucursales = idsucursales;
+        this.fotosucursales=fotosucursales;
+
     }
 
     @Override
@@ -37,16 +42,16 @@ public class SucursalItinerarioAdapter extends RecyclerView.Adapter<SucursalItin
 
     @Override
     public void onBindViewHolder(SucursalItinerarioViewHolder holder, int position) {
-        holder.mTitulo.setText(sucursales.get(position).get_name());
-        holder.mId = sucursales.get(position).get_id();
-        String url = sucursales.get(position).get_image();
+        holder.mTitulo.setText(nombresucursales.get(position));
+        holder.mId = idsucursales.get(position);
+        String url = fotosucursales.get(position);
         new AsyncTaskLoadImage(holder.mFoto).execute(url);
         holder.setOnItemClickListener(mListener);
     }
 
     @Override
     public int getItemCount() {
-        return sucursales.size();
+        return nombresucursales.size();
     }
 
     public interface OnItemClickListener{
