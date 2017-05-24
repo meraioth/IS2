@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
@@ -60,11 +61,8 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        try {
-            mPresentador=new Catalogo(this.getContext());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        mPresentador= MapaBusquedaItinerarioActivity.catalogo;
 
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
 

@@ -32,7 +32,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    //private static Catalogo catalogo;
+    public static Catalogo catalogo;
     private PresentadorSucursal mPresentadorSucursal;
 
     private SearchView mBusqueda;
@@ -79,7 +79,11 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_busqueda);
         setSupportActionBar(mToolbar);
-
+        try {
+            catalogo = new Catalogo(this.getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //mPresentadorSucursal = new PresentadorSucursal(this.getApplicationContext());
         /*mapaFragment = MapaFragment.newInstance((Serializable) catalogo);
         busquedaFragment = BusquedaFragment.newInstance((Serializable) catalogo);

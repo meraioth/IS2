@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
@@ -60,11 +61,9 @@ public class BusquedaAvanzadaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            mPresentador = new Catalogo(this.getContext());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+            mPresentador = MapaBusquedaItinerarioActivity.catalogo;
+
         setHasOptionsMenu(true);
 
     }
