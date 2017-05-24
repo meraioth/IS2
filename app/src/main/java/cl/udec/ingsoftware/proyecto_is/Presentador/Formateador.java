@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import java.sql.Array;
@@ -137,7 +138,6 @@ public class Formateador {
             }
         }
         Log.d("SucursalesEn-Local",String.valueOf(sucursales.size()));
-
     }
 
     //TODO: Recibir Cursor (Local) y ResultSet (Remota) y formatea los datos , entregando conjunto de objetos. (Respalda información en SQLite)
@@ -178,10 +178,8 @@ public class Formateador {
             Toast.makeText(cont,"Primera Carga",Toast.LENGTH_SHORT).show();
             setVersion_local(consultor.getVersionRemoto(),1);
             setPrimera_carga(1);
-            resultSet = consultor.getSucursalesRemoto();
+            resultSet = consultor.getItinerariosRemoto();
             agregarItinerarios(resultSet,itinerarios);
-//            imprimir_resultado(resultSet);
-            //consultor.respaldar_Itinerario(resultSet);
 
         }else if(isNetworkAvailable() && version_local[1]!=consultor.getVersionRemoto() ){
             Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
@@ -189,7 +187,6 @@ public class Formateador {
             consultor.reset_local();
             resultSet = consultor.getItinerariosRemoto();
             agregarItinerarios(resultSet, itinerarios);
-            //consultor.respaldar_Itinerario(resultSet);
         }else{
             Toast.makeText(cont,"Cargando Local",Toast.LENGTH_SHORT).show();
             Cursor cursor= consultor.getItinerariosLocal();
@@ -198,10 +195,42 @@ public class Formateador {
         return itinerarios;
     }
 
-    private void agregarItinerarios(ResultSet aux, ArrayList<Itinerario> itinerario) {
+    private void agregarItinerarios(ResultSet aux, ArrayList<Itinerario> itinerarios) throws SQLException {
+        while(aux.next()) {
+            boolean existe_itinerario = false;
+            //Crear Categoria
+            Categoria cat = new Categoria(aux.getString("nombre_categoria"),aux.getString("descripcion_categoria"));
+            //Crear Servicio
+            Servicio serv = new Servicio(aux.getInt("id_servicio"),aux.getString("nombre_servicio"),
+                    aux.getString("descripcion_servicio"),cat);
+            //Buscaar si existe la sucursal asociada al a tupla
+            Itinerario itinerario;
+            ArrayList sucursales_duracion = new ArrayList();
+            for (Itinerario it : itinerarios) {
+                if (aux.getString("id_itinerario") == String.valueOf(it.getId())) {
+                    //Si existe la sucursal, añadimos el servicio
+                    existe_itinerario = true;
+                    break;
+                }
+            }
+            if (!existe_itinerario) {
+                //Si no existe la sucursal, se crea y se añade servicio
+                itinerario = new Itinerario(aux.getInt("id_itinerario"),aux.getString("nombre_itinerario"),
+                        aux.getInt("id_usuario"),aux.getString("estacion"));
+                Sucursal suc = new Sucursal(aux.getString("nombre_sucursal"), aux.getInt("id_sucursal"),
+                        aux.getInt("sello_de_turismo"),aux.getDouble("latitud"),aux.getDouble("longitud"),
+                        aux.getString("foto_sucursal"),aux.getString("descripcion_sucursal"));
+                Pair pair = new Pair(suc, aux.getInt("duracion"));
+                sucursales_duracion.add(pair);
+            }
+        }
+        Log.d("SucursalesEn- Remoto",String.valueOf(itinerarios.size()));
+
+
     }
 
     private void agregarItinerarios(Cursor aux, ArrayList<Itinerario> itinerario) {
+
     }
 
 

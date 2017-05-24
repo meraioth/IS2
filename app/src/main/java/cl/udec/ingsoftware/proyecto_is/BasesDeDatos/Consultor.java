@@ -65,11 +65,9 @@ public class Consultor {
                 "and servicio_categoria.nombre_categoria=categoria.nombre_categoria;") ;
         return remoto.getResult();
     };
-
+//// TODO: 22-05-17 Agregar tabla usuario en la consulta para luego instanciar los objetos de usuario 
     public ResultSet getItinerariosRemoto(){
-        remoto.query("select * from itinerario,orden,sucursal\n" +
-                "where itinerario.id=orden.id_itinerario\n" +
-                "and sucursal.id=orden.id_sucursal; ") ;
+        remoto.query("select * from itinerarios_y_sucursales") ;
         return remoto.getResult();
     };
 
