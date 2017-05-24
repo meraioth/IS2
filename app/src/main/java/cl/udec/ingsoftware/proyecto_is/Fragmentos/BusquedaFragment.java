@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -56,7 +57,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param presentador Parameter 1.
      * @return A new instance of fragment BusquedaFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -69,11 +69,9 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            mPresentador = new Catalogo(this.getContext());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        mPresentador = MapaBusquedaItinerarioActivity.catalogo;
+
         setHasOptionsMenu(true);
 
     }

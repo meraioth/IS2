@@ -63,6 +63,16 @@ public class PresentadorItinerario {
         return nombresSucursales;
     }
 
+    public ArrayList<String> getFotoSucursales(int id){
+        ArrayList<Pair> sucursales_duracion = findItinerarioById(id).getSucursales();
+        ArrayList<String> fotosSucursales = new ArrayList<>();
+        for (Pair pair : sucursales_duracion){
+            Sucursal suc = (Sucursal) pair.first;
+            fotosSucursales.add(suc.getImagen());
+        }
+        return fotosSucursales;
+    }
+
     private Itinerario findItinerarioById(int idItinerario){
         for (Itinerario itinerario: itinerarios){
             if(itinerario.getId() == idItinerario){
@@ -73,4 +83,13 @@ public class PresentadorItinerario {
     }
 
 
+    public ArrayList<Integer> getIdSucursales(int id) {
+        ArrayList<Pair> sucursales_duracion = findItinerarioById(id).getSucursales();
+        ArrayList<Integer> fotosSucursales = new ArrayList<>();
+        for (Pair pair : sucursales_duracion){
+            Sucursal suc = (Sucursal) pair.first;
+            fotosSucursales.add(suc.getId());
+        }
+        return fotosSucursales;
+    }
 }

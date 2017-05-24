@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalItinerarioAdapter;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorItinerario;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 
@@ -38,7 +39,8 @@ public class ItinerarioFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
-    private Catalogo mPresentador;
+    private PresentadorItinerario mPresentador;
+    private int PRUEBA=1;
 
     public ItinerarioFragment() {
         // Required empty public constructor
@@ -60,7 +62,7 @@ public class ItinerarioFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            mPresentador = new Catalogo(this.getContext());
+            mPresentador = new PresentadorItinerario(this.getContext());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,11 +85,7 @@ public class ItinerarioFragment extends Fragment {
         mRecyclerView.setLayoutManager(llm);
 
         SucursalItinerarioAdapter adapter = null;
-        try {
-            adapter = new SucursalItinerarioAdapter(mPresentador.getTripletasOfSucursales());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        adapter = new SucursalItinerarioAdapter(mPresentador.getNombreSucursales(PRUEBA),mPresentador.getFotoSucursales(PRUEBA),mPresentador.getIdSucursales(PRUEBA));
         //adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         return view;
