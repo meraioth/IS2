@@ -91,13 +91,16 @@ public class Catalogo implements Serializable {
         ArrayList<Integer> ides = new ArrayList<Integer>();
         int id;
         for (Sucursal sucursal: sucursales) {
-            if (sucursal.getNombre().contains(arg)){
-                id = sucursal.getId();
-                if (!ides.contains(id)){
-                    ides.add(id);
-                    Resp.add(new Tripleta(sucursal.getId(),sucursal.getNombre(),sucursal.getImagen()));
+            for(Servicio serv: sucursal.getServicios()){
+                if (sucursal.getNombre().contains(arg)|| serv.getNombre().contains(arg)||serv.getCategoria().getNombre().contains(arg)||sucursal.getComuna().contains(arg)){
+                    id = sucursal.getId();
+                    if (!ides.contains(id)){
+                        ides.add(id);
+                        Resp.add(new Tripleta(sucursal.getId(),sucursal.getNombre(),sucursal.getImagen()));
+                    }
                 }
             }
+
         }
         return Resp;
     }

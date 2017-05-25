@@ -131,7 +131,7 @@
     <string name="servicio_texto_busqueda">Servicios...</string>
     <string name="comuna_texto_busqueda">Comuna...</string>
     <string name="busqueda_avanzada_titulo">Busqueda Avanzada</string>
-    <string name="busqueda_titulo">Buscar</string>
+    <string name="busqueda_titulo">¿ Qué buscas ? </string>
     <string name="ver_en_mapa_titulo">Ver en mapa</string>
     <string name="atras_titulo">Volver atrás</string>
 </resources>
