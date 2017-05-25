@@ -45,6 +45,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
 
+    private SucursalAdapter adapter;
     private OnSucursalSelectedListener mSucursalListener;
     private Catalogo mPresentador;
 
@@ -71,6 +72,11 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
 
         mPresentador = MapaBusquedaItinerarioActivity.catalogo;
+        try {
+            adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         setHasOptionsMenu(true);
 
@@ -96,12 +102,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
 
-        SucursalAdapter adapter = null;
-        try {
-            adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         return view;
@@ -144,7 +145,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     @Override
     public boolean onQueryTextSubmit(String query) {
         String aux = toTitleCase(query);
-        SucursalAdapter adapter = null;
         adapter = new SucursalAdapter( mPresentador.getBuscarKeyword(aux));
         adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
@@ -162,6 +162,12 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onItemClick(int id) {
         mSucursalListener.OnSucursalSelected(id);
+    }
+
+    public void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio) {
+        adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales(str_comuna, str_categoria, str_servicio));
+        adapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(adapter);
     }
 
     public interface OnSucursalSelectedListener {

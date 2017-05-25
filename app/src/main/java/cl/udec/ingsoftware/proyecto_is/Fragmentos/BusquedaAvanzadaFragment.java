@@ -1,11 +1,8 @@
 package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -19,13 +16,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
-import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
-import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 /**
@@ -126,6 +118,7 @@ public class BusquedaAvanzadaFragment extends Fragment {
                 }else{
 
                     Toast.makeText(view.getContext(),str_comuna+" "+str_categoria+" "+str_servicio,Toast.LENGTH_SHORT).show();
+                    mListener.onSearchAdvanced(str_comuna,str_categoria,str_servicio);
 
 
                 }
@@ -149,7 +142,7 @@ public class BusquedaAvanzadaFragment extends Fragment {
 
     public void onBusquedaAdvancedPressed() {
         if (mListener != null) {
-            mListener.onSearchAdvanced();
+            mListener.onSearchAdvanced(str_comuna, str_categoria, str_servicio);
         }
     }
 
@@ -191,6 +184,6 @@ public class BusquedaAvanzadaFragment extends Fragment {
      */
     public interface OnBusuqedaAvanzadaInteractionListener {
         void onCancelAdvancedSearch();
-        void onSearchAdvanced();
+        void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio);
     }
 }

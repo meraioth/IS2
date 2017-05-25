@@ -12,7 +12,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
@@ -118,6 +117,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         fragmentManager = getSupportFragmentManager();
         switch (item.getItemId()) {
             case R.id.busqueda_avanzada:
+                busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaAvanzadaFragment);
                 fragmentTransaction.commit();
@@ -146,8 +146,12 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onSearchAdvanced() {
-
+    public void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio) {
+        busquedaFragment.onSearchAdvanced(str_comuna,str_categoria,str_servicio);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
