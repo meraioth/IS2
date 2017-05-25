@@ -56,6 +56,18 @@ public class Catalogo implements Serializable {
         return sucursaless;
     }
 
+
+    public ArrayList getIds(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Sucursal suc:sucursales
+                ) {
+            ids.add(suc.getId());
+
+        }
+        return ids;
+
+    }
+
     public ArrayList getSucursales(String categoria){
         ArrayList<String> sucursaless = new ArrayList();
         for (Sucursal suc:sucursales

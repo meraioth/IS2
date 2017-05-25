@@ -1,5 +1,6 @@
 package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
@@ -41,6 +43,10 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     private static final String ARG_PRESENTADOR = "presentador";
     private Catalogo mPresentador;
 
+    private HashMap<String, Integer> mHashMap = new HashMap<>();
+
+    //es la activity
+    private BusquedaFragment.OnSucursalSelectedListener mSucursalListener;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,17 +106,21 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
                 ArrayList latitudes = mPresentador.getLatitudes();
                 ArrayList longitudes = mPresentador.getLongitudes();
                 ArrayList nombre = mPresentador.getSucursales();
+                ArrayList ids = mPresentador.getIds();
 
                 for(int i = 0;i<latitudes.size();i++){
                     if((Double)latitudes.get(i)!=-1){
                         Log.d("mapa :",nombre.get(i)+" "+latitudes.get(i)+longitudes.get(i));
                         googleMap.addMarker(new MarkerOptions().position(new LatLng((Double)latitudes.get(i),(Double)longitudes.get(i))).title((String)nombre.get(i)));
+                        mHashMap.put((String) nombre.get(i),(Integer) ids.get(i));
                     }
                 }
 
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
+                        int id = mHashMap.get(marker.getTitle());
+                        mSucursalListener.OnSucursalSelected(id);
                         return false;
                     }
                 });
@@ -200,6 +210,18 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //se checkea que la activity implemente la interfaz
+        if (context instanceof BusquedaFragment.OnSucursalSelectedListener) {
+            mSucursalListener = (BusquedaFragment.OnSucursalSelectedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnBusuqedaAvanzadaInteractionListener");
+        }
     }
 
 
