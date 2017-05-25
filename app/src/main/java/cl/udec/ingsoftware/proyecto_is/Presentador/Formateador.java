@@ -172,61 +172,101 @@ public class Formateador {
         //System.out.println("version remoto db:"+consultor.getVersionRemoto());
 
 
-        if(primera_carga[1]){
-            Toast.makeText(cont,"Primera Carga",Toast.LENGTH_SHORT).show();
-            setVersion_local(consultor.getVersionRemoto(),1);
-            setPrimera_carga(1);
-            resultSet = consultor.getItinerariosRemoto();
-            agregarItinerarios(resultSet,itinerarios);
-
-        }else if(isNetworkAvailable() && version_local[1]!=consultor.getVersionRemoto() ){
-            Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
-            setVersion_local(consultor.getVersionRemoto(),1);
-            consultor.reset_local();
+//        if(primera_carga[1]){
+//            Toast.makeText(cont,"Primera Carga",Toast.LENGTH_SHORT).show();
+//            setVersion_local(consultor.getVersionRemoto(),1);
+//            setPrimera_carga(1);
+//            resultSet = consultor.getItinerariosRemoto();
+//            agregarItinerarios(resultSet,itinerarios);
+//
+//        }else
+            if(isNetworkAvailable()){
+//            Toast.makeText(cont,"Base de Dato Desactualizada",Toast.LENGTH_SHORT).show();
+//            setVersion_local(consultor.getVersionRemoto(),1);
+//            consultor.reset_local();
             resultSet = consultor.getItinerariosRemoto();
             agregarItinerarios(resultSet, itinerarios);
-        }else{
-            Toast.makeText(cont,"Cargando Local",Toast.LENGTH_SHORT).show();
-            Cursor cursor= consultor.getItinerariosLocal();
-            agregarItinerarios(cursor,itinerarios);
         }
+//        else{
+//            Toast.makeText(cont,"Cargando Local",Toast.LENGTH_SHORT).show();
+//            Cursor cursor= consultor.getItinerariosLocal();
+//            //agregarItinerarios(cursor,itinerarios);
+//        }
         return itinerarios;
     }
 
     private void agregarItinerarios(ResultSet aux, ArrayList<Itinerario> itinerarios) throws SQLException {
+        //Se crean todas las sucursales con la respectiva info
+        ArrayList<Sucursal> sucursales=new ArrayList<Sucursal>();
         while(aux.next()) {
-            boolean existe_itinerario = false;
+            boolean existe_sucursal = false;
             //Crear Categoria
-            Categoria cat = new Categoria(aux.getString("nombre_categoria"),aux.getString("descripcion_categoria"));
+            Categoria cat = new Categoria(aux.getString("nombre_categoria"), aux.getString("descripcion_categoria"));
             //Crear Servicio
             Servicio serv = new Servicio(aux.getInt("id_servicio"),aux.getString("nombre_servicio"),
                     aux.getString("descripcion_servicio"),cat);
             //Buscaar si existe la sucursal asociada al a tupla
-            Itinerario itinerario;
-            ArrayList sucursales_duracion = new ArrayList();
-            for (Itinerario it : itinerarios) {
-                if (aux.getString("id_itinerario") == String.valueOf(it.getId())) {
+            //TODO:Cambiar arreglo de sucursales por hashtable
+            Sucursal sucursal;
+            for (Sucursal suc : sucursales) {
+                if (aux.getInt(1) == suc.getId()) {
                     //Si existe la sucursal, añadimos el servicio
+                    suc.addServicio(serv);
+                    existe_sucursal = true;
+                }
+            }
+            if (!existe_sucursal) {
+                //Si no existe la sucursal, se crea y se añade servicio
+                sucursal = new Sucursal(aux.getString("nombre_sucursal"), aux.getInt("id_sucursal"), aux.getInt("sello_de_turismo"),
+                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto_sucursal"), aux.getString("descripcion"), aux.getString("comuna"));
+                sucursal.addServicio(serv);
+                sucursales.add(sucursal);
+            }
+        }
+        aux.first();
+        Pair pair = new Pair(null,null);
+        while(aux.next()) {
+            boolean existe_itinerario = false;
+
+            Itinerario itinerario = new Itinerario();
+            for (Itinerario it : itinerarios) {
+                if (aux.getInt("id_itinerario") == (it.getId())) {
+                    //Si existe el itinerario, añadimos sucursal
+                    for (Sucursal suc : sucursales
+                            ) {
+                        if (aux.getInt("id_sucursal") == suc.getId()) {
+                            pair = new Pair(suc, aux.getInt("duracion"));
+                            it.addSucursal(pair);
+                            break;
+                        }
+
+                    }
                     existe_itinerario = true;
                     break;
                 }
             }
             if (!existe_itinerario) {
-                //Si no existe la sucursal, se crea y se añade servicio
-                itinerario = new Itinerario(aux.getInt("id_itinerario"),aux.getString("nombre_itinerario"),
-                        aux.getInt("id_usuario"),aux.getString("estacion"));
-                Sucursal suc = new Sucursal(aux.getString("nombre_sucursal"), aux.getInt("id_sucursal"),
-                        aux.getInt("sello_de_turismo"),aux.getDouble("latitud"),aux.getDouble("longitud"),
-                        aux.getString("foto_sucursal"),aux.getString("descripcion_sucursal"));
-                Pair pair = new Pair(suc, aux.getInt("duracion"));
-                sucursales_duracion.add(pair);
+                //Si no existe itinerario, se crea y se añade servicio
+                itinerario = new Itinerario(aux.getInt("id_itinerario"), aux.getString("nombre_itinerario"),
+                        aux.getInt("id_usuario"), aux.getString("estacion"));
+                for (Sucursal suc : sucursales
+                        ) {
+                    if (aux.getInt("id_sucursal") == suc.getId()) {
+                        pair = new Pair(suc, aux.getInt("duracion"));
+                        itinerario.addSucursal(pair);
+                        break;
+                    }
+                }
+                itinerarios.add(itinerario);
             }
         }
-        Log.d("SucursalesEn- Remoto",String.valueOf(itinerarios.size()));
+
+
+        Log.d("itinerarios",String.valueOf(itinerarios.size()));
 
 
     }
-
+    //Los itinerarios no serán guardados en local
     private void agregarItinerarios(Cursor aux, ArrayList<Itinerario> itinerario) {
 
     }

@@ -42,8 +42,9 @@ public class Catalogo implements Serializable {
 
     public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
-        itinerarios = formateador.getItinerarios();
         sucursales = formateador.getSucursales();
+        itinerarios = formateador.getItinerarios();
+
     }
 
     public ArrayList getSucursales(){

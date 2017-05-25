@@ -40,7 +40,7 @@ public class ItinerarioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private PresentadorItinerario mPresentador;
-    private int PRUEBA=1;
+    private int PRUEBA=4;
 
     public ItinerarioFragment() {
         // Required empty public constructor

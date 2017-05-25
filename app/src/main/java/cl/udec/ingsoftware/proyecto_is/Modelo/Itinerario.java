@@ -21,7 +21,13 @@ public class Itinerario {
         this.nombre = nombre;
         this.id_usuario = id_usuario;
         this.estacion = estacion;
+        sucursales_duracion = new ArrayList<>();
     }
+
+    public Itinerario() {
+
+    }
+
     public void inicializarSucursales(ArrayList<Pair> sucursales){
         this.sucursales_duracion = sucursales;
     }
@@ -44,5 +50,9 @@ public class Itinerario {
     }
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+
+    public void addSucursal(Pair pair) {
+        sucursales_duracion.add(pair);
     }
 }
