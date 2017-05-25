@@ -209,16 +209,10 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.login) {
             vista_login();
-        } else if (id == R.id.mapa_tematico) {
-            vista_mapa_tematico();
-
-        } else if (id == R.id.nav_manage) {
+        }  else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
             vista_mapsforge();
-
-        } else if (id == R.id.nav_send) {
-            vista_osm();
 
         }
 
