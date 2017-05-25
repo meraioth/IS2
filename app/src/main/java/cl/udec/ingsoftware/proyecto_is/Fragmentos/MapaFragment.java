@@ -1,6 +1,9 @@
 package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -29,6 +33,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -38,10 +43,11 @@ import cl.udec.ingsoftware.proyecto_is.R;
  * Created by meraioth on 16-05-17.
  */
 
-public class MapaFragment extends Fragment implements AdapterView.OnItemSelectedListener  {
+public class MapaFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private static final String ARG_PRESENTADOR = "presentador";
     private Catalogo mPresentador;
+    Map<String,Integer> iconos = new HashMap<String,Integer>();
 
     private HashMap<String, Integer> mHashMap = new HashMap<>();
 
@@ -49,14 +55,11 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
     private BusquedaFragment.OnSucursalSelectedListener mSucursalListener;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mPresentador = (Catalogo) getArguments().getSerializable(ARG_PRESENTADOR);
-            try {
-                mPresentador=new Catalogo(this.getContext());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            mPresentador= MapaBusquedaItinerarioActivity.catalogo;
         }
 
         setHasOptionsMenu(true);
@@ -78,7 +81,8 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_categoria);
         spinner.setOnItemSelectedListener(this);
 
-        ArrayList<String> categories = mPresentador.getCategorias();
+        final ArrayList<String> categories = mPresentador.getCategorias();
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
@@ -106,22 +110,30 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
                 ArrayList latitudes = mPresentador.getLatitudes();
                 ArrayList longitudes = mPresentador.getLongitudes();
                 ArrayList nombre = mPresentador.getSucursales();
+                ArrayList categorias = mPresentador.getAllCategorias();
                 ArrayList ids = mPresentador.getIds();
 
                 for(int i = 0;i<latitudes.size();i++){
                     if((Double)latitudes.get(i)!=-1){
                         Log.d("mapa :",nombre.get(i)+" "+latitudes.get(i)+longitudes.get(i));
-                        googleMap.addMarker(new MarkerOptions().position(new LatLng((Double)latitudes.get(i),(Double)longitudes.get(i))).title((String)nombre.get(i)));
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng((Double)latitudes.get(i),(Double)longitudes.get(i))).title((String)nombre.get(i)).icon(getIcon((String) categorias.get(i))));
                         mHashMap.put((String) nombre.get(i),(Integer) ids.get(i));
                     }
                 }
 
-                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                    @Override
+//                    public boolean onMarkerClick(Marker marker) {
+//                        int id = mHashMap.get(marker.getTitle());
+//                        mSucursalListener.OnSucursalSelected(id);
+//                        return false;
+//                    }
+//                });
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
-                    public boolean onMarkerClick(Marker marker) {
+                    public void onInfoWindowClick(Marker marker) {
                         int id = mHashMap.get(marker.getTitle());
                         mSucursalListener.OnSucursalSelected(id);
-                        return false;
                     }
                 });
 
@@ -183,27 +195,77 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
         ArrayList latitudes = mPresentador.getLatitudes(item);
         ArrayList longitudes = mPresentador.getLongitudes(item);
         ArrayList nombre = mPresentador.getSucursales(item);
+
         Log.d("Cantidad", String.valueOf(latitudes.size()));
 
         for(int i = 0;i<latitudes.size();i++){
             if((Double)latitudes.get(i)!=-1){
+
+//                Drawable circleDrawable = getResources().getDrawable( R.drawable.esparcimiento);
+//                BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
+
                 LatLng aux = new LatLng((double)latitudes.get(i),(double)longitudes.get(i));
-                googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)));
+                googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)).icon(getIcon(item)));
             }
         }
         }else {
             ArrayList latitudes = mPresentador.getLatitudes();
             ArrayList longitudes = mPresentador.getLongitudes();
             ArrayList nombre = mPresentador.getSucursales();
+            ArrayList categories =mPresentador.getAllCategorias();
             Log.d("Cantidad", String.valueOf(latitudes.size()));
 
             for(int i = 0;i<latitudes.size();i++){
                 if((Double)latitudes.get(i)!=-1){
+//                    Drawable circleDrawable = getResources().getDrawable(iconos.get(categories.get(i)));
+//                    BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
                     LatLng aux = new LatLng((double)latitudes.get(i),(double)longitudes.get(i));
-                    googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)));
+                    googleMap.addMarker(new MarkerOptions().position(aux).title((String)nombre.get(i)).icon(getIcon((String) categories.get(i))));
                 }
             }
         }
+
+    }
+
+    private BitmapDescriptor getIcon(String item) {
+        Drawable aux;
+        switch (item) {
+            case "Alojamiento Turístico":
+             aux = getResources().getDrawable(R.drawable.alojamiento);
+                break;
+            case "Restaurantes y Similares":
+                aux = getResources().getDrawable(R.drawable.restaurant);
+                break;
+            case "Agencias de Viaje y Tour Operador":
+                aux = getResources().getDrawable(R.drawable.restaurant);
+                break;
+            case "Transporte de Pasajeros por Carretera Interurbana":
+                aux = getResources().getDrawable(R.drawable.transporte);
+                break;
+            case "Turismo Aventura":
+                aux = getResources().getDrawable(R.drawable.turismo);
+                break;
+            case "Servicios de Esparcimiento":
+                aux = getResources().getDrawable(R.drawable.esparcimiento);
+                break;
+            case "Artesanía":
+                aux = getResources().getDrawable(R.drawable.artesania);
+                break;
+            case "Guías de Turismo":
+                aux = getResources().getDrawable(R.drawable.turismo);
+                break;
+            case "Servicios Deportivos":
+                aux = getResources().getDrawable(R.drawable.deporte);
+                break;
+            default:
+                aux = getResources().getDrawable(R.drawable.arauco);
+                break;
+
+
+        }
+
+        BitmapDescriptor markerIcon = getMarkerIconFromDrawable(aux);
+        return markerIcon;
 
     }
 
@@ -222,6 +284,16 @@ public class MapaFragment extends Fragment implements AdapterView.OnItemSelected
             throw new RuntimeException(context.toString()
                     + " must implement OnBusuqedaAvanzadaInteractionListener");
         }
+    }
+
+
+    private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
 

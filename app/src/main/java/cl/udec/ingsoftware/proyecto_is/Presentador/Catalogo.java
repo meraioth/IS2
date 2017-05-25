@@ -310,4 +310,18 @@ public class Catalogo implements Serializable {
 
         return info;
     }
+
+    public ArrayList<String> getAllCategorias() {
+        ArrayList<String> categoria= new ArrayList<String>();
+        categoria.add("Todas");
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                    categoria.add(serv.getCategoria().getNombre());
+            }
+        }
+
+        return categoria;
+    }
 }
