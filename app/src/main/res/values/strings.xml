@@ -134,4 +134,6 @@
     <string name="busqueda_titulo">¿ Qué buscas ? </string>
     <string name="ver_en_mapa_titulo">Ver en mapa</string>
     <string name="atras_titulo">Volver atrás</string>
+    <string name="comentario1">"Usuario : Fernando Galvez\n"
+    "Excelente experiencia tomando este viaje, totalmente recomendado, nos demoramos aproximadamente dos dias y alcanzamos a recorrer varias comunas"</string>
 </resources>

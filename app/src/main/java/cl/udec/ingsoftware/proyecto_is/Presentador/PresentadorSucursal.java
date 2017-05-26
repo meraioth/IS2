@@ -75,4 +75,7 @@ public class PresentadorSucursal implements Serializable {
     }
 
 
+    public String getComuna() {
+        return sucursal.getComuna();
+    }
 }

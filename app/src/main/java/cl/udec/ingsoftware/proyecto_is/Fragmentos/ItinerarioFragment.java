@@ -11,10 +11,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.RatingBar;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Random;
 
+import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ListAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalItinerarioAdapter;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -40,7 +46,9 @@ public class ItinerarioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private PresentadorItinerario mPresentador;
-    private int PRUEBA=4;
+    private int PRUEBA=2;
+    private RatingBar mRating;
+    private ListView comentarios;
 
     public ItinerarioFragment() {
         // Required empty public constructor
@@ -67,6 +75,7 @@ public class ItinerarioFragment extends Fragment {
             e.printStackTrace();
         }
         setHasOptionsMenu(true);
+
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -83,7 +92,16 @@ public class ItinerarioFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(llm);
-
+        Random randomGenerator = new Random();
+        mRating = (RatingBar) view.findViewById(R.id.eval_itinerario);
+        mRating.setNumStars(5);
+        float rating = randomGenerator.nextInt(5);
+        mRating.setRating(rating);
+        comentarios = (ListView) view.findViewById(R.id.comentarios_itinerario);
+        ArrayAdapter<String> comments = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_2,android.R.id.text1,new String[]{"Usuario : Fernando Galvez\n" +
+                "Excelente experiencia tomando este viaje, totalmente recomendado, nos demoramos aproximadamente dos dias y alcanzamos a recorrer varias comunas","Usuario : Eduardo Gómez\n" +
+                "Una excelente alternativa a los clásicos viajes, hermosa vista por las ciudades puerto de la provincia de Arauco"});
+        comentarios.setAdapter(comments);
         SucursalItinerarioAdapter adapter = null;
         adapter = new SucursalItinerarioAdapter(mPresentador.getNombreSucursales(PRUEBA),mPresentador.getFotoSucursales(PRUEBA),mPresentador.getIdSucursales(PRUEBA));
         //adapter.setOnItemClickListener(this);

@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class VisualizacionSucursal extends AppCompatActivity {
     private TextView mCalificacion;
     private RatingBar mRating;
     private Toolbar mToolbar;
+    private ListView comentarios;
 
 
     @Override
@@ -53,7 +56,7 @@ public class VisualizacionSucursal extends AppCompatActivity {
         }
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_sucursal);
-        mToolbar.setTitle(mPresentador.get_name());
+        mToolbar.setTitle(mPresentador.get_name()+" - "+mPresentador.getComuna());
         setSupportActionBar(mToolbar);
 
         mCalificacion = (TextView) findViewById(R.id.texto_calificacion);
@@ -63,6 +66,12 @@ public class VisualizacionSucursal extends AppCompatActivity {
         mRating = (RatingBar) findViewById(R.id.ratingBar);
         float rating = randomGenerator.nextInt(5);
         mRating.setRating(rating);
+        comentarios = (ListView) findViewById(R.id.comentarios_sucursal);
+        ArrayAdapter<String> comments = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2,android.R.id.text1,new String[]{"Usuario : Fernando Galvez\n" +
+                "Lugar Atendido por sus dueños, excelente ambiente, muy acogedor en general un ambiente muy cálido","Usuario : Eduardo Gómez\n" +
+                "Infraestructura un poco débil, poco recomendable para las personas más exigentes, aunque las personas que atienden son muy atentas"});
+        comentarios.setAdapter(comments);
+
 
     }
 

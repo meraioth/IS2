@@ -1,70 +1,164 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_itinerariosucursales"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_height="201dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_itinerariosucursales"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_weight="1" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/recycler_view_itinerariosucursales"
-            android:layout_alignParentBottom="true">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/agregar_itinerario"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            app:backgroundTint="@color/wallet_holo_blue_light"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_day"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="339dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/floatingActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="76dp"
-                    android:layout_marginEnd="34dp"
-                    android:layout_weight="0.12"
-                    android:clickable="true"
-                    app:fabSize="mini"
-                    app:srcCompat="@android:drawable/ic_menu_day" />
+        <TextView
+            android:id="@+id/descripcion_itinerario"
+            android:layout_width="155dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Nombre Itinerario:"
+            android:textColor="@color/color_letra_sucursal_descripcion"
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/ratingBar2"
-                    android:layout_marginTop="17dp"
-                    android:layout_weight="0.12"
-                    android:text="TextView" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="185dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Paseo Borde Costero"
+            android:textColor="@color/color_letra_sucursal_descripcion"
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <RatingBar
-                    android:id="@+id/ratingBar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/floatingActionButton"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="84dp" />
-            </LinearLayout>
-        </ScrollView>
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="155dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Usuario:"
+            android:textColor="@color/color_letra_sucursal_descripcion"
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            tools:layout_editor_absoluteY="78dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="185dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Federico Martinez"
+            android:textColor="@color/color_letra_sucursal_descripcion"
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="78dp" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="154dp"
+            android:layout_height="35dp"
+            android:text="Comentarios"
+            android:textStyle="italic"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="45dp"
+            app:layout_constraintTop_toBottomOf="@+id/owner"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <ListView
+            android:id="@+id/comentarios_itinerario"
+            android:layout_width="405dp"
+            android:layout_height="111dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            tools:layout_editor_absoluteX="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/eval_itinerario" />
+
+        <RatingBar
+            android:id="@+id/eval_itinerario"
+            android:layout_width="240dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            tools:layout_editor_absoluteY="336dp" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
