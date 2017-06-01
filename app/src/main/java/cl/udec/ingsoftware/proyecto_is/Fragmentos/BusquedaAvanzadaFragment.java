@@ -116,11 +116,7 @@ public class BusquedaAvanzadaFragment extends Fragment {
                 if(str_servicio==null || str_categoria == null || str_comuna==null){
                     Toast.makeText(view.getContext(),"Debe rellenar todos los campos",Toast.LENGTH_SHORT).show();
                 }else{
-
-                    Toast.makeText(view.getContext(),str_comuna+" "+str_categoria+" "+str_servicio,Toast.LENGTH_SHORT).show();
                     mListener.onSearchAdvanced(str_comuna,str_categoria,str_servicio);
-
-
                 }
             }
         });

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
@@ -24,6 +25,12 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
 
     public SucursalAdapter(List<Tripleta> sucursales){
         this.sucursales = sucursales;
+    }
+
+    public void setNewData(ArrayList<Tripleta> sucursales) {
+        this.sucursales.clear();
+        this.sucursales.addAll(sucursales);
+        notifyDataSetChanged();
     }
 
     @Override

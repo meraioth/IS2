@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -70,14 +71,15 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mPresentador = MapaBusquedaItinerarioActivity.catalogo;
-        try {
-            adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(adapter == null){
+            try {
+                adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales());
+                adapter.setOnItemClickListener(this);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
         setHasOptionsMenu(true);
 
     }
@@ -101,9 +103,6 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
-
-
-        adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         return view;
     }
@@ -145,10 +144,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     @Override
     public boolean onQueryTextSubmit(String query) {
         String aux = toTitleCase(query);
-        adapter = new SucursalAdapter( mPresentador.getBuscarKeyword(aux));
-        adapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(adapter);
-
+        adapter.setNewData(mPresentador.getBuscarKeyword(aux));
         mBusqueda.clearFocus();
         mBusqueda.onActionViewCollapsed();
         return false;
@@ -165,9 +161,8 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio) {
-        adapter = new SucursalAdapter(mPresentador.getTripletasOfSucursales(str_comuna, str_categoria, str_servicio));
-        adapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(adapter);
+        ArrayList<Tripleta> aux = mPresentador.getTripletasOfSucursales(str_comuna, str_categoria, str_servicio);
+        adapter.setNewData(aux);
     }
 
     public interface OnSucursalSelectedListener {

@@ -165,6 +165,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
         fragmentTransaction.commit();
+
     }
 
     @Override
