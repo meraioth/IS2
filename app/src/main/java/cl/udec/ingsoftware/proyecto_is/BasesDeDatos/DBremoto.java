@@ -3,6 +3,7 @@ package cl.udec.ingsoftware.proyecto_is.BasesDeDatos;
 /**
  * Created by meraioth on 28-12-16.
  */
+import android.content.AsyncTaskLoader;
 import android.util.Log;
 
 import java.sql.Array;
@@ -12,6 +13,8 @@ import java.sql.SQLException ;
 import java.sql.Statement ;
 import java.sql.ResultSet ;
 import java.util.ArrayList;
+
+import static org.postgresql.util.JdbcBlackHole.close;
 
 public class DBremoto {
 
@@ -24,18 +27,13 @@ public class DBremoto {
     public void query(String aux){
         consulta=aux;
 
-//        if(sqlThread.getState()== Thread.State.NEW){
-            sqlThread.start();
+        sqlThread.start();
             try {
-                sqlThread.join(0);
+                sqlThread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-//        }else {
-//            Thread sqlthread = sqlThread;
-//            sqlthread.start();
-//        }
 
     }
     public ResultSet getResult(){
@@ -57,12 +55,16 @@ public class DBremoto {
                         ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = st.executeQuery(consulta);
 
+
                 result = rs;
-                conn.close();
-            } catch (SQLException se) {
-                System.out.println("oops! No se puede conectar. Error: " + se.toString());
+
             } catch (ClassNotFoundException e) {
-                System.out.println("oops! No se encuentra la clase. Error: " + e.getMessage());
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+
+                close(conn);
             }
         }
     };

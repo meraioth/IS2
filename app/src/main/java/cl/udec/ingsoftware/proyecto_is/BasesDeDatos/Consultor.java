@@ -57,6 +57,7 @@ public class Consultor {
     };
 
     public ResultSet getSucursalesRemoto(){
+        remoto = new DBremoto();
         remoto.query("select *\n" +
                 " from sucursal,sucursal_servicio,servicio ,servicio_categoria,categoria\n" +
                 "where sucursal.id=sucursal_servicio.id_sucursal and \n" +
@@ -67,23 +68,27 @@ public class Consultor {
     };
 //// TODO: 22-05-17 Agregar tabla usuario en la consulta para luego instanciar los objetos de usuario 
     public ResultSet getItinerariosRemoto(){
+        remoto = new DBremoto();
         remoto.query("select * from itinerarios_y_sucursales") ;
         return remoto.getResult();
     };
 
     public ResultSet getCategoriasRemoto(){
+        remoto = new DBremoto();
         remoto.query("select * " +
                 "from categorias; ") ;
         return remoto.getResult();
     };
 
     public ResultSet getServiciosRemoto(){
+        remoto = new DBremoto();
         remoto.query("select * " +
                 "from servicio; ") ;
         return remoto.getResult();
     };
 
     public int getVersionRemoto(){
+        remoto = new DBremoto();
         remoto.query("select max(update) from log;");
         ResultSet rs = remoto.getResult();
         try {
