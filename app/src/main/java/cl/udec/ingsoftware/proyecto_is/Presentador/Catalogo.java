@@ -81,6 +81,7 @@ public class Catalogo implements Serializable {
         return sucursaless;
     }
 
+
      public ArrayList getTripletasOfSucursales()throws SQLException {
         ArrayList<Tripleta> info = new ArrayList<Tripleta>();
         ArrayList<Integer> ides = new ArrayList<Integer>();
@@ -323,5 +324,13 @@ public class Catalogo implements Serializable {
         }
 
         return categoria;
+    }
+
+    public ArrayList<Integer> getAllIdOfItinerarios(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (Itinerario it: itinerarios){
+            ids.add(it.getId());
+        }
+        return ids;
     }
 }
