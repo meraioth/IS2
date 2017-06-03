@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/busqueda_avanzada_itinerario"
         android:orientation="vertical">
 
         <LinearLayout
@@ -34,6 +35,7 @@
 
             <Spinner
                 android:id="@+id/spinner_comuna"
+                style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -65,6 +67,7 @@
 
             <Spinner
                 android:id="@+id/spinner_categoria_busqueda"
+                style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -96,6 +99,7 @@
 
             <Spinner
                 android:id="@+id/spinner_servicio"
+                style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

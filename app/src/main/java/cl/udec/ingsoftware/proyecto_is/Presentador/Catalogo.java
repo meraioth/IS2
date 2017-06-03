@@ -324,4 +324,8 @@ public class Catalogo implements Serializable {
 
         return categoria;
     }
+
+    public String[] getDuraciones_Itinerarios() {
+    return new String[]{" ","as"};
+    }
 }

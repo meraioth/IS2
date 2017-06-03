@@ -136,4 +136,7 @@
     <string name="atras_titulo">Volver atrás</string>
     <string name="comentario1">"Usuario : Fernando Galvez\n"
     "Excelente experiencia tomando este viaje, totalmente recomendado, nos demoramos aproximadamente dos dias y alcanzamos a recorrer varias comunas"</string>
+    <string name="duracion_busqueda">Duración (Horas)</string>
+    <string name="estacion">Estación del Año</string>
+    <string name="seguidores">Cantidad Seguidores/Otro</string>
 </resources>
