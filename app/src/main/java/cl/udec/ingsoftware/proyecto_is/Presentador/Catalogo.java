@@ -81,7 +81,6 @@ public class Catalogo implements Serializable {
         return sucursaless;
     }
 
-
      public ArrayList getTripletasOfSucursales()throws SQLException {
         ArrayList<Tripleta> info = new ArrayList<Tripleta>();
         ArrayList<Integer> ides = new ArrayList<Integer>();
