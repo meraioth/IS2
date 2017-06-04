@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import java.io.Serializable;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -237,8 +239,6 @@ public class Catalogo implements Serializable {
         return nombreItinerarios;
     }
 
-
-
     public ArrayList<String> getComunas() {
         Set<String> com = new HashSet<String>();
         ArrayList<String> comunas= new ArrayList<String>();
@@ -247,7 +247,6 @@ public class Catalogo implements Serializable {
                 ) {
 
                 com.add(suc.getComuna());
-
         }
         for (String str:com
                 ) {
@@ -274,8 +273,7 @@ public class Catalogo implements Serializable {
                 cat.add(serv.getCategoria().getNombre());
             }
         }
-        for (String str:cat
-                ) {
+        for (String str:cat){
             categoria.add(str);
         }
         return categoria;
@@ -336,4 +334,48 @@ public class Catalogo implements Serializable {
     public int[] getDuraciones_Itinerarios() {
     return new int[]{5,10,15};
     }
+
+    /**
+     * Obtiene las duraciones de itinerarios para la estacion 'estacion'
+     * @param estacion
+     * @return Arreglo de Enteros con las duraciones para la estacion
+     */
+    public ArrayList getDuraciones(String estacion) {
+        Set<Integer> dur = new HashSet<Integer>();
+        ArrayList<Integer> duracion = new ArrayList<Integer>();
+        //duracion.add("Todas");
+        for (Itinerario itinerario: itinerarios){
+            if(itinerario.getEstacion().compareTo(estacion)==0)
+                dur.add(itinerario.getDuracion());
+        }
+        for (Integer str:dur){
+            duracion.add(str);
+        }
+        return duracion;
+    }
+
+    /**
+     * Filtrar itinerarios por estacion y duracion
+     * @param str_estacion
+     * @param str_duracion
+     * @return Arreglo de tripletas
+     */
+    public ArrayList getTripletaItinerarios(String str_estacion, int str_duracion) {
+        ArrayList<TripletaItinerario> info = new ArrayList<TripletaItinerario>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        int id;
+        for (Itinerario itinerario: itinerarios) {
+            id = itinerario.getId();
+            if (!ides.contains(id)){
+                ides.add(id);
+                    if(itinerario.getEstacion().compareTo(str_estacion)==0 && Integer.valueOf(itinerario.getDuracion()).compareTo(Integer.valueOf(str_duracion))==0) {
+                        TripletaItinerario tri = new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getSucursales());
+                        info.add(tri);
+                    }
+            }
+        }
+        return info;
+    }
+
+
 }
