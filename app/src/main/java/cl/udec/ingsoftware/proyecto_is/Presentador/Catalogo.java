@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,6 +29,7 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
+import cl.udec.ingsoftware.proyecto_is.Modelo.TripletaItinerario;
 
 /**
  * Created by matisin on 28-12-16.
@@ -322,23 +324,13 @@ public class Catalogo implements Serializable {
         return categoria;
     }
 
-    public ArrayList<String> getEstaciones() {
-        Set<String> est = new HashSet<String>();
-        ArrayList<String> estaciones = new ArrayList<String>();
-        //estaciones.add("Todas");
-        for (Itinerario itinerario: itinerarios
-                ) {
-            est.add(itinerario.getEstacion());
-        }
-        for (String str:est
-                ) {
-            estaciones.add(str);
-        }
-        return estaciones;
+
+    public String[] getDuraciones_Itinerarios() {
+        return new String[]{" ","as"};
     }
 
     /**
-     * Obtiene las duraciones de itinerarios para una estacion
+     * Obtiene las duraciones de itinerarios para la estacion 'estacion'
      * @param estacion
      * @return Arreglo de Enteros con las duraciones para la estacion
      */
@@ -358,24 +350,26 @@ public class Catalogo implements Serializable {
 
     /**
      * Filtrar itinerarios por estacion y duracion
-     * @param estacion
-     * @param duracion
+     * @param str_estacion
+     * @param str_duracion
      * @return Arreglo de tripletas
      */
-    public ArrayList getFiltrarItinerarios(String estacion, int duracion) {
-        ArrayList<Pair> info = new ArrayList<Pair>();
+    public ArrayList getTripletaItinerarios(String str_estacion, int str_duracion) {
+        ArrayList<TripletaItinerario> info = new ArrayList<TripletaItinerario>();
         ArrayList<Integer> ides = new ArrayList<Integer>();
         int id;
         for (Itinerario itinerario: itinerarios) {
             id = itinerario.getId();
             if (!ides.contains(id)){
                 ides.add(id);
-                    if(itinerario.getEstacion().compareTo(estacion)==0 && itinerario.getDuracion().compareTo(duracion)==0) {
-                        Pair pair = new Pair(itinerario.getId(), itinerario.getNombre());
-                        info.add(pair);
+                    if(itinerario.getEstacion().compareTo(str_estacion)==0 && Integer.valueOf(itinerario.getDuracion()).compareTo(Integer.valueOf(str_duracion))==0) {
+                        TripletaItinerario tri = new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getSucursales());
+                        info.add(tri);
                     }
             }
         }
         return info;
     }
+
+
 }
