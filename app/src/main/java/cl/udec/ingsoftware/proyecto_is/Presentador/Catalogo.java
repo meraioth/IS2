@@ -332,4 +332,8 @@ public class Catalogo implements Serializable {
         }
         return ids;
     }
+
+    public int[] getDuraciones_Itinerarios() {
+    return new int[]{5,10,15};
+    }
 }

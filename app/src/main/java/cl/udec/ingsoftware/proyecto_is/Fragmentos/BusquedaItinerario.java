@@ -63,7 +63,12 @@ public class BusquedaItinerario extends Fragment {
         duracion = (Spinner) view.findViewById(R.id.duracion_spinner);
         estacion = (Spinner)view.findViewById(R.id.estacion_spinner);
         estacion.setAdapter(new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,new String[]{"Otoño","Invierno","Primavera","Verano"}));
-        duracion.setAdapter(new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,mPresentador.getDuraciones_Itinerarios()));
+        int[] dura= mPresentador.getDuraciones_Itinerarios();
+        String[] duraciones = new String[dura.length];
+        for (int i = 0; i <dura.length ; i++) {
+            duraciones[i]=String.valueOf(dura[i]);
+        }
+        duracion.setAdapter(new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,duraciones));
         estacion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
