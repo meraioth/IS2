@@ -15,13 +15,15 @@ public class Itinerario {
     private int id_usuario;
     private String estacion;
     private ArrayList<Pair> sucursales_duracion;
+    private int duracion;
 
-    public Itinerario(int id,String nombre, int id_usuario, String estacion){
+    public Itinerario(int id,String nombre, int id_usuario, String estacion, int duracion){
         this.id = id;
         this.nombre = nombre;
         this.id_usuario = id_usuario;
         this.estacion = estacion;
         sucursales_duracion = new ArrayList<>();
+        this.duracion = duracion;
     }
 
     public Itinerario() {
@@ -54,5 +56,9 @@ public class Itinerario {
 
     public void addSucursal(Pair pair) {
         sucursales_duracion.add(pair);
+    }
+
+    public int getDuracion(){
+        return this.duracion;
     }
 }
