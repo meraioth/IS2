@@ -80,7 +80,6 @@ public class ItinerarioFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_busqueda_avanzada, menu);
     }
 
     @Override

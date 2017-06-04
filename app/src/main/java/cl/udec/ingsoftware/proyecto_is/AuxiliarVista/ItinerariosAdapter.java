@@ -2,6 +2,7 @@ package cl.udec.ingsoftware.proyecto_is.AuxiliarVista;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +46,13 @@ public class ItinerariosAdapter extends RecyclerView.Adapter<ItinerariosAdapter.
 
     @Override
     public void onBindViewHolder(ItinerarioViewHolder holder, int position) {
+
+        holder.recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recycler.setAdapter(new SucursalItinerarioAdapter(
                 mPresentador.getNombreSucursales(3),
                 mPresentador.getFotoSucursales(3),
                 mPresentador.getIdSucursales(3)));
+        holder.recycler.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -62,15 +66,12 @@ public class ItinerariosAdapter extends RecyclerView.Adapter<ItinerariosAdapter.
 
         public ItinerarioViewHolder(View itemView, PresentadorItinerario mPresentador) {
             super(itemView);
+
             recycler = (RecyclerView) itemView.findViewById(R.id.lista_itinerarios);
-
-
-            SucursalItinerarioAdapter card = new SucursalItinerarioAdapter(
-                    mPresentador.getNombreSucursales(3),
-                    mPresentador.getFotoSucursales(3),
-                    mPresentador.getIdSucursales(3)
-            );
-            recycler.setAdapter(card);
+            LinearLayoutManager llm = new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.HORIZONTAL,false);
+            recycler.setLayoutManager(llm);
+            recycler.setNestedScrollingEnabled(false);
+            recycler.setAdapter(null);
         }
 
         @Override
