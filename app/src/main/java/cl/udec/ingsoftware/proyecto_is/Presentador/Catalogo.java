@@ -29,6 +29,7 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
+import cl.udec.ingsoftware.proyecto_is.Modelo.TripletaItinerario;
 
 /**
  * Created by matisin on 28-12-16.
