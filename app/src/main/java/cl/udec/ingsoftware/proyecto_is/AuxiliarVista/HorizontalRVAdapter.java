@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +44,14 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView text;
         public CardView mCardView;
-        public TextView mTitulo;
         public ImageView mFoto;
-        public ImageView mSello;
         public int mId;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView)itemView.findViewById(R.id.card_view_sucursal);
-            mTitulo = (TextView)itemView.findViewById(R.id.titulo_sucursal);
+            mCardView = (CardView)itemView.findViewById(R.id.cardies_itinerary);
             mFoto = (ImageView)itemView.findViewById(R.id.imagen_sucursal);
-            mSello = (ImageView) itemView.findViewById(R.id.sello_verde_card);
             mFoto.setScaleType(ImageView.ScaleType.FIT_XY);
 
         }
@@ -66,7 +60,7 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        View itemView = LayoutInflater.from(context).inflate(R.layout.cardview_sucursal, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.solo_fotos_itinerario, parent, false);
         ItemViewHolder holder = new ItemViewHolder(itemView);
         return holder;
     }
@@ -74,7 +68,7 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder rawHolder, int position) {
         ItemViewHolder holder = (ItemViewHolder) rawHolder;
-        holder.mTitulo.setText(nombresucursales.get(position));
+        //holder.mTitulo.setText(nombresucursales.get(position));
         String url = fotosucursales.get(position);
         new AsyncTaskLoadImage(holder.mFoto).execute(url);
 
