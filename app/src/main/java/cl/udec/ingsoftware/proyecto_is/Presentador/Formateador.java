@@ -278,4 +278,17 @@ public class Formateador {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+    public Itinerario crearItinerario(int id, String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
+        boolean creado = consultor.crearItinerario(id,nombre,idUsuario,estacion,idsSucursales, duraciones);
+        if(creado){
+            Itinerario itinerario = new Itinerario(id,nombre,idUsuario,estacion);
+            for (int i = 0; i < idsSucursales.length; i++){
+                Pair par = new Pair(idsSucursales[i],duraciones[i]);
+                itinerario.addSucursal(par);
+            }
+            return itinerario;
+        }
+        return null;
+    }
 }
