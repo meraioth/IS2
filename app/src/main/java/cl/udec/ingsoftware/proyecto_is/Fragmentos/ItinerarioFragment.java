@@ -80,7 +80,6 @@ public class ItinerarioFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_busqueda_avanzada, menu);
     }
 
     @Override
@@ -92,16 +91,19 @@ public class ItinerarioFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(llm);
+
         Random randomGenerator = new Random();
         mRating = (RatingBar) view.findViewById(R.id.eval_itinerario);
         mRating.setNumStars(5);
         float rating = randomGenerator.nextInt(5);
         mRating.setRating(rating);
+
         comentarios = (ListView) view.findViewById(R.id.comentarios_itinerario);
         ArrayAdapter<String> comments = new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_2,android.R.id.text1,new String[]{"Usuario : Fernando Galvez\n" +
                 "Excelente experiencia tomando este viaje, totalmente recomendado, nos demoramos aproximadamente dos dias y alcanzamos a recorrer varias comunas","Usuario : Eduardo Gómez\n" +
                 "Una excelente alternativa a los clásicos viajes, hermosa vista por las ciudades puerto de la provincia de Arauco"});
         comentarios.setAdapter(comments);
+
         SucursalItinerarioAdapter adapter = null;
         adapter = new SucursalItinerarioAdapter(mPresentador.getNombreSucursales(PRUEBA),mPresentador.getFotoSucursales(PRUEBA),mPresentador.getIdSucursales(PRUEBA));
         //adapter.setOnItemClickListener(this);

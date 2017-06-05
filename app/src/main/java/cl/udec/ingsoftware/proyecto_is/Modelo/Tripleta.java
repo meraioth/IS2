@@ -1,5 +1,9 @@
 package cl.udec.ingsoftware.proyecto_is.Modelo;
 
+import android.util.Pair;
+
+import java.util.ArrayList;
+
 /**
  * Created by koskovi on 16-05-17.
  */

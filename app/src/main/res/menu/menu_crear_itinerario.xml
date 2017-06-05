@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/cancelar_crear_itinerario"
+        android:color="@color/letra_card_sucursal"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/cancelar"
+
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item android:id="@+id/aceptar_crear_itinerario"
+        android:title="@string/aceptar"
+        android:icon="@drawable/ic_check_black_24dp"
+        app:showAsAction="always"/>
+
+</menu>

@@ -1,5 +1,6 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerariosFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.MapaFragment;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
@@ -31,6 +33,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
     private BusquedaFragment busquedaFragment;
     private MapaFragment mapaFragment;
     private ItinerarioFragment itinerarioFragment;
+    private ItinerariosFragment itinerariosFragment;
     private BusquedaAvanzadaFragment busquedaAvanzadaFragment;
 
     private FragmentTransaction fragmentTransaction;
@@ -60,7 +63,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
                     fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_itinerario:
-                    fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerarioFragment);
+                    fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
                     fragmentTransaction.commit();
                     return true;
             }
@@ -103,6 +106,8 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         mapaFragment = MapaFragment.newInstance();
         busquedaFragment = BusquedaFragment.newInstance();
         itinerarioFragment = ItinerarioFragment.newInstance();
+        itinerariosFragment = ItinerariosFragment.newInstance();
+
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
