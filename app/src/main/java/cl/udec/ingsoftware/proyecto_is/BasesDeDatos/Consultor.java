@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.util.Pair;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by meraioth on 08-05-17.
@@ -45,7 +47,6 @@ public class Consultor {
         SQLiteDatabase db = local.getReadableDatabase();
         Cursor c = db.rawQuery("select * " +
                 "from categoria;",null);
-
         return c;
     };
 
@@ -178,4 +179,28 @@ public class Consultor {
     }
 
 
+    public boolean crearItinerario(int id, String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
+        boolean itinerarioCreado = false;
+        boolean ordenCreado = false;
+        remoto = new DBremoto();
+        remoto.query("insert into itinerario " +
+                "values("+ id +"," + nombre + "," + idUsuario + "," + estacion + ");");
+        remoto.query("select * from itinerario where nombre = " + nombre + ");");
+        if (remoto.getResult().next()){
+            itinerarioCreado = true;
+        }
+        if(itinerarioCreado){
+            //PARA CADA ID DE SUCURSAL, INSERTAR EN LA BD EL ORDEN CORRESPONDIENTE
+            for(int i = 0; i < idsSucursales.length; i++){
+                remoto.query("insert into orden" +
+                        "values(" +
+                        id + "," + idsSucursales[i] + "," + i + "," + duraciones[i]);
+            }
+            remoto.query("select * from orden where id_itinerario = " + id + ";");
+            if(remoto.getResult().next()){
+                ordenCreado = true;
+            }
+        }
+        return ordenCreado;
+    }
 }

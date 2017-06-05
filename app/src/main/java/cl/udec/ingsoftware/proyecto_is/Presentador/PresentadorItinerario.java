@@ -92,4 +92,11 @@ public class PresentadorItinerario {
         }
         return fotosSucursales;
     }
+
+    public void crearItinerario(int id, String nombre, int idUsuario, String estacion, int[] idsSucursales, int[] duraciones) throws SQLException {
+        Itinerario itinerario = formateador.crearItinerario(id,nombre,idUsuario,estacion,idsSucursales,duraciones);
+        if (itinerario != null){
+            itinerarios.add(itinerario);
+        }
+    }
 }
