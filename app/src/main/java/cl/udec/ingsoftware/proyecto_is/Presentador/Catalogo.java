@@ -132,8 +132,7 @@ public class Catalogo implements Serializable {
                 cat.add(serv.getCategoria().getNombre());
             }
         }
-        for (String str:cat
-             ) {
+        for (String str:cat) {
             categoria.add(str);
         }
         return categoria;
@@ -198,10 +197,22 @@ public class Catalogo implements Serializable {
 
     }
 
+    public ArrayList<Categoria> getCategoria(String s){
+        ArrayList<Categoria> cate = new ArrayList();
+        for (Sucursal suc:sucursales) {
+            if (suc.getNombre().contentEquals(s)){
+                for(Servicio serv : suc.getServicios()){
+                    cate.add(serv.getCategoria());
+                }
+            }
+
+        }
+        return cate;
+    }
+
     public ArrayList getLongitudes(String categoria){
         ArrayList<Double> longitudes = new ArrayList<>();
-        for (Sucursal suc:sucursales
-                ) {
+        for (Sucursal suc:sucursales) {
             for(Servicio serv : suc.getServicios()){
 
                 if(serv.getCategoria().getNombre().compareTo(categoria) == 0){

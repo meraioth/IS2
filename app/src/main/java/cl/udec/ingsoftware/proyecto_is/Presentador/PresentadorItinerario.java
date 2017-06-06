@@ -5,8 +5,11 @@ import android.util.Pair;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
+import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 /**
@@ -61,6 +64,29 @@ public class PresentadorItinerario {
             nombresSucursales.add(suc.getNombre());
         }
         return nombresSucursales;
+    }
+
+    public ArrayList<String> getItinerarioServices(int id){
+        ArrayList<Pair> sucursales_duracion = new ArrayList<>();
+        sucursales_duracion = findItinerarioById(id).getSucursales();
+        ArrayList<String> servicios = new ArrayList<>();
+        for (Pair pair:  sucursales_duracion){
+            Sucursal suc = (Sucursal) pair.first;
+            ArrayList<Servicio> sese = suc.getServicios();
+            for (Servicio ss : suc.getServicios()){
+                String categoria = ss.getCategoria().getNombre();
+                if (categoria.contentEquals("Alojamiento Turístico")){servicios.add(categoria);}
+                if (categoria.contentEquals("Agencias de Viaje y Tour Operador")){servicios.add(categoria);}
+                if (categoria.contentEquals("Restaurantes y Similares")){servicios.add(categoria);}
+                if (categoria.contentEquals("Transporte de Pasajeros por Carretera Interurbana")){servicios.add(categoria);}
+                if (categoria.contentEquals("Turismo Aventura")){servicios.add(categoria);}
+                if (categoria.contentEquals("Servicios de Esparcimiento")){servicios.add(categoria);}
+                if (categoria.contentEquals("Artesanía")){servicios.add(categoria);}
+                if (categoria.contentEquals("Guías de Turismo")){servicios.add(categoria);}
+                if (categoria.contentEquals("Servicios Deportivos")){servicios.add(categoria);}
+            }
+        }
+        return servicios;
     }
 
     public ArrayList<String> getFotoSucursales(int id){

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public CardView mCardView;
         public ImageView mFoto;
+        public TextView mNombreSucursal;
         public int mId;
 
         public ItemViewHolder(View itemView) {
@@ -53,7 +55,7 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mCardView = (CardView)itemView.findViewById(R.id.cardies_itinerary);
             mFoto = (ImageView)itemView.findViewById(R.id.imagen_sucursal);
             mFoto.setScaleType(ImageView.ScaleType.FIT_XY);
-
+            mNombreSucursal = (TextView)itemView.findViewById(R.id.myImageViewText);
         }
     }
 
@@ -70,6 +72,7 @@ public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ItemViewHolder holder = (ItemViewHolder) rawHolder;
         //holder.mTitulo.setText(nombresucursales.get(position));
         String url = fotosucursales.get(position);
+        holder.mNombreSucursal.setText(nombresucursales.get(position));
         new AsyncTaskLoadImage(holder.mFoto).execute(url);
 
     }

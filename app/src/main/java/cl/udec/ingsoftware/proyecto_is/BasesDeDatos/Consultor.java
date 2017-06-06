@@ -3,6 +3,7 @@ package cl.udec.ingsoftware.proyecto_is.BasesDeDatos;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorJoiner;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.Pair;
@@ -56,6 +57,7 @@ public class Consultor {
                 "from servicio;",null);
         return c;
     };
+
 
     public ResultSet getSucursalesRemoto(){
         remoto = new DBremoto();
