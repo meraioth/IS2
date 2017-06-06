@@ -1,19 +1,28 @@
 package cl.udec.ingsoftware.proyecto_is.AuxiliarVista;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -29,19 +38,20 @@ import static android.view.View.VISIBLE;
  * Created by meraioth on 04-06-17.
  */
 
-public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.ItemViewHolder> {
+public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.ItemViewHolder>{
 
     private final Context mContext;
     private Catalogo catalogo;
-    private PresentadorSucursal sucursal;
     private PresentadorItinerario itinerario;
     private static RecyclerView horizontalList;
+    Button boton;
 
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder{
         private HorizontalRVAdapter horizontalAdapter;
         private TextView titulo;
         private ImageView transporte, alojamiento, comida, deporte, esparcimiento, artesania, tour;
+
         public ItemViewHolder(View view) {
             super(view);
             Context context = itemView.getContext();
@@ -58,7 +68,9 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
             esparcimiento = (ImageView)itemView.findViewById(R.id.ico_esparcimiento);
             artesania = (ImageView)itemView.findViewById(R.id.ico_artesania);
             tour = (ImageView)itemView.findViewById(R.id.ico_tour);
+
         }
+
 
     }
 
@@ -72,16 +84,30 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
         }
 
     }
-
-
+/*
+    FragmentManager fm = getSupportFragmentManager();
+    YourFragment fragment = new YourFragment();
+ fm.beginTransaction().add(R.id.main_contenier,fragment).commit();
+  */
 
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.itinerario_item, parent, false);
+        boton = (Button)itemView.findViewById(R.id.buton_ver_itinerario);
+
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.Fragment iti = new android.app.Fragment();
+                FragmentTransaction transaction = ((MapaBusquedaItinerarioActivity)mContext).getFragmentManager().beginTransaction();
+                transaction.replace(R.id.recycler_view_itinerariosucursales, iti);
+                Toast.makeText(mContext, "hola click", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ItemViewHolder holder = new ItemViewHolder(itemView);
         return holder;
     }
+
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
@@ -101,12 +127,15 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
             if (cat.contentEquals("Guías de Turismo")){holder.tour.setVisibility(VISIBLE);}
             if (cat.contentEquals("Servicios Deportivos")){holder.deporte.setVisibility(VISIBLE);}
         }
+
+
     }
 
     @Override
     public int getItemCount() {
         return catalogo.getItinerarios().size();
     }
+
 
 
 }
