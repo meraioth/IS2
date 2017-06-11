@@ -357,12 +357,15 @@ public class Catalogo implements Serializable {
         ArrayList<Integer> duracion = new ArrayList<Integer>();
         //duracion.add("Todas");
         for (Itinerario itinerario: itinerarios){
-            if(itinerario.getEstacion().compareTo(estacion)==0)
+            if(itinerario.getEstacion().compareTo(estacion)==0) {
                 dur.add(itinerario.getDuracion());
+            }
         }
         for (Integer str:dur){
             duracion.add(str);
         }
+        if(duracion.size()==0)
+            duracion.add(0);
         return duracion;
     }
 

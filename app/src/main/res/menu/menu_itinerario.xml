@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/busqueda_itinerario"
+        android:color="@color/letra_card_sucursal"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/busqueda_titulo"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:queryHint="@string/busqueda_hint"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item android:id="@+id/busqueda_itinerario_avanzada"
+        android:title="@string/busqueda_avanzada_titulo"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="always"/>
+
+</menu>

@@ -6,12 +6,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,15 +34,14 @@ import cl.udec.ingsoftware.proyecto_is.R;
  * Created by cridonoso on 03-06-17.
  */
 
-public class ItinerariosFragment extends Fragment {
+public class ItinerariosFragment extends Fragment implements SearchView.OnQueryTextListener,View.OnClickListener ,VerticalRVAdapter.OnItemClickListener {
 
     PresentadorItinerario mPresentador;
+    private SearchView mBusqueda;
     Catalogo catalogo;
-    SucursalItinerarioAdapter adapter;
-    ItinerariosAdapter adapter_lista;
-    RecyclerView mRecyclerView, mRecyclerView2;
-    private OnFragmentInteractionListener mListener;
-
+    RecyclerView mRecyclerView;
+    private OnItinerarioSelectedListener mItinerarioListener;
+    private VerticalRVAdapter verticalRVAdapter;
 
 
     public ItinerariosFragment() {}
@@ -49,7 +51,6 @@ public class ItinerariosFragment extends Fragment {
         return fragment;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,10 @@ public class ItinerariosFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_itinerario, menu);
+        MenuItem searchItem = menu.findItem(R.id.busqueda_itinerario);
+        mBusqueda = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mBusqueda.setOnQueryTextListener(this);
     }
 
 
@@ -80,24 +85,25 @@ public class ItinerariosFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
 
-        VerticalRVAdapter cr= new VerticalRVAdapter(getContext(),catalogo);
-        mRecyclerView.setAdapter(cr);
+         verticalRVAdapter= new VerticalRVAdapter(getContext(),catalogo);
+        mRecyclerView.setAdapter(verticalRVAdapter);
 
 
         return view;
     }
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void onSucursalPressed(int position) {
+        if (mItinerarioListener != null) {
+            mItinerarioListener.OnItinerarioSelected(position);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
+        if (context instanceof OnItinerarioSelectedListener) {
+            mItinerarioListener = (OnItinerarioSelectedListener) context;
+        }
+//        else {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnBusuqedaAvanzadaInteractionListener");
 //        }
@@ -106,22 +112,66 @@ public class ItinerariosFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mItinerarioListener = null;
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+        }
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        String aux = toTitleCase(query);
+        verticalRVAdapter.setNewData(aux);
+        mBusqueda.clearFocus();
+        mBusqueda.onActionViewCollapsed();
+        return false;
+    }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onItemClick(int id) {
+        mItinerarioListener.OnItinerarioSelected(id);
+    }
+
+    public void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio) {
+//        ArrayList<Tripleta> aux = mPresentador.getTripletasOfSucursales(str_comuna, str_categoria, str_servicio);
+//        verticalRVAdapter.setNewData(aux);
+    }
+    public interface OnItinerarioSelectedListener {
+        void OnItinerarioSelected(int position);
+    }
+
+    public static String toTitleCase(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        boolean space = true;
+        StringBuilder builder = new StringBuilder(str);
+        final int len = builder.length();
+
+        for (int i = 0; i < len; ++i) {
+            char c = builder.charAt(i);
+            if (space) {
+                if (!Character.isWhitespace(c)) {
+                    // Convert to title case and switch out of whitespace mode.
+                    builder.setCharAt(i, Character.toTitleCase(c));
+                    space = false;
+                }
+            } else if (Character.isWhitespace(c)) {
+                space = true;
+            } else {
+                builder.setCharAt(i, Character.toLowerCase(c));
+            }
+        }
+
+        return builder.toString();
     }
 }

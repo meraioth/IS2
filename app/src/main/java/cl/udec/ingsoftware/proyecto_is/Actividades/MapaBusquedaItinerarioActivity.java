@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaItinerario;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerariosFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.MapaFragment;
@@ -35,6 +36,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
     private ItinerarioFragment itinerarioFragment;
     private ItinerariosFragment itinerariosFragment;
     private BusquedaAvanzadaFragment busquedaAvanzadaFragment;
+    private BusquedaItinerario busquedaItinerarioFragment;
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
@@ -144,6 +146,18 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
                 fragmentTransaction.commit();
+            case R.id.busqueda_itinerario_avanzada:
+                busquedaItinerarioFragment= BusquedaItinerario.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaItinerarioFragment);
+                fragmentTransaction.commit();
+                return true;
+            case R.id.cerrar_itinerario_avanzada:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                fragmentTransaction.commit();
+
+
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -17,7 +17,7 @@ public class Itinerario {
     private ArrayList<Pair> sucursales_duracion;
     private int duracion;
 
-    public Itinerario(int id, String nombre, int id_usuario, String estacion){
+    public Itinerario(int id, String nombre, int id_usuario, String estacion,int duracion){
         this.id = id;
         this.nombre = nombre;
         this.id_usuario = id_usuario;

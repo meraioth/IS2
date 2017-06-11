@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/cerrar_itinerario_avanzada"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/cancelar"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/titulo_busqueda_avanzada"
+        android:title="@string/busqueda_hint"
+        app:showAsAction="withText"
+        />
+
+    <item
+        android:id="@+id/refrescar_busqueda"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="@string/aceptar"
+        app:showAsAction="always"
+        />
+
+</menu>

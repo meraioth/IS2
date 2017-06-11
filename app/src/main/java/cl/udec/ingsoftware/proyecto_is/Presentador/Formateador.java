@@ -248,7 +248,7 @@ public class Formateador {
             if (!existe_itinerario) {
                 //Si no existe itinerario, se crea y se añade servicio
                 itinerario = new Itinerario(aux.getInt("id_itinerario"), aux.getString("nombre_itinerario"),
-                        aux.getInt("id_usuario"), aux.getString("estacion"));
+                        aux.getInt("id_usuario"), aux.getString("estacion"),aux.getInt("duracion"));
                 for (Sucursal suc : sucursales
                         ) {
                     if (aux.getInt("id_sucursal") == suc.getId()) {
@@ -282,7 +282,7 @@ public class Formateador {
     public Itinerario crearItinerario(int id, String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
         boolean creado = consultor.crearItinerario(id,nombre,idUsuario,estacion,idsSucursales, duraciones);
         if(creado){
-            Itinerario itinerario = new Itinerario(id,nombre,idUsuario,estacion);
+            Itinerario itinerario = new Itinerario(id,nombre,idUsuario,estacion,-1);
             for (int i = 0; i < idsSucursales.length; i++){
                 Pair par = new Pair(idsSucursales[i],duraciones[i]);
                 itinerario.addSucursal(par);

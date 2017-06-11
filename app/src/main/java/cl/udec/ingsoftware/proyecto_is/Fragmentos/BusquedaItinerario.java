@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
@@ -59,30 +63,42 @@ public class BusquedaItinerario extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_busqueda_itinerario, container, false);
-        buscar = (Button) view.findViewById(R.id.button_busqueda_avanzada);
+        buscar = (Button) view.findViewById(R.id.button_busqueda_avanzada_itinerario);
         duracion = (Spinner) view.findViewById(R.id.duracion_spinner);
         estacion = (Spinner)view.findViewById(R.id.estacion_spinner);
         estacion.setAdapter(new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,new String[]{"Otoño","Invierno","Primavera","Verano"}));
-        int[] dura= mPresentador.getDuraciones_Itinerarios();
-        String[] duraciones = new String[dura.length];
-        for (int i = 0; i <dura.length ; i++) {
-            duraciones[i]=String.valueOf(dura[i]);
-        }
-        duracion.setAdapter(new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,duraciones));
-        estacion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final ArrayList[] dura = new ArrayList[1];
+        final String[][] duraciones = new String[1][1];
+        estacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 str_estacion=parent.getItemAtPosition(position).toString();
 
+                duracion.setAdapter(new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_spinner_item, mPresentador.getDuraciones(str_estacion)));
+
+
             }
-        });
-        duracion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                str_duracion=parent.getItemAtPosition(position).toString();
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+
+
+        duracion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                str_duracion=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,16 +125,16 @@ public class BusquedaItinerario extends Fragment {
 //        }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) {
-//            mListener = (BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnBusuqedaAvanzadaInteractionListener");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) {
+////            mListener = (BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnBusuqedaAvanzadaInteractionListener");
+//        }
+//    }
 
     @Override
     public void onDetach() {
@@ -143,5 +159,11 @@ public class BusquedaItinerario extends Fragment {
     public interface OnBusuqedaAvanzadaItinerarioInteractionListener {
         void onCancelAdvancedSearch();
         void onSearchAdvanced(String str_duracion, String str_estacion);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_busqueda_itinerario, menu);
     }
 }

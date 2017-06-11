@@ -28,14 +28,6 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BusquedaFragment.OnSucursalSelectedListener} interface
- * to handle interaction events.
- * Use the {@link BusquedaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BusquedaFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener, SucursalAdapter.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -45,6 +45,19 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
     private PresentadorItinerario itinerario;
     private static RecyclerView horizontalList;
     Button boton;
+    private OnItemClickListener mListener;
+
+
+    public void setNewData(String aux) {
+        //modificar con itinerarios filtrados
+        /*
+        *   public void setNewData(ArrayList<Tripleta> sucursales) {
+        this.sucursales.clear();
+        this.sucursales.addAll(sucursales);
+        notifyDataSetChanged();
+    }
+*/
+    }
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -106,6 +119,14 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
 
         ItemViewHolder holder = new ItemViewHolder(itemView);
         return holder;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int id);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
     }
 
 
