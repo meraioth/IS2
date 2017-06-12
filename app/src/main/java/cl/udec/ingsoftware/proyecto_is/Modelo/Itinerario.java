@@ -15,9 +15,6 @@ public class Itinerario {
     private int id_usuario;
     private String estacion;
     private ArrayList<Pair> sucursales_duracion;
-    private ArrayList<Pair> sucursales_id;
-    private ArrayList<Pair> sucursales_nombre;
-    private ArrayList<Pair> sucursales_imagen;
     private int duracion;
     private ArrayList<Sucursal> sucursales;
 
@@ -68,17 +65,5 @@ public class Itinerario {
     }
 
     public ArrayList<Sucursal> getItinerarioSucursarles(){ return sucursales; }
-
-    /*public ArrayList<Pair> getIdSucursales(){
-        return this.sucursales_id;
-    }
-
-    public ArrayList<Pair> getNombreSucursales(){
-        return this.sucursales_nombre;
-    }
-
-    public ArrayList<Pair> getImagenSucursales(){
-        return this.sucursales_imagen;
-    }*/
 
 }
