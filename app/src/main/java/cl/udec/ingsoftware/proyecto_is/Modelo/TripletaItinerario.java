@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class TripletaItinerario {
     private int id;
     private String nombre;
-    private ArrayList<Pair> sucursales;
+    private ArrayList<Sucursal> sucursales;
 
-    public TripletaItinerario(int id, String nombre, ArrayList<Pair> sucursales) {
+    public TripletaItinerario(int id, String nombre, ArrayList<Sucursal> sucursales) {
         this.id = id;
         this.nombre = nombre;
         sucursales = new ArrayList<>();
@@ -21,9 +21,9 @@ public class TripletaItinerario {
 
     public void change_id(int id){this.id = id;}
     public void change_nombre(String nombre){this.nombre = nombre;}
-    public void change_sucursales(ArrayList<Pair> sucursales){this.sucursales = sucursales;}
+    public void change_sucursales(ArrayList<Sucursal> sucursales){this.sucursales = sucursales;}
 
     public int get_id(){return id;}
     public String get_nombre(){return nombre;}
-    public ArrayList<Pair> get_sucursales(){return sucursales;}
+    public ArrayList<Sucursal> get_sucursales(){return sucursales;}
 }

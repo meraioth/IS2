@@ -370,12 +370,12 @@ public class Catalogo implements Serializable {
     }
 
     /**
-     * Filtrar itinerarios por estacion y duracion
+     * Filtrar itinerarios por estación y duración
      * @param str_estacion
      * @param str_duracion
      * @return Arreglo de tripletas
      */
-    public ArrayList getTripletaItinerarios(String str_estacion, int str_duracion) {
+    public ArrayList getBuscarItinerarios(String str_estacion, int str_duracion) {
         ArrayList<TripletaItinerario> info = new ArrayList<TripletaItinerario>();
         ArrayList<Integer> ides = new ArrayList<Integer>();
         int id;
@@ -384,7 +384,7 @@ public class Catalogo implements Serializable {
             if (!ides.contains(id)){
                 ides.add(id);
                     if(itinerario.getEstacion().compareTo(str_estacion)==0 && Integer.valueOf(itinerario.getDuracion()).compareTo(Integer.valueOf(str_duracion))==0) {
-                        TripletaItinerario tri = new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getSucursales());
+                        TripletaItinerario tri = new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getItinerarioSucursarles());
                         info.add(tri);
                     }
             }
@@ -392,5 +392,29 @@ public class Catalogo implements Serializable {
         return info;
     }
 
-
+    /**
+     * Búsqueda de itinerarios por keyword
+     * @param arg
+     * @return Arreglo de tripletas
+     */
+    public ArrayList getBuscarItinerariosKeyword(String arg) {
+        ArrayList<TripletaItinerario> info = new ArrayList<>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        int id;
+        for (Itinerario itinerario: itinerarios) {
+            for(Sucursal suc: itinerario.getItinerarioSucursarles()) {
+                for (Servicio serv : suc.getServicios()){
+                    if (itinerario.getNombre().contains(arg) || suc.getNombre().contains(arg) || serv.getNombre().contains(arg) || serv.getCategoria().getNombre().contains(arg) || suc.getComuna().contains(arg))
+                {
+                    id = itinerario.getId();
+                    if (!ides.contains(id)) {
+                        ides.add(id);
+                        info.add(new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getItinerarioSucursarles()));
+                    }
+                }
+                }
+            }
+        }
+        return info;
+    }
 }
