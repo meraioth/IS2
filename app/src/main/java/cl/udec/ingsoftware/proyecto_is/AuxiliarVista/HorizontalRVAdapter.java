@@ -20,7 +20,8 @@ import cl.udec.ingsoftware.proyecto_is.util.AsyncTaskLoadImage;
  */
 
 public class HorizontalRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<String> nombresucursales,fotosucursales;
+    private ArrayList<String> nombresucursales = new ArrayList<>();
+    private ArrayList<String> fotosucursales;
     private ArrayList<Integer> idsucursales;
     private List<String> mDataList;
     private int mRowIndex = -1;

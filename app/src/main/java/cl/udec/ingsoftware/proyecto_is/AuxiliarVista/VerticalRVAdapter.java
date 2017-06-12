@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,6 +47,10 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
     private static RecyclerView horizontalList;
     Button boton;
     private OnItemClickListener mListener;
+    private android.support.v4.app.FragmentTransaction fragmentTransaction;
+    private FragmentManager fragmentManager;
+    private ItinerarioFragment itinerario_fragment = ItinerarioFragment.newInstance();
+    private int identificador_itinerario;
 
 
     public void setNewData(String aux) {
@@ -64,6 +69,7 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
         private HorizontalRVAdapter horizontalAdapter;
         private TextView titulo;
         private ImageView transporte, alojamiento, comida, deporte, esparcimiento, artesania, tour;
+
 
         public ItemViewHolder(View view) {
             super(view);
@@ -104,15 +110,23 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
   */
 
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.itinerario_item, parent, false);
+        final View itemView = LayoutInflater.from(mContext).inflate(R.layout.itinerario_item, parent, false);
         boton = (Button)itemView.findViewById(R.id.buton_ver_itinerario);
 
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                android.app.Fragment iti = new android.app.Fragment();
-                FragmentTransaction transaction = ((MapaBusquedaItinerarioActivity)mContext).getFragmentManager().beginTransaction();
-                transaction.replace(R.id.recycler_view_itinerariosucursales, iti);
+                fragmentManager = ((MapaBusquedaItinerarioActivity)mContext).getSupportFragmentManager();
+
+                //INGRESAR IDENTIFICADOR DEL ITINERARIO QUE SE QUIERE MOSTRAR !!!!
+                identificador_itinerario = 2;
+                itinerario_fragment.set_id_itinerario(identificador_itinerario);
+
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerario_fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
                 Toast.makeText(mContext, "hola click", Toast.LENGTH_SHORT).show();
             }
         });
@@ -130,12 +144,15 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
     }
 
 
+
+
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Log.d("final int pos", String.valueOf(position));
         holder.horizontalAdapter.setData(itinerario.getNombreSucursales(position+1),itinerario.getFotoSucursales(position+1),itinerario.getIdSucursales(position+1)); // List of Strings
         holder.horizontalAdapter.setRowIndex(position);
         holder.titulo.setText(itinerario.getNombreItinerario(position+1));
+
 
         for(String cat: itinerario.getItinerarioServices(position+1)){
             if (cat.contentEquals("Alojamiento Turístico")){holder.alojamiento.setVisibility(VISIBLE);}

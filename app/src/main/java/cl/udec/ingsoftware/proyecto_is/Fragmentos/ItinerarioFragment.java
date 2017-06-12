@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import java.util.Random;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ListAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalItinerarioAdapter;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorItinerario;
 import cl.udec.ingsoftware.proyecto_is.R;
@@ -46,12 +48,17 @@ public class ItinerarioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private PresentadorItinerario mPresentador;
-    private int PRUEBA=2;
+    private int prueba;
     private RatingBar mRating;
     private ListView comentarios;
 
     public ItinerarioFragment() {
         // Required empty public constructor
+    }
+
+    public void set_id_itinerario(int id){
+        prueba = id;
+        Log.e("AQUI", String.valueOf(id));
     }
 
     /**
@@ -63,7 +70,7 @@ public class ItinerarioFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static ItinerarioFragment newInstance() {
         ItinerarioFragment fragment = new ItinerarioFragment();
-        return fragment;
+        return  fragment;
     }
 
     @Override
@@ -83,10 +90,9 @@ public class ItinerarioFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_itinerario, container, false);
+        View view = inflater.inflate(R.layout.fragment_itinerario, null);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_itinerariosucursales);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -105,7 +111,7 @@ public class ItinerarioFragment extends Fragment {
         comentarios.setAdapter(comments);
 
         SucursalItinerarioAdapter adapter = null;
-        adapter = new SucursalItinerarioAdapter(mPresentador.getNombreSucursales(PRUEBA),mPresentador.getFotoSucursales(PRUEBA),mPresentador.getIdSucursales(PRUEBA));
+        adapter = new SucursalItinerarioAdapter(mPresentador.getNombreSucursales(prueba),mPresentador.getFotoSucursales(prueba),mPresentador.getIdSucursales(prueba));
         //adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
         return view;

@@ -18,8 +18,10 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 
 public class PresentadorItinerario {
     Context context;
-    ArrayList<Itinerario> itinerarios;
+    ArrayList<Itinerario> itinerarios = new ArrayList<>();
     Formateador formateador;
+
+
     public PresentadorItinerario(Context cont) throws SQLException {
         this.context=cont;
         formateador= new Formateador(context);
@@ -57,7 +59,8 @@ public class PresentadorItinerario {
     }
 
     public ArrayList<String> getNombreSucursales(int id){
-        ArrayList<Pair> sucursales_duracion = findItinerarioById(id).getSucursales();
+        ArrayList<Pair> sucursales_duracion = new ArrayList<Pair>();
+        sucursales_duracion = findItinerarioById(id).getSucursales();
         ArrayList<String> nombresSucursales = new ArrayList<>();
         for (Pair pair : sucursales_duracion){
             Sucursal suc = (Sucursal) pair.first;
