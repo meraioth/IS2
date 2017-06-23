@@ -29,7 +29,7 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener  {
+public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener {
 
     private BusquedaFragment busquedaFragment;
     private MapaFragment mapaFragment;
@@ -175,6 +175,14 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onSearchAdvanced(String str_duracion, String str_estacion) {
+        itinerariosFragment.onSearchAdvanced(str_duracion,str_estacion);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,itinerariosFragment);
+        fragmentTransaction.commit();
+    }
 
 
     @Override

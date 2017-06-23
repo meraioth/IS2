@@ -25,6 +25,8 @@ import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
+import cl.udec.ingsoftware.proyecto_is.Modelo.TripletaItinerario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Formateador;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorItinerario;
@@ -41,14 +43,17 @@ import static android.view.View.VISIBLE;
 public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.ItemViewHolder>{
 
     private final Context mContext;
-    private Catalogo catalogo;
     private PresentadorItinerario itinerario;
+    private ArrayList<TripletaItinerario> itinerariosTripleta;
     private static RecyclerView horizontalList;
     Button boton;
     private OnItemClickListener mListener;
 
 
-    public void setNewData(String aux) {
+    public void setNewData(ArrayList<TripletaItinerario> trip) {
+        this.itinerariosTripleta.clear();
+        this.itinerariosTripleta = trip;
+        notifyDataSetChanged();
         //modificar con itinerarios filtrados
         /*
         *   public void setNewData(ArrayList<Tripleta> sucursales) {
@@ -87,9 +92,10 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
 
     }
 
-    public VerticalRVAdapter(Context context, Catalogo catalogo) {
+    public VerticalRVAdapter(Context context, ArrayList<TripletaItinerario> tripleta) {
         mContext = context;
-        this.catalogo = catalogo;
+        this.itinerariosTripleta = tripleta;
+        Log.d("tamañoMeraioth", String.valueOf(tripleta.size()));
         try {
             this.itinerario=new PresentadorItinerario(mContext);
         } catch (SQLException e) {
@@ -133,11 +139,27 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Log.d("final int pos", String.valueOf(position));
-        holder.horizontalAdapter.setData(itinerario.getNombreSucursales(position+1),itinerario.getFotoSucursales(position+1),itinerario.getIdSucursales(position+1)); // List of Strings
-        holder.horizontalAdapter.setRowIndex(position);
-        holder.titulo.setText(itinerario.getNombreItinerario(position+1));
-
-        for(String cat: itinerario.getItinerarioServices(position+1)){
+        Log.d("meraioth en", String.valueOf(itinerariosTripleta.size()));
+        //holder.horizontalAdapter.setData(itinerario.getNombreSucursales(position+1),itinerario.getFotoSucursales(position+1),itinerario.getIdSucursales(position+1)); // List of Strings
+        ArrayList<String> nombreSucursales = new ArrayList<String>();
+        ArrayList<String> fotoSucursales = new ArrayList<String>();
+        ArrayList<Integer> idSucursales = new ArrayList();
+        for (TripletaItinerario aux:itinerariosTripleta) {
+            if(aux.get_id()==position+1){
+                //ARREGLAR TRIPLETA ITINERARIOS.GET SUCURSALES AHI ESTA EL PROBLEMA
+                Log.d("aux.getSucursales:", String.valueOf(aux.get_sucursales()));
+                for(Sucursal s : aux.get_sucursales()) {
+                    nombreSucursales.add(s.getNombre());
+                    fotoSucursales.add(s.getImagen());
+                    idSucursales.add(s.getId());
+                }
+            }
+        }
+        holder.horizontalAdapter.setData(nombreSucursales,fotoSucursales,idSucursales);
+        holder.horizontalAdapter.setRowIndex(position+1);
+        //holder.titulo.setText(itinerario.getNombreItinerario(position));
+        holder.titulo.setText(itinerario.getNombreItinerario(itinerariosTripleta.get(position).get_id()));
+        for(String cat: itinerario.getItinerarioServices(itinerariosTripleta.get(position).get_id())){
             if (cat.contentEquals("Alojamiento Turístico")){holder.alojamiento.setVisibility(VISIBLE);}
             if (cat.contentEquals("Restaurantes y Similares")){holder.comida.setVisibility(VISIBLE);}
             if (cat.contentEquals("Agencias de Viaje y Tour Operador")){holder.tour.setVisibility(VISIBLE);}
@@ -154,7 +176,7 @@ public class VerticalRVAdapter extends RecyclerView.Adapter<VerticalRVAdapter.It
 
     @Override
     public int getItemCount() {
-        return catalogo.getItinerarios().size();
+        return itinerariosTripleta.size();
     }
 
 

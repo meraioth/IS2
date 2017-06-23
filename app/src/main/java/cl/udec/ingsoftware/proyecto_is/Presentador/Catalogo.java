@@ -402,6 +402,12 @@ public class Catalogo implements Serializable {
         ArrayList<Integer> ides = new ArrayList<Integer>();
         int id;
         for (Itinerario itinerario: itinerarios) {
+            if(arg.contains(itinerario.getNombre())){
+                if(!ides.contains(itinerario.getId())) {
+                    ides.add(itinerario.getId());
+                    info.add(new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getItinerarioSucursarles()));
+                }
+            }
             for(Sucursal suc: itinerario.getItinerarioSucursarles()) {
                 for (Servicio serv : suc.getServicios()){
                     if (itinerario.getNombre().contains(arg) || suc.getNombre().contains(arg) || serv.getNombre().contains(arg) || serv.getCategoria().getNombre().contains(arg) || suc.getComuna().contains(arg))
@@ -414,6 +420,17 @@ public class Catalogo implements Serializable {
                 }
                 }
             }
+        }
+        return info;
+    }
+
+    public ArrayList<TripletaItinerario> getTripletasOfItinerario() {
+        ArrayList<TripletaItinerario> info = new ArrayList<TripletaItinerario>();
+        ArrayList<Integer> ides = new ArrayList<Integer>();
+        for (Itinerario itinerario: itinerarios) {
+            Log.d("tamaño sucursales", String.valueOf(itinerario.getItinerarioSucursarles().size()));
+            TripletaItinerario tri = new TripletaItinerario(itinerario.getId(), itinerario.getNombre(), itinerario.getItinerarioSucursarles());
+            info.add(tri);
         }
         return info;
     }

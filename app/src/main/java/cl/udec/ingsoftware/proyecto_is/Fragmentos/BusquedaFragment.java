@@ -188,6 +188,4 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
 
         return builder.toString();
     }
-
-
 }

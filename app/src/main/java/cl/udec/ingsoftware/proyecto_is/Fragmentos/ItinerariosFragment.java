@@ -26,6 +26,7 @@ import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivit
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.VerticalRVAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ItinerariosAdapter;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalItinerarioAdapter;
+import cl.udec.ingsoftware.proyecto_is.Modelo.TripletaItinerario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorItinerario;
 import cl.udec.ingsoftware.proyecto_is.R;
@@ -84,13 +85,11 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(llm);
-
-         verticalRVAdapter= new VerticalRVAdapter(getContext(),catalogo);
+        verticalRVAdapter= new VerticalRVAdapter(getContext(),catalogo.getTripletasOfItinerario());
         mRecyclerView.setAdapter(verticalRVAdapter);
-
-
         return view;
     }
+
     public void onSucursalPressed(int position) {
         if (mItinerarioListener != null) {
             mItinerarioListener.OnItinerarioSelected(position);
@@ -123,7 +122,7 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
     @Override
     public boolean onQueryTextSubmit(String query) {
         String aux = toTitleCase(query);
-        verticalRVAdapter.setNewData(aux);
+        verticalRVAdapter.setNewData(catalogo.getBuscarItinerariosKeyword(aux));
         mBusqueda.clearFocus();
         mBusqueda.onActionViewCollapsed();
         return false;
@@ -139,10 +138,11 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         mItinerarioListener.OnItinerarioSelected(id);
     }
 
-    public void onSearchAdvanced(String str_comuna, String str_categoria, String str_servicio) {
-//        ArrayList<Tripleta> aux = mPresentador.getTripletasOfSucursales(str_comuna, str_categoria, str_servicio);
-//        verticalRVAdapter.setNewData(aux);
+    public void onSearchAdvanced(String duracion, String estacion) {
+        ArrayList<TripletaItinerario> aux = catalogo.getBuscarItinerarios(estacion,Integer.valueOf(duracion));
+        verticalRVAdapter.setNewData(aux);
     }
+
     public interface OnItinerarioSelectedListener {
         void OnItinerarioSelected(int position);
     }

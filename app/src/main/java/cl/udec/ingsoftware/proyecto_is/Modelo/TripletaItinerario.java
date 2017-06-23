@@ -16,7 +16,7 @@ public class TripletaItinerario {
     public TripletaItinerario(int id, String nombre, ArrayList<Sucursal> sucursales) {
         this.id = id;
         this.nombre = nombre;
-        sucursales = new ArrayList<>();
+        this.sucursales = sucursales;
     }
 
     public void change_id(int id){this.id = id;}

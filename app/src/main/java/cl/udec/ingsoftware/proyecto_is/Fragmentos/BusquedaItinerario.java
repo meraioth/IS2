@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
+import cl.udec.ingsoftware.proyecto_is.Modelo.TripletaItinerario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
@@ -34,9 +35,7 @@ public class BusquedaItinerario extends Fragment {
     private Spinner duracion,estacion;
     private String str_duracion,str_estacion;
     private Button buscar;
-
-
-//    private ItinerariosFragment.OnItinerarioSelectedListener mListener;
+    private OnBusuqedaAvanzadaItinerarioInteractionListener mListener;
 
     public BusquedaItinerario() {
         // Required empty public constructor
@@ -86,7 +85,6 @@ public class BusquedaItinerario extends Fragment {
         });
 
 
-
         duracion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -105,7 +103,7 @@ public class BusquedaItinerario extends Fragment {
                 if(str_estacion==null || str_duracion == null ){
                     Toast.makeText(view.getContext(),"Debe rellenar todos los campos",Toast.LENGTH_SHORT).show();
                 }else{
-//                    mListener.onSearchAdvanced(str_duracion,str_estacion);
+                    mListener.onSearchAdvanced(str_duracion,str_estacion);
                 }
             }
         });
@@ -120,26 +118,27 @@ public class BusquedaItinerario extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
+        if (mListener != null) {
+
+        }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) {
-////            mListener = (BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnBusuqedaAvanzadaInteractionListener");
-//        }
-//    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) {
+            mListener = (BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnBusuqedaAvanzadaInteractionListener");
+        }
+    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
+        mListener = null;
     }
 
     /**
@@ -152,10 +151,7 @@ public class BusquedaItinerario extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
     public interface OnBusuqedaAvanzadaItinerarioInteractionListener {
         void onCancelAdvancedSearch();
         void onSearchAdvanced(String str_duracion, String str_estacion);
