@@ -1,6 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
 
     private SearchView mBusqueda;
     private Toolbar mToolbar;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -107,7 +109,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         itinerarioFragment = ItinerarioFragment.newInstance((Serializable) catalogo);*/
         mapaFragment = MapaFragment.newInstance();
         busquedaFragment = BusquedaFragment.newInstance();
-        itinerarioFragment = ItinerarioFragment.newInstance();
+        //itinerarioFragment = ItinerarioFragment.newInstance();
         itinerariosFragment = ItinerariosFragment.newInstance();
 
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
