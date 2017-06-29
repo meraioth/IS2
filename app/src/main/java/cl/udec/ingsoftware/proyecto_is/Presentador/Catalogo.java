@@ -25,6 +25,8 @@ import java.util.Set;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Empresa;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Empresario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
@@ -41,13 +43,14 @@ public class Catalogo implements Serializable {
 
     private ArrayList<Itinerario> itinerarios;
     private ArrayList<Sucursal> sucursales;
+    private ArrayList<Empresa> empresas;
     private Formateador formateador;
 
     public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
         sucursales = formateador.getSucursales();
         itinerarios = formateador.getItinerarios();
-
+        empresas = formateador.getEmpresas();
     }
 
     public ArrayList getSucursales(){
@@ -433,5 +436,20 @@ public class Catalogo implements Serializable {
             info.add(tri);
         }
         return info;
+    }
+
+    //Metodo que retorna los String asociado a los nombres de las sucursales de un empresario (por su id)
+    public ArrayList<String> getSucursalById(int id){
+        ArrayList<String> sucursaless = new ArrayList();
+        for (Empresa firma: empresas){
+            if (id == firma.getIdEmpresario()){
+                for (Sucursal suc:sucursales){
+                    if (suc.getRutEmpresa() == firma.getRutEmpresa()){
+                        sucursaless.add(suc.getNombre());
+                    }
+                }
+            }
+        }
+        return sucursaless;
     }
 }

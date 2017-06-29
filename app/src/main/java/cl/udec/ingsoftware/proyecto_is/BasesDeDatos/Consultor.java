@@ -51,6 +51,13 @@ public class Consultor {
         return c;
     };
 
+    public Cursor getEmpresas(){
+        SQLiteDatabase db = local.getReadableDatabase();
+        Cursor c = db.rawQuery("select * " +
+                "from empresa;",null);
+        return c;
+    };
+
     public Cursor getServiciosLocal(){
         SQLiteDatabase db = local.getReadableDatabase();
         Cursor c = db.rawQuery("select * " +

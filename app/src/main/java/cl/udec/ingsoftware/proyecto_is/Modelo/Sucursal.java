@@ -22,8 +22,9 @@ public class Sucursal {
     private String imagen;
     private String descripcion;
     private  String comuna;
+    private  String rut_empresa;
     //public Sucursal(String nombre, String id, String direccion,int longitud, int latitud, int sello){
-    public Sucursal(String nombre, int id, int sello, double latitud, double longitud, String image, String descri, String comuna){
+    public Sucursal(String nombre, int id, int sello, double latitud, double longitud, String image, String descri, String comuna, String rut_empresa){
         //super(id,direccion,longitud,latitud);
         this.nombre = nombre;
         this.sello = sello;
@@ -34,6 +35,7 @@ public class Sucursal {
         this.imagen = image;
         this.descripcion = descri;
         this.comuna=comuna;
+        this.rut_empresa = rut_empresa;
 
     }
 
@@ -78,5 +80,9 @@ public class Sucursal {
 
     public String getComuna() {
         return comuna;
+    }
+
+    public String getRutEmpresa() {
+        return rut_empresa;
     }
 }

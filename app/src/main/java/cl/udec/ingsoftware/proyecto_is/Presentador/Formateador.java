@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.Consultor;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Empresa;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Empresario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
@@ -102,7 +104,7 @@ public class Formateador {
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
                 sucursal = new Sucursal(aux.getString("nombre"),aux.getInt("id"),aux.getInt("sello_de_turismo"),
-                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto"), aux.getString("descripcion"),aux.getString("comuna"));
+                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto"), aux.getString("descripcion"),aux.getString("comuna"), aux.getString("rut_empresa"));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -130,7 +132,7 @@ public class Formateador {
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
                 sucursal = new Sucursal(aux.getString(1),aux.getInt(0),aux.getInt(2),
-                        aux.getDouble(5), aux.getDouble(6), aux.getString(8), aux.getString(7), aux.getString(4));
+                        aux.getDouble(5), aux.getDouble(6), aux.getString(8), aux.getString(7), aux.getString(4), aux.getString(3));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -218,7 +220,7 @@ public class Formateador {
             if (!existe_sucursal) {
                 //Si no existe la sucursal, se crea y se añade servicio
                 sucursal = new Sucursal(aux.getString("nombre_sucursal"), aux.getInt("id_sucursal"), aux.getInt("sello_de_turismo"),
-                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto_sucursal"), aux.getString("descripcion"), aux.getString("comuna"));
+                        aux.getDouble("latitud"), aux.getDouble("longitud"), aux.getString("foto_sucursal"), aux.getString("descripcion"), aux.getString("comuna"), aux.getString("rut_empresa"));
                 sucursal.addServicio(serv);
                 sucursales.add(sucursal);
             }
@@ -290,5 +292,35 @@ public class Formateador {
             return itinerario;
         }
         return null;
+    }
+
+
+    //devuelve las empresas
+    public ArrayList<Empresa> getEmpresas() throws SQLException {
+        ArrayList<Empresa> empresas = new ArrayList<>();
+        ResultSet resultSet;
+        Empresa empresa;
+        if(isNetworkAvailable()){
+
+            resultSet = (ResultSet) consultor.getEmpresas();
+            while(resultSet.next()) {
+                boolean existe_sucursal = false;
+                //Buscar si existe la empresa la lista
+                Sucursal sucursal;
+                for (Empresa firma : empresas) {
+                    if (resultSet.getInt(0) == firma.getId()) {
+                        existe_sucursal = true;
+                        break;
+                    }
+                }
+                if (!existe_sucursal) {
+                    //Si no existe la empresa, se crea y se añade servicio
+                    empresa = new Empresa(resultSet.getInt("id"), resultSet.getString("nombre"), resultSet.getString("rut_empresa"), resultSet.getInt("id_empresario"));
+                    empresas.add(empresa);
+                }
+            }
+
+        }
+        return empresas;
     }
 }
