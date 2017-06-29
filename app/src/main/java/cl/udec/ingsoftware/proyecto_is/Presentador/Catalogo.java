@@ -439,7 +439,7 @@ public class Catalogo implements Serializable {
     }
 
     //Metodo que retorna los String asociado a los nombres de las sucursales de un empresario (por su id)
-    public ArrayList<String> getSucursalById(int id){
+    public ArrayList<String> getSucursalesById(int id){
         ArrayList<String> sucursaless = new ArrayList();
         for (Empresa firma: empresas){
             if (id == firma.getIdEmpresario()){
