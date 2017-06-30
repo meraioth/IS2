@@ -300,15 +300,13 @@ public class Formateador {
         ArrayList<Empresa> empresas = new ArrayList<>();
         ResultSet resultSet;
         Empresa empresa;
-        if(isNetworkAvailable()){
-
-            resultSet = (ResultSet) consultor.getEmpresas();
+        resultSet = consultor.getEmpresas();
             while(resultSet.next()) {
                 boolean existe_sucursal = false;
                 //Buscar si existe la empresa la lista
                 Sucursal sucursal;
                 for (Empresa firma : empresas) {
-                    if (resultSet.getInt(0) == firma.getId()) {
+                    if (resultSet.getInt("id") == firma.getId()) {
                         existe_sucursal = true;
                         break;
                     }
@@ -320,7 +318,7 @@ public class Formateador {
                 }
             }
 
-        }
+
         return empresas;
     }
 }

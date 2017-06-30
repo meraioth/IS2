@@ -91,7 +91,6 @@ public class Catalogo implements Serializable {
         ArrayList<Tripleta> info = new ArrayList<Tripleta>();
         ArrayList<Integer> ides = new ArrayList<Integer>();
         int id;
-        //Log.e("id", String.valueOf(sucursales.size()));
         for (Sucursal suc: sucursales) {
             id = suc.getId();
             if (!ides.contains(id)){

@@ -82,7 +82,5 @@ public class Sucursal {
         return comuna;
     }
 
-    public String getRutEmpresa() {
-        return rut_empresa;
-    }
+    public String getRutEmpresa() {return rut_empresa;}
 }

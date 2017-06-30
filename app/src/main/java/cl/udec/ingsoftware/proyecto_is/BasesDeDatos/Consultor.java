@@ -51,12 +51,6 @@ public class Consultor {
         return c;
     };
 
-    public Cursor getEmpresas(){
-        SQLiteDatabase db = local.getReadableDatabase();
-        Cursor c = db.rawQuery("select * " +
-                "from empresa;",null);
-        return c;
-    };
 
     public Cursor getServiciosLocal(){
         SQLiteDatabase db = local.getReadableDatabase();
@@ -80,6 +74,13 @@ public class Consultor {
     public ResultSet getItinerariosRemoto(){
         remoto = new DBremoto();
         remoto.query("select * from itinerarios_y_sucursales") ;
+        return remoto.getResult();
+    };
+
+    public ResultSet getEmpresas(){
+        remoto = new DBremoto();
+        remoto.query("select *\n" +
+                "from empresa;");
         return remoto.getResult();
     };
 
