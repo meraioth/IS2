@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.Consultor;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Empresa;
-import cl.udec.ingsoftware.proyecto_is.Modelo.Empresario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
 
 /**
  * Created by meraioth on 08-05-17.
@@ -320,5 +320,19 @@ public class Formateador {
 
 
         return empresas;
+    }
+
+    public Usuario getUsuario(String name,String pass){
+        Usuario usuario = null;
+        ResultSet resultSet= consultor.getUsuario(name,pass);
+        if(resultSet!=null){
+            try {
+                resultSet.next();
+                usuario=new Usuario(resultSet.getString("nombre"),resultSet.getString("email"),resultSet.getInt("rol"),resultSet.getInt("id"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return usuario;
+        }else return null;
     }
 }

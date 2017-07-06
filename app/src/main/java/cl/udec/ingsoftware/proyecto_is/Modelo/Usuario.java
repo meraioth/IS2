@@ -7,5 +7,28 @@ import java.util.ArrayList;
  */
 
 public class Usuario {
+    String name,email;
+    int rol,id;
+    public Usuario(String name,String email,int rol,int id){
+        this.name=name;
+        this.email=email;
+        this.rol=rol;
+        this.id=id;
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getRol() {
+        return rol;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

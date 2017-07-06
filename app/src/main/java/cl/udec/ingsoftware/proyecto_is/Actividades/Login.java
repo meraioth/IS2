@@ -1,28 +1,50 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorUsuario;
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    PresentadorUsuario presentadorUsuario;
     Button b1,b2;
     EditText ed1,ed2;
-    DBremoto db,db1;
     public final static String EXTRA_MESSAGE = "cl.udec.ingsoftware.proyecto_is.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         b1 = (Button)findViewById(R.id.button_login);
         ed1 = (EditText)findViewById(R.id.mail);
         ed2 = (EditText)findViewById(R.id.pass);
@@ -32,42 +54,21 @@ public class Login extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    db = new DBremoto();
-                    db1=new DBremoto();
-                    String cons = "SELECT * FROM usuario where usuario.email like '"+
-                            ed1.getText().toString()+"' and usuario.password like '"+ed2.getText().toString()+"';";
-                    db.query(cons);
-                    ResultSet rs = db.getResult();
-                try {
-                    if (rs.next()){
-                        String id =rs.getString("id");
-                        System.out.println(id);
-                        String consu =  "SELECT * FROM empresario where id ="+id+";";
-                        System.out.println(consu);
-                        db1.query(consu);
-                        ResultSet rs1 = db1.getResult();
-                        if(rs1.next()){
-
-                            Toast.makeText(getApplicationContext(),
-                             "Redirecting...",Toast.LENGTH_SHORT).show();
-                            vista_empresario(id);
-                        }else
-                        {
-                            vista_turista(id);
-                           Toast.makeText(getApplicationContext(),
-                                "Redirecting...",Toast.LENGTH_SHORT).show();
-
-
-                        }
-
-                    }else Toast.makeText(getApplicationContext(),
-                    "Fallo verificación...",Toast.LENGTH_SHORT).show();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                presentadorUsuario=new PresentadorUsuario(v.getContext(),ed1.getText().toString(),ed2.getText().toString());
+                if(presentadorUsuario.login()){
+                    guardarEnSP(presentadorUsuario.getUsuario());
+                    if(presentadorUsuario.getRol()==1){
+                        vista_empresario("asda");
+                    }else{
+                        vista_turista("asdas");
+                    }
                 }
-
-            }
-            });
+            }});
+    }
+    private void guardarEnSP(Usuario usuario) {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        sp.edit().putString("name",usuario.getName());
+        sp.edit().putInt("rol",usuario.getRol());
     }
 
     private void vista_empresario(String message){
@@ -83,5 +84,62 @@ public class Login extends AppCompatActivity {
 
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

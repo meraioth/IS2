@@ -1,32 +1,16 @@
 package cl.udec.ingsoftware.proyecto_is.Presentador;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.util.Pair;
 
 import java.io.Serializable;
-import java.sql.Array;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
-import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBremoto;
-import cl.udec.ingsoftware.proyecto_is.BasesDeDatos.DBlocal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Categoria;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Empresa;
-import cl.udec.ingsoftware.proyecto_is.Modelo.Empresario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Itinerario;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Servicio;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;

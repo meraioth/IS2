@@ -28,7 +28,7 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 
-public class BusquedaFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener, SucursalAdapter.OnItemClickListener {
+public class BusquedaFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener, SucursalAdapter.OnItemClickListener   {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PRESENTADOR = "presentador";

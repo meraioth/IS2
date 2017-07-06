@@ -213,4 +213,10 @@ public class Consultor {
         }
         return ordenCreado;
     }
+
+    public ResultSet getUsuario(String name, String pass) {
+        remoto = new DBremoto();
+        remoto.query("select * from usuario where email='"+name+"' and password='"+pass+"';");
+        return remoto.getResult();
+    }
 }
