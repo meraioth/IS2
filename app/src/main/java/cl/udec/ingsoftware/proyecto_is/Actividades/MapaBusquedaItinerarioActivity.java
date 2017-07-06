@@ -1,6 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.sql.SQLException;
@@ -28,7 +30,7 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener {
+public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener {
 
     private BusquedaFragment busquedaFragment;
     private MapaFragment mapaFragment;
@@ -99,6 +101,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        inflar_menu(navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
         //mPresentadorSucursal = new PresentadorSucursal(this.getApplicationContext());
@@ -116,6 +119,22 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
         fragmentTransaction.commit();
+
+
+    }
+
+    private void inflar_menu(NavigationView navigationView) {
+        //no hay usuario activo = 0
+        //usuario empresario =1
+        //usuario turista =2
+        int usuario =usuarioactivo();
+        if(usuario==0){
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
+        }else if(usuario==1){
+            navigationView.inflateMenu(R.menu.activity_main_drawer_empresario);
+        }else {
+            navigationView.inflateMenu(R.menu.activity_main_drawer_turista);
+        }
 
 
     }
@@ -205,6 +224,13 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         return false;
     }
 
+
+    private int usuarioactivo() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        return sp.getInt("rol",0);
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -214,10 +240,13 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
             // Handle the camera action
         } else if (id == R.id.login) {
             vista_login();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.cerrar_sesion) {
+            cerrar_sesion();
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.mis_sucursales) {
+            vista_empresario();
+        }else if(id == R.id.actualizar_sucursal){
+            vista_actualizar_sucursal();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -225,9 +254,39 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity implements
         return true;
 
     }
+
+    private void vista_actualizar_sucursal() {
+        Intent intent = new Intent(this, ActualizarSucursal.class);
+
+        startActivity(intent);
+    }
+
+    private void vista_empresario() {
+        Intent intent = new Intent(this, Vista_empresario.class);
+
+        startActivity(intent);
+    }
+
+    private void cerrar_sesion() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        sp.edit().putInt("rol",0).commit();
+        Intent intent = new Intent(this, MapaBusquedaItinerarioActivity.class);
+
+        startActivity(intent);
+    }
+
     private void vista_login(){
         Intent intent = new Intent(this, Login.class);
 
         startActivity(intent);
+    }
+    @Override
+    protected void onDestroy(){
+        Log.d("destroy","true");
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        sp.edit().putInt("rol",0).commit();
+        super.onDestroy();
+
+
     }
 }

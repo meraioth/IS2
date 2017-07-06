@@ -78,4 +78,13 @@ public class PresentadorSucursal implements Serializable {
     public String getComuna() {
         return sucursal.getComuna();
     }
+
+    public void setDescripcion(String descripcion) {
+        formateador.updateDescripcionSucursal(id,descripcion);
+    }
+
+    public void setNombre(String name) {
+        formateador.updateNombreSucursal(id,name);
+
+    }
 }

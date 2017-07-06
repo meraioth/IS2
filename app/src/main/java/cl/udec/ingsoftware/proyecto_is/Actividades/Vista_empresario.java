@@ -1,6 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -74,23 +75,31 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
         if (id == R.id.principal) {
 
             gotoPrincipal();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.actualizar_sucursal) {
+            gotoActualizarSucursal();
+        } else if (id == R.id.cerrar_sesion) {
+            cerrar_sesion();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void gotoActualizarSucursal() {
+        startActivity(new Intent(this,ActualizarSucursal.class));
+
+    }
+
     private void gotoPrincipal() {
         startActivity(new Intent(this,MapaBusquedaItinerarioActivity.class));
+    }
+    private void cerrar_sesion() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        sp.edit().putInt("rol",0).commit();
+        Intent intent = new Intent(this, MapaBusquedaItinerarioActivity.class);
+
+        startActivity(intent);
     }
 }

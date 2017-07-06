@@ -335,4 +335,13 @@ public class Formateador {
             return usuario;
         }else return null;
     }
+
+    public void updateDescripcionSucursal(int id, String descripcion) {
+        consultor.updateDescripcionSucursal(id,descripcion);
+    }
+
+    public void updateNombreSucursal(int id, String name) {
+        consultor.updateNombreSucursal(id,name);
+
+    }
 }

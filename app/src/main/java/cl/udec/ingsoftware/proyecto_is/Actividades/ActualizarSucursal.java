@@ -1,8 +1,11 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,12 +15,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 public class ActualizarSucursal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+    EditText nombre,rut,descripcion;
+    int id_suc;
+    Button actualizar,subir_foto;
+    Spinner mis_sucursales;
+    Catalogo catalogo;
+    PresentadorSucursal msucursal;
+    Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,24 +48,56 @@ public class ActualizarSucursal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        try {
+            catalogo=new Catalogo(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        actualizar = (Button) findViewById(R.id.actualizar);
+        nombre = (EditText) findViewById(R.id.edit_nombre);
+        rut = (EditText) findViewById(R.id.edit_rut);
+        descripcion = (EditText) findViewById(R.id.edit_descripcion);
+        usuario = getUsuarioSP();
+        mis_sucursales = (Spinner) findViewById(R.id.sucursales);
+        //TODO: esto no está entregando nada por favor revisar el metodo getSucursalesbyID
+        List<String> sucursales = catalogo.getSucursalesById(usuario.getId());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sucursales);
+        mis_sucursales.setAdapter(dataAdapter);
+        mis_sucursales.setOnItemSelectedListener(this);
+        actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"actualizando...",Toast.LENGTH_SHORT).show();
+                //actualizar(nombre.toString(),descripcion.toString());
+            }
+        });
     }
+
+
+    private void actualizar(String name ,String Descripcion){
+        msucursal.setNombre(name);
+        msucursal.setDescripcion(Descripcion);
+
+    }
+    //TODO: sacar este modelo de aca
+    private Usuario getUsuarioSP() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        String name= sp.getString("name","");
+        String email = sp.getString("email","");
+        int rol = sp.getInt("rol",0);
+        Log.d("rol",""+rol);
+        int id = sp.getInt("id",0);
+        return new Usuario(name,email,rol,id);
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -82,22 +137,49 @@ public class ActualizarSucursal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.home) {
+            gotoHome();
+        } else if (id == R.id.mis_sucursales) {
+            gotovista_empresario();
+        } else if (id == R.id.cerrar_sesion) {
+        cerrar_sesion();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void gotovista_empresario() {
+        Intent intent = new Intent(this, Vista_empresario.class);
+    }
+
+    private void gotoHome() {
+        Intent intent = new Intent(this, MapaBusquedaItinerarioActivity.class);
+    }
+
+    private void cerrar_sesion() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        sp.edit().putInt("rol",0).commit();
+        Intent intent = new Intent(this, MapaBusquedaItinerarioActivity.class);
+
+        startActivity(intent);
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ArrayList<Tripleta> suc = catalogo.getBuscarKeyword(parent.getItemAtPosition(position).toString());
+        Tripleta aux = suc.get(0);
+        this.id_suc = aux.get_id();
+        msucursal = new PresentadorSucursal(view.getContext(),aux.get_id());
+        if(msucursal!=null){
+            nombre.setText(msucursal.get_name());
+            descripcion.setText(msucursal.get_descripcion());
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 }

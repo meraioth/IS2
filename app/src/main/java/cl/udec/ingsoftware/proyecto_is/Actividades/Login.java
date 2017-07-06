@@ -46,6 +46,7 @@ public class Login extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.inflateMenu(R.menu.activity_login_drawer);
         navigationView.setNavigationItemSelectedListener(this);
         b1 = (Button)findViewById(R.id.button_login);
         ed1 = (EditText)findViewById(R.id.mail);
@@ -102,6 +103,7 @@ public class Login extends AppCompatActivity
         sp.edit().putString("email",usuario.getEmail()).apply();
         sp.edit().putInt("rol",usuario.getRol()).apply();
         sp.edit().putString("pass",password).apply();
+        sp.edit().putInt("id",usuario.getId());
         sp.edit().commit();
     }
     private String getUsuarioEmailSP(){
@@ -169,14 +171,6 @@ public class Login extends AppCompatActivity
         if (id == R.id.principal) {
             gotoPrincipal();
         } else if (id == R.id.login) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

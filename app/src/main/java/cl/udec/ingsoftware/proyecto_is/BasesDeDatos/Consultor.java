@@ -219,4 +219,16 @@ public class Consultor {
         remoto.query("select * from usuario where email='"+name+"' and password='"+pass+"';");
         return remoto.getResult();
     }
+
+    public void updateDescripcionSucursal(int id, String descripcion) {
+        remoto = new DBremoto();
+        remoto.query("update sucursal set descripcion ='"+descripcion+"' where id ="+id+";");
+        remoto.query("insert into log values (default)");
+    }
+
+    public void updateNombreSucursal(int id, String name) {
+        remoto = new DBremoto();
+        remoto.query("update sucursal set nombre ='"+name+"' where id ="+id+";");
+        remoto.query("insert into log values (default)");
+    }
 }

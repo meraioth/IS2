@@ -5,11 +5,19 @@
         <item
             android:id="@+id/principal"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Principal" />
+            android:title="Home" />
         <item
-            android:id="@+id/login"
-            android:icon="@drawable/ic_menu_login"
-            android:title="Ingresar" />
+            android:id="@+id/mis_sucursales"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Mis Sucursales" />
+        <item
+            android:id="@+id/actualizar_sucursal"
+            android:icon="@android:drawable/ic_menu_upload"
+            android:title="Actualizar Sucursal" />
+        <item
+            android:id="@+id/cerrar_sesion"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="Log Out" />
 
 
     </group>

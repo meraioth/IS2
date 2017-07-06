@@ -429,10 +429,12 @@ public class Catalogo implements Serializable {
                 for (Sucursal suc:sucursales){
                     if (suc.getRutEmpresa() == firma.getRutEmpresa()){
                         sucursaless.add(suc.getNombre());
+                        Log.d("hay sucursales","true");
                     }
                 }
             }
         }
         return sucursaless;
     }
+
 }
