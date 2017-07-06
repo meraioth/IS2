@@ -1,5 +1,6 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -70,8 +71,9 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.principal) {
+
+            gotoPrincipal();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -87,5 +89,8 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void gotoPrincipal() {
+        startActivity(new Intent(this,MapaBusquedaItinerarioActivity.class));
     }
 }
