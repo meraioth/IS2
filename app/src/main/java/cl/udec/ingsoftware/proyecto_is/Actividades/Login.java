@@ -69,6 +69,7 @@ public class Login extends AppCompatActivity
         SharedPreferences sp = this.getSharedPreferences("usuario",0);
         sp.edit().putString("name",usuario.getName());
         sp.edit().putInt("rol",usuario.getRol());
+        sp.edit().commit();
     }
 
     private void vista_empresario(String message){
