@@ -103,7 +103,7 @@ public class Login extends AppCompatActivity
         sp.edit().putString("email",usuario.getEmail()).apply();
         sp.edit().putInt("rol",usuario.getRol()).apply();
         sp.edit().putString("pass",password).apply();
-        sp.edit().putInt("id",usuario.getId());
+        sp.edit().putInt("id",usuario.getId()).apply();
         sp.edit().commit();
     }
     private String getUsuarioEmailSP(){
