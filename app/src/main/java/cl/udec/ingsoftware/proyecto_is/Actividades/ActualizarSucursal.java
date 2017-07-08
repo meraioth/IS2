@@ -67,6 +67,7 @@ public class ActualizarSucursal extends AppCompatActivity
         usuario = getUsuarioSP();
         mis_sucursales = (Spinner) findViewById(R.id.sucursales);
         //TODO: esto no está entregando nada por favor revisar el metodo getSucursalesbyID
+        Log.d("id usuario", String.valueOf(usuario.getId()));
         List<String> sucursales = catalogo.getSucursalesById(usuario.getId());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sucursales);
         mis_sucursales.setAdapter(dataAdapter);
@@ -95,7 +96,6 @@ public class ActualizarSucursal extends AppCompatActivity
         Log.d("rol",""+rol);
         int id = sp.getInt("id",0);
         return new Usuario(name,email,rol,id);
-
     }
 
 

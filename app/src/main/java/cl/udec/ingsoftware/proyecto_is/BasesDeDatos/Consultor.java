@@ -129,11 +129,9 @@ public class Consultor {
 
     public void respaldar_sucursales(ResultSet resultSet) throws SQLException {
         System.out.println("GUARDANDO REGISTROS ################");
-
         if(resultSet!= null){
             resultSet.first();
             while (resultSet.next()) {
-
                 SQLiteDatabase db = local.getReadableDatabase();
                 ContentValues contentValues = new ContentValues();
                 if(db.rawQuery("select * from categoria where nombre_categoria = ?",new String[]{resultSet.getString(18)}).getCount()==0){
@@ -141,24 +139,17 @@ public class Consultor {
                     contentValues.put("nombre_categoria",resultSet.getString(18));
                     contentValues.put("descripcion",resultSet.getString(19));
                     local.getWritableDatabase().insert("categoria", null, contentValues);
-
-
                 }
-
-
                 if(db.rawQuery("select * from servicio where id = ?",new String[]{String.valueOf(resultSet.getInt(12))}).getCount()==0) {
                     contentValues = new ContentValues();
                     contentValues.put("id", resultSet.getInt(12));
                     contentValues.put("nombre_servicio", resultSet.getString(13));
                     contentValues.put("descripcion", resultSet.getString(15));
                     local.getWritableDatabase().insert("servicio", null, contentValues);
-
                     contentValues = new ContentValues();
                     contentValues.put("id_servicio",resultSet.getInt(16));
                     contentValues.put("nombre_categoria",resultSet.getString(17));
                     local.getWritableDatabase().insert("servicio_categoria", null, contentValues);
-
-
                 }
 
                 if(db.rawQuery("select * from sucursal where sucursal.id = ?",new String[]{String.valueOf(resultSet.getInt(1))}).getCount()==0) {
@@ -167,6 +158,7 @@ public class Consultor {
                     contentValues.put("id", resultSet.getInt(1));
                     contentValues.put("nombre", resultSet.getString(2));
                     contentValues.put("sello_de_turismo", resultSet.getString(3));
+                    contentValues.put("rut_empresa",resultSet.getString(4));
                     contentValues.put("comuna", resultSet.getString(5));
                     contentValues.put("latitud", resultSet.getDouble(6));
                     contentValues.put("longitud", resultSet.getDouble(7));
@@ -174,14 +166,11 @@ public class Consultor {
                     contentValues.put("foto", resultSet.getString(9));
                     System.out.println("Tupla---->> id :" + resultSet.getInt(1) + " nombre:" + resultSet.getString(2) + " comuna:" + resultSet.getString(5));
                     local.getWritableDatabase().insert("sucursal", null, contentValues);
-
                     contentValues = new ContentValues();
                     contentValues.put("id_sucursal", resultSet.getInt(10));
                     contentValues.put("id_servicio", resultSet.getInt(11));
                     local.getWritableDatabase().insert("sucursal_servicio", null, contentValues);
-
                 }
-
             }
         }
 

@@ -427,9 +427,8 @@ public class Catalogo implements Serializable {
         for (Empresa firma: empresas){
             if (id == firma.getIdEmpresario()){
                 for (Sucursal suc:sucursales){
-                    if (suc.getRutEmpresa() == firma.getRutEmpresa()){
+                    if (String.valueOf(suc.getRutEmpresa()).equals(String.valueOf(firma.getRutEmpresa()))){
                         sucursaless.add(suc.getNombre());
-                        Log.d("hay sucursales","true");
                     }
                 }
             }

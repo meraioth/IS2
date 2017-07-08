@@ -73,7 +73,6 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
 
         if (id == R.id.principal) {
-
             gotoPrincipal();
         } else if (id == R.id.actualizar_sucursal) {
             gotoActualizarSucursal();

@@ -317,8 +317,6 @@ public class Formateador {
                     empresas.add(empresa);
                 }
             }
-
-
         return empresas;
     }
 
