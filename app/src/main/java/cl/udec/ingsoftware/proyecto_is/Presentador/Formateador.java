@@ -326,6 +326,7 @@ public class Formateador {
         if(resultSet!=null){
             try {
                 resultSet.next();
+                Log.d("Usuario",resultSet.getInt("id")+"");
                 usuario=new Usuario(resultSet.getString("nombre"),resultSet.getString("email"),resultSet.getInt("rol"),resultSet.getInt("id"));
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -95,6 +95,7 @@ public class ActualizarSucursal extends AppCompatActivity
         int rol = sp.getInt("rol",0);
         Log.d("rol",""+rol);
         int id = sp.getInt("id",0);
+        Log.d("int id ",id+"");
         return new Usuario(name,email,rol,id);
     }
 
