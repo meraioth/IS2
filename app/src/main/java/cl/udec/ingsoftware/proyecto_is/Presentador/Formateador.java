@@ -340,6 +340,8 @@ public class Formateador {
     }
 
     public void updateNombreSucursal(int id, String name) {
+        Log.d("formateador_update_name",name+" "+id);
+
         consultor.updateNombreSucursal(id,name);
 
     }

@@ -1,6 +1,7 @@
 package cl.udec.ingsoftware.proyecto_is.Presentador;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -84,6 +85,7 @@ public class PresentadorSucursal implements Serializable {
     }
 
     public void setNombre(String name) {
+        Log.d("presentador_sucursal_update_name",name);
         formateador.updateNombreSucursal(id,name);
 
     }

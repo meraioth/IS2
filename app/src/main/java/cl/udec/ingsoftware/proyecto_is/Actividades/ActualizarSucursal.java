@@ -76,7 +76,8 @@ public class ActualizarSucursal extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),"actualizando...",Toast.LENGTH_SHORT).show();
-                //actualizar(nombre.toString(),descripcion.toString());
+                Log.d("mensaje:",nombre.toString()+descripcion.toString());
+                actualizar(nombre.getText().toString(),descripcion.getText().toString());
             }
         });
     }
