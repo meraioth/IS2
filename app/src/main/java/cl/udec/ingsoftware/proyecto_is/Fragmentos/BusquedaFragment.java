@@ -139,6 +139,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
         adapter.setNewData(mPresentador.getBuscarKeyword(aux));
         mBusqueda.clearFocus();
         mBusqueda.onActionViewCollapsed();
+        Toast.makeText(getContext(),"Mostrando Resultados de '"+query+"'...",Toast.LENGTH_SHORT).show();
         return false;
     }
 

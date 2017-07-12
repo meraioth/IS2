@@ -78,6 +78,7 @@ public class ActualizarSucursal extends AppCompatActivity
                 Toast.makeText(v.getContext(),"actualizando...",Toast.LENGTH_SHORT).show();
                 Log.d("mensaje:",nombre.toString()+descripcion.toString());
                 actualizar(nombre.getText().toString(),descripcion.getText().toString());
+                refresh();
             }
         });
     }
