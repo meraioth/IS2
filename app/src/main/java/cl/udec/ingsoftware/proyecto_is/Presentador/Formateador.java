@@ -345,4 +345,8 @@ public class Formateador {
         consultor.updateNombreSucursal(id,name);
 
     }
+
+    public void guardarNuevaSucursal(String nombre, String rut, String descripcion, String comuna){
+        consultor.guardarNuevaSucursal(nombre, rut, descripcion, comuna);
+    }
 }

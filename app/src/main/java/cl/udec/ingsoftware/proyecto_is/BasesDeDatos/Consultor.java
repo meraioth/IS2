@@ -223,4 +223,10 @@ public class Consultor {
                 "insert into log values (default)");
 
     }
+
+    public void guardarNuevaSucursal(String nombre, String rut, String descripcion, String comuna){
+        remoto = new DBremoto();
+        remoto.query("insert into sucursal (nombre, rut_empresa, descripcion, comuna)" +
+                "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
+    }
 }

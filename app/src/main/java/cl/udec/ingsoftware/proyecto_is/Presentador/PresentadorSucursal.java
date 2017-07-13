@@ -89,4 +89,9 @@ public class PresentadorSucursal implements Serializable {
         formateador.updateNombreSucursal(id,name);
 
     }
+
+    public void setNuevaSucursal(String nombre, String rut, String descripcion, String comuna){
+        formateador.guardarNuevaSucursal(nombre, rut, descripcion, comuna);
+    }
+
 }
