@@ -1,12 +1,15 @@
 package cl.udec.ingsoftware.proyecto_is.Fragmentos;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +29,10 @@ import java.util.HashMap;
 
 import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ListAdapter;
+import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.ListSucursalesAgregarItinerarioAdapter;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
+import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
+import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorItinerario;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 /**
@@ -39,6 +46,7 @@ import cl.udec.ingsoftware.proyecto_is.R;
 public class AgregarItinerarioFragment extends Fragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private PresentadorItinerario mPresentador;
     private EditText mTituloItinerario;
     private RadioButton mVerano,mOtoño,mInvierno,mPrimavera;
     private ListView mSucursalesAgregadas;
@@ -51,6 +59,7 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
 
     private OnFragmentInteractionListener mListener;
     private ArrayAdapter mAdapter;
+    private ListSucursalesAgregarItinerarioAdapter mAdapterSucursales;
 
     public AgregarItinerarioFragment() {
         // Required empty public constructor
@@ -66,12 +75,45 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mPresentador = PresentadorItinerario.getInstance(this.getContext());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_crear_itinerario, menu);
+    }
+
+    public boolean onSave(){
+        String nombre = mTituloItinerario.getText().toString();
+        Usuario user = getUsuarioSP();
+        String estacion;
+
+        if(mVerano.isChecked()){
+            estacion = "Verano";
+        }else if(mOtoño.isChecked()){
+            estacion = "Otoño";
+        }else if(mInvierno.isChecked()){
+            estacion = "Invierno";
+        }else if(mPrimavera.isChecked()){
+            estacion = "Primavera";
+        }else{
+            estacion = "No";
+        }
+        int[] idSucursales = new int[sucursales.size()];
+        ArrayList duraciones = mAdapterSucursales.getDuraciones();
+        for(int i = 0 ; i<sucursales.size(); i++){
+            idSucursales[i] = sucursalesIds.get(sucursales.get(i));
+        }
+        int rol = user.getRol();
+
+        System.out.println(user.getName());
+       // Toast.makeText(this.getContext(),rol,Toast.LENGTH_SHORT).show();
+
+        //mPresentador.crearItinerario();
+
+
+        return true;
     }
 
     @Override
@@ -96,7 +138,8 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
             sucursalesIds.put(sucursalesTodos.get(i).toString(),(Integer) idsTodos.get(i));
         }
         mSucursalesAgregadas = (ListView) view.findViewById(R.id.lista_agregados);
-        mSucursalesAgregadas.setAdapter(new ListAdapter(this.getActivity(),sucursales));
+        mAdapterSucursales = new ListSucursalesAgregarItinerarioAdapter(this.getActivity(),sucursales);
+        mSucursalesAgregadas.setAdapter(mAdapterSucursales);
         mBusquedaSucursal.setOnItemClickListener(this);
         return view;
     }
@@ -119,6 +162,16 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
         }
     }
 */
+    public boolean saveData(){
+        ArrayList duraciones = mAdapterSucursales.getDuraciones();
+        String message ="";
+        for(int i= 0; i < sucursales.size() ; i ++){
+            message = message  +" "+ sucursales.get(i).toString();
+            message = message + " " + duraciones.get(i)+ " \n";
+        }
+        Toast.makeText(this.getContext(),message,Toast.LENGTH_SHORT).show();
+        return true;
+    }
     @Override
     public void onDetach() {
         super.onDetach();
@@ -127,9 +180,13 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        int identificador = sucursalesIds.get( mAdapter.getItem(position));
-        sucursales.add(mAdapter.getItem(position).toString());
-        mSucursalesAgregadas.setAdapter(new ListAdapter(this.getActivity(),sucursales));
+        String sucursal = mAdapter.getItem(position).toString();
+        if (sucursales.contains(sucursal)){
+            Toast.makeText(this.getActivity(),"El lugar ya existe en el itinerario",Toast.LENGTH_LONG).show();
+        }else{
+            sucursales.add(sucursal);
+            mAdapterSucursales.notifyDataSetChanged();
+        }
         mBusquedaSucursal.setText("");
     }
 
@@ -147,4 +204,17 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private Usuario getUsuarioSP() {
+        SharedPreferences sp = this.getActivity().getSharedPreferences("usuario",0);
+        String name= sp.getString("name","");
+        String email = sp.getString("email","");
+        int rol = sp.getInt("rol",0);
+        Log.d("rol",""+rol);
+        int id = sp.getInt("id",0);
+        Log.d("int id ",id+"");
+        return new Usuario(name,email,rol,id);
+    }
+
+
 }

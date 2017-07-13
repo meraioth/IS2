@@ -89,6 +89,10 @@
             android:name=".Actividades.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Actividades.AgregarSucursal"
+            android:label="@string/title_activity_agregar_sucursal"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

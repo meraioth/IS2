@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.AgregarItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaItinerario;
@@ -31,7 +32,7 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener {
+public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener, ItinerariosFragment.OnFragmentInteractionListener{
 
     private BusquedaFragment busquedaFragment;
     private MapaFragment mapaFragment;
@@ -39,6 +40,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
     private ItinerariosFragment itinerariosFragment;
     private BusquedaAvanzadaFragment busquedaAvanzadaFragment;
     private BusquedaItinerario busquedaItinerarioFragment;
+    private AgregarItinerarioFragment agregarItinerarioFragment;
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
@@ -71,12 +73,24 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
                     fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
                     fragmentTransaction.commit();
                     return true;
+                case R.id.cancelar_crear_itinerario:
+                    fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                    fragmentTransaction.commit();
+                    return true;
+                case R.id.aceptar_crear_itinerario:
+                    if(agregarItinerarioFragment.onSave()){
+                        Toast.makeText(getApplicationContext(),"Itinerario creado con exito",Toast.LENGTH_SHORT).show();
+                        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                        fragmentTransaction.commit();
+                        return true;
+
+                    }
+
             }
             return false;
         }
 
     };
-
 
 
     @Override
@@ -113,7 +127,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         busquedaFragment = BusquedaFragment.newInstance();
         //itinerarioFragment = ItinerarioFragment.newInstance();
         itinerariosFragment = ItinerariosFragment.newInstance();
-
+        agregarItinerarioFragment = AgregarItinerarioFragment.newInstance();
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
@@ -171,16 +185,30 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
             case R.id.busqueda_itinerario_avanzada:
                 busquedaItinerarioFragment= BusquedaItinerario.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaItinerarioFragment);
                 fragmentTransaction.commit();
                 return true;
+
             case R.id.cerrar_itinerario_avanzada:
                 Log.d("cerro_busqueda_avanzada_itinerio","cerró");
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
                 fragmentTransaction.commit();
                 return true;
+
+            case R.id.cancelar_crear_itinerario:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                fragmentTransaction.commit();
+                return true;
+
+            case R.id.aceptar_crear_itinerario:
+                Toast.makeText(this,"Itinerario creado con exito",Toast.LENGTH_SHORT).show();
+                agregarItinerarioFragment.onSave();
+
+                /*fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                fragmentTransaction.commit();*/
 
 
 
@@ -306,5 +334,13 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         super.onDestroy();
 
 
+    }
+
+    @Override
+    public void onFragmentAdd() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,agregarItinerarioFragment);
+        fragmentTransaction.commit();
     }
 }

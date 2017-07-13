@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
     RecyclerView mRecyclerView;
     private OnItinerarioSelectedListener mItinerarioListener;
     private VerticalRVAdapter verticalRVAdapter;
+    private FloatingActionButton agregarItinerario;
+    private OnFragmentInteractionListener mListener;
 
 
     public ItinerariosFragment() {}
@@ -87,6 +90,8 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         mRecyclerView.setLayoutManager(llm);
         verticalRVAdapter= new VerticalRVAdapter(getContext(),catalogo.getTripletasOfItinerario());
         mRecyclerView.setAdapter(verticalRVAdapter);
+        agregarItinerario = (FloatingActionButton) view.findViewById(R.id.nuevo_itinerario);
+        agregarItinerario.setOnClickListener(this);
         return view;
     }
 
@@ -96,17 +101,6 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnItinerarioSelectedListener) {
-            mItinerarioListener = (OnItinerarioSelectedListener) context;
-        }
-//        else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnBusuqedaAvanzadaInteractionListener");
-//        }
-    }
 
     @Override
     public void onDetach() {
@@ -116,8 +110,27 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case(R.id.nuevo_itinerario):
+                onButtonPressed();
         }
     }
+    public void onButtonPressed() {
+        if (mListener != null) {
+            mListener.onFragmentAdd();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnBusuqedaAvanzadaInteractionListener");
+        }
+    }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -173,5 +186,8 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         }
 
         return builder.toString();
+    }
+    public interface OnFragmentInteractionListener {
+        void onFragmentAdd();
     }
 }

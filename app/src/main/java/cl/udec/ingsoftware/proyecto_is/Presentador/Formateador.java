@@ -349,4 +349,12 @@ public class Formateador {
     public Boolean eliminarSucursal(String sucursal) throws SQLException {
         return consultor.eliminarSucursal(sucursal);
     }
+
+    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
+        consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
+    }
+
+/*    public void guardarServicioSucursal(String servicios){
+        consultor.guardarServicioSucursal(servicios);
+    }*/
 }
