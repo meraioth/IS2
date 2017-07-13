@@ -230,9 +230,8 @@ public class Consultor {
                 "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
     }
 
-    public void guardarServicioSucursal(String servicios){
+/*    public void guardarServicioSucursal(String servicios){
         remoto = new DBremoto();
-        remoto.query("insert into sucursal.servicio (id_sucursal, id_servicio)" +
-                "values ("+ );
-    }
+        remoto.query();
+    }*/
 }
