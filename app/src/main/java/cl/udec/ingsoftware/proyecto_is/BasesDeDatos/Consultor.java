@@ -224,9 +224,15 @@ public class Consultor {
 
     }
 
-    public void guardarNuevaSucursal(String nombre, String rut, String descripcion, String comuna){
+    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
         remoto = new DBremoto();
         remoto.query("insert into sucursal (nombre, rut_empresa, descripcion, comuna)" +
                 "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
     }
+
+/*    public void guardarServicioSucursal(String servicios){
+        remoto = new DBremoto();
+        remoto.query("insert into sucursal.servicio (id_sucursal, id_servicio)" +
+                "values ("+ );
+    }*/
 }

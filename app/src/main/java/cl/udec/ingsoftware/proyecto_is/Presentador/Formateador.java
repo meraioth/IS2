@@ -346,7 +346,11 @@ public class Formateador {
 
     }
 
-    public void guardarNuevaSucursal(String nombre, String rut, String descripcion, String comuna){
-        consultor.guardarNuevaSucursal(nombre, rut, descripcion, comuna);
+    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
+        consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
+    }
+
+    public void guardarServicioSucursal(String servicios){
+        consultor.guardarServicioSucursal(servicios);
     }
 }
