@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
-    android:background="@android:color/holo_blue_light"
     android:orientation="vertical">
 
 
@@ -16,46 +15,41 @@
             android:id="@+id/area_seleccion_itinerario"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/lightseagreen"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/titulo_itinerario"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
-            <RatingBar
-                android:id="@+id/ratingBar2"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="2"
-                android:numStars="5"
-                android:scaleX="1.5"
-                android:scaleY="2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
+                android:alpha="0.8"
                 android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/ico_transporte"
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/transporte" />
 
                 <ImageView
                     android:id="@+id/ico_comida"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/restaurant" />
@@ -63,7 +57,7 @@
                 <ImageView
                     android:id="@+id/ico_deporte"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/deporte" />
@@ -71,7 +65,7 @@
                 <ImageView
                     android:id="@+id/ico_artesania"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/artesania" />
@@ -79,7 +73,7 @@
                 <ImageView
                     android:id="@+id/ico_esparcimiento"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/esparcimiento" />
@@ -87,7 +81,7 @@
                 <ImageView
                     android:id="@+id/ico_alojamiento"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/alojamiento" />
@@ -95,35 +89,42 @@
                 <ImageView
                     android:id="@+id/ico_tour"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     android:visibility="gone"
                     app:srcCompat="@drawable/turismo" />
+
             </LinearLayout>
 
 
         </LinearLayout>
 
     </LinearLayout>
-
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/lightseagreen">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/horizontal_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_weight="2"
         android:visibility="visible">
 
     </android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/buton_ver_itinerario"
         style="@android:style/Widget.Material.Light.Button.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/place_autocomplete_search_hint"
+        android:layout_weight="1"
         android:elevation="0dp"
         android:text="Ver Itinerario" />
-    <!--android:layout_marginTop="5dp"-->
+
 
 </LinearLayout>
 

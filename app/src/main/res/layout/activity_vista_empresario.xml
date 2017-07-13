@@ -22,5 +22,6 @@ tools:openDrawer="start">
     app:headerLayout="@layout/nav_header_vista_empresario"
     app:menu="@menu/activity_vista_empresario_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>
 
