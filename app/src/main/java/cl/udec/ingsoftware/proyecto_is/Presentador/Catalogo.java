@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -353,6 +354,21 @@ public class Catalogo implements Serializable {
         if(duracion.size()==0)
             duracion.add(0);
         return duracion;
+    }
+
+    /**
+     * Metodo que retorna el nombre de los itinerarios junto con sus id de un usuario
+     * @param idUsuario id de un usuario
+     * @return Tabla hash con itinerarios y ids
+     */
+    public HashMap<String,Integer> getItinerariosUsuario(int idUsuario){
+        HashMap<String,Integer> mis_itinerarios = new HashMap<>();
+        for(Itinerario itinerario: itinerarios){
+            if(itinerario.getId_usuario() == idUsuario){
+                mis_itinerarios.put(itinerario.getNombre(),itinerario.getId());
+            }
+        }
+        return mis_itinerarios;
     }
 
     /**

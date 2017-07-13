@@ -31,4 +31,20 @@
         </menu>
     </item>
 
+    <item android:title="Itinerarios">
+        <menu>
+            <item
+                android:id="@+id/itinerarios_propios"
+                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:title="Mis Itinerarios"
+                />
+            <item
+                android:id="@+id/itinerarios_favoritos"
+                android:icon="@drawable/ic_favorite_24dp"
+                android:title="Favoritos"
+                />
+        </menu>
+
+    </item>
+
 </menu>

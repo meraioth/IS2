@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/modificar_itinerario_popup"
+        android:title="Modifidcar"/>
+
+    <item
+        android:id="@+id/borrar_itinerario"
+        android:title="Borrar"/>
+
+</menu>

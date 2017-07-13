@@ -141,4 +141,5 @@
     <string name="seguidores">Cantidad Seguidores/Otro</string>
     <string name="title_activity_actualizar_sucursal">Actualizar Sucursal</string>
     <string name="title_activity_sucursales_empresario">Mis Sucursales</string>
+    <string name="atras">atras</string>
 </resources>

@@ -28,6 +28,8 @@ import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaItinerario;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.ItinerariosFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.MapaFragment;
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.MisItinerariosFragment;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
@@ -41,6 +43,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
     private BusquedaAvanzadaFragment busquedaAvanzadaFragment;
     private BusquedaItinerario busquedaItinerarioFragment;
     private AgregarItinerarioFragment agregarItinerarioFragment;
+    private MisItinerariosFragment misItinerariosFragment;
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
@@ -129,6 +132,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         itinerariosFragment = ItinerariosFragment.newInstance();
         agregarItinerarioFragment = AgregarItinerarioFragment.newInstance();
         busquedaAvanzadaFragment = BusquedaAvanzadaFragment.newInstance();
+        misItinerariosFragment = MisItinerariosFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -205,6 +209,12 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
             case R.id.aceptar_crear_itinerario:
                 Toast.makeText(this,"Itinerario creado con exito",Toast.LENGTH_SHORT).show();
                 agregarItinerarioFragment.onSave();
+                return true;
+            case R.id.atras_mis_itinerarios:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                fragmentTransaction.commit();
+
 
                 /*fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
@@ -293,12 +303,21 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
             vista_empresario();
         }else if(id == R.id.actualizar_sucursal){
             vista_actualizar_sucursal();
+        }else if (id == R.id.itinerarios_propios){
+            vista_mis_itinerarios();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    private void vista_mis_itinerarios() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,misItinerariosFragment);
+        fragmentTransaction.commit();
     }
 
     private void vista_actualizar_sucursal() {
@@ -342,5 +361,16 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,agregarItinerarioFragment);
         fragmentTransaction.commit();
+    }
+
+    public Usuario getUsuarioSP() {
+        SharedPreferences sp = this.getSharedPreferences("usuario",0);
+        String name= sp.getString("name","");
+        String email = sp.getString("email","");
+        int rol = sp.getInt("rol",0);
+        Log.d("rol",""+rol);
+        int id = sp.getInt("id",0);
+        Log.d("int id ",id+"");
+        return new Usuario(name,email,rol,id);
     }
 }
