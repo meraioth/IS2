@@ -142,6 +142,23 @@ public class Catalogo implements Serializable {
         return servicios;
     }
 
+    public  ArrayList getIdsServicios(){
+        Set<Integer> ser = new HashSet<Integer>();
+        ArrayList<Integer> idsServicios = new ArrayList<Integer>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                ser.add(serv.getId());
+            }
+        }
+        for (Integer str:ser
+                ) {
+            idsServicios.add(str);
+        }
+        return idsServicios;
+    }
+
     public  ArrayList getServiciosBusqueda(String categoria){
         Set<String> ser = new HashSet<String>();
         ArrayList<String> servicios= new ArrayList<String>();
