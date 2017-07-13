@@ -142,4 +142,5 @@
     <string name="title_activity_actualizar_sucursal">Actualizar Sucursal</string>
     <string name="title_activity_sucursales_empresario">Mis Sucursales</string>
     <string name="atras">atras</string>
+    <string name="title_activity_agregar_sucursal">Agregar Sucursal</string>
 </resources>

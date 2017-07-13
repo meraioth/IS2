@@ -143,6 +143,23 @@ public class Catalogo implements Serializable {
         return servicios;
     }
 
+    public  ArrayList getIdsServicios(){
+        Set<Integer> ser = new HashSet<Integer>();
+        ArrayList<Integer> idsServicios = new ArrayList<Integer>();
+        for (Sucursal suc: sucursales
+                ) {
+            for (Servicio serv:suc.getServicios()
+                    ) {
+                ser.add(serv.getId());
+            }
+        }
+        for (Integer str:ser
+                ) {
+            idsServicios.add(str);
+        }
+        return idsServicios;
+    }
+
     public  ArrayList getServiciosBusqueda(String categoria){
         Set<String> ser = new HashSet<String>();
         ArrayList<String> servicios= new ArrayList<String>();
@@ -443,7 +460,7 @@ public class Catalogo implements Serializable {
         for (Empresa firma: empresas){
             System.out.println("id: "+id+" == "+firma.getIdEmpresario());
             if (id == firma.getIdEmpresario()){
-                for (Sucursal suc:sucursales){
+                for (Sucursal suc:this.sucursales){
                     if (String.valueOf(suc.getRutEmpresa()).equals(String.valueOf(firma.getRutEmpresa()))){
                         sucursaless.add(suc.getNombre());
                     }
@@ -453,4 +470,17 @@ public class Catalogo implements Serializable {
         return sucursaless;
     }
 
+    public void eliminarSucursal(String sucursal) throws SQLException {
+        int pos= 0;
+        for(Sucursal suc:this.sucursales){
+            if(suc.getNombre().equals(sucursal)){
+                break;
+            }
+            pos++;
+        }
+        boolean eliminado = formateador.eliminarSucursal(sucursal);
+        if(eliminado){
+            this.sucursales.remove(pos);
+        }
+    }
 }

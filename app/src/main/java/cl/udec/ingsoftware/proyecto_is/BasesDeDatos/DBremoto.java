@@ -26,8 +26,9 @@ public class DBremoto {
 
     public void query(String aux){
         consulta=aux;
-
-        sqlThread.start();
+        if (sqlThread.getState() == Thread.State.NEW) {
+            sqlThread.start();
+        }
             try {
                 sqlThread.join();
             } catch (InterruptedException e) {
