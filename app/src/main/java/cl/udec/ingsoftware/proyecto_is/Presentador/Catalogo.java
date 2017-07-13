@@ -425,6 +425,7 @@ public class Catalogo implements Serializable {
     public ArrayList<String> getSucursalesById(int id){
         ArrayList<String> sucursaless = new ArrayList();
         for (Empresa firma: empresas){
+            System.out.println("id: "+id+" == "+firma.getIdEmpresario());
             if (id == firma.getIdEmpresario()){
                 for (Sucursal suc:sucursales){
                     if (String.valueOf(suc.getRutEmpresa()).equals(String.valueOf(firma.getRutEmpresa()))){

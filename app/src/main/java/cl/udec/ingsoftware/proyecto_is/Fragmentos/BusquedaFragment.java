@@ -71,6 +71,8 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener, 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }else{
+
         }
         setHasOptionsMenu(true);
 

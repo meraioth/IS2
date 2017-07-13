@@ -91,7 +91,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         mToolbar = (Toolbar) findViewById(R.id.toolbar_busqueda);
         setSupportActionBar(mToolbar);
         try {
-            catalogo = new Catalogo(this.getApplicationContext());
+            catalogo = new Catalogo(this);
         } catch (SQLException e) {
             e.printStackTrace();
         }
