@@ -281,14 +281,15 @@ public class Formateador {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public Itinerario crearItinerario(int id, String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
-        boolean creado = consultor.crearItinerario(id,nombre,idUsuario,estacion,idsSucursales, duraciones);
-        if(creado){
+    public Itinerario crearItinerario(String nombre, int idUsuario, String estacion, int[] idsSucursales, int[] duraciones) throws SQLException {
+        int id = consultor.crearItinerario(nombre,idUsuario,estacion,idsSucursales, duraciones);
+        if(id != 0){
             Itinerario itinerario = new Itinerario(id,nombre,idUsuario,estacion,-1);
             for (int i = 0; i < idsSucursales.length; i++){
                 Pair par = new Pair(idsSucursales[i],duraciones[i]);
                 itinerario.addSucursal(par);
             }
+
             return itinerario;
         }
         return null;

@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -87,8 +88,11 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
     public boolean onSave(){
         String nombre = mTituloItinerario.getText().toString();
         Usuario user = getUsuarioSP();
+        if(user.getRol() == 0){
+            Toast.makeText(this.getContext(),"Tiene que iniciar sesión antes",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String estacion;
-
         if(mVerano.isChecked()){
             estacion = "Verano";
         }else if(mOtoño.isChecked()){
@@ -100,18 +104,23 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
         }else{
             estacion = "No";
         }
+
         int[] idSucursales = new int[sucursales.size()];
-        ArrayList duraciones = mAdapterSucursales.getDuraciones();
+        ArrayList duraciones_list = mAdapterSucursales.getDuraciones();
+        int[] duraciones = new int[sucursales.size()];
         for(int i = 0 ; i<sucursales.size(); i++){
             idSucursales[i] = sucursalesIds.get(sucursales.get(i));
+            duraciones[i] = (int) duraciones_list.get(i);
         }
-        int rol = user.getRol();
-
-        System.out.println(user.getName());
-       // Toast.makeText(this.getContext(),rol,Toast.LENGTH_SHORT).show();
-
-        //mPresentador.crearItinerario();
-
+        if(mTituloItinerario.getText().toString().equals("")){
+            Toast.makeText(this.getContext(),"Titulo no puede ser vacío",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        try {
+            mPresentador.crearItinerario(mTituloItinerario.getText().toString(),user.getId(),estacion,idSucursales,duraciones);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return true;
     }

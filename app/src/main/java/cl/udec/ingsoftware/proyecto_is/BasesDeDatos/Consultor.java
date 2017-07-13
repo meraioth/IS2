@@ -178,29 +178,36 @@ public class Consultor {
     }
 
 
-    public boolean crearItinerario(int id, String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
+    public int crearItinerario(String nombre, int idUsuario, String estacion,int[]idsSucursales, int[]duraciones) throws SQLException {
         boolean itinerarioCreado = false;
         boolean ordenCreado = false;
         remoto = new DBremoto();
-        remoto.query("insert into itinerario " +
-                "values("+ id +"," + nombre + "," + idUsuario + "," + estacion + ");");
-        remoto.query("select * from itinerario where nombre = " + nombre + ");");
+        remoto.query("insert into itinerario(nombre,id_usuario,estacion) " +
+                "values('" +nombre + "'," + idUsuario + ",'" + estacion + "');");
+        remoto = new DBremoto();
+        remoto.query("select * from itinerario where nombre = '" + nombre + "';");
+        int id = 0;
         if (remoto.getResult().next()){
+            id = remoto.getResult().getInt("id");
             itinerarioCreado = true;
         }
         if(itinerarioCreado){
             //PARA CADA ID DE SUCURSAL, INSERTAR EN LA BD EL ORDEN CORRESPONDIENTE
             for(int i = 0; i < idsSucursales.length; i++){
+                remoto = new DBremoto();
                 remoto.query("insert into orden" +
-                        "values(" +
-                        id + "," + idsSucursales[i] + "," + i + "," + duraciones[i]);
+                        " values(" +
+                        id + "," + idsSucursales[i] + "," + i+1 + "," + duraciones[i]+");");
             }
+            remoto = new DBremoto();
             remoto.query("select * from orden where id_itinerario = " + id + ";");
             if(remoto.getResult().next()){
                 ordenCreado = true;
             }
         }
-        return ordenCreado;
+        remoto = new DBremoto();
+        remoto.query("insert into log values(default)");
+        return id;
     }
 
     public ResultSet getUsuario(String name, String pass) {

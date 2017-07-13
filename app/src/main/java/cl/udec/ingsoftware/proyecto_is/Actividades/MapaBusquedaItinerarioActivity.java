@@ -207,8 +207,12 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
                 return true;
 
             case R.id.aceptar_crear_itinerario:
-                Toast.makeText(this,"Itinerario creado con exito",Toast.LENGTH_SHORT).show();
-                agregarItinerarioFragment.onSave();
+                if(agregarItinerarioFragment.onSave()){
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                    fragmentTransaction.commit();
+                    Toast.makeText(getApplicationContext(),"Itinerario creado con éxito!", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.atras_mis_itinerarios:
                 fragmentTransaction = fragmentManager.beginTransaction();
