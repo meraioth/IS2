@@ -78,6 +78,7 @@ public class ActualizarSucursal extends AppCompatActivity
                 Toast.makeText(v.getContext(),"actualizando...",Toast.LENGTH_SHORT).show();
                 Log.d("mensaje:",nombre.toString()+descripcion.toString());
                 actualizar(nombre.getText().toString(),descripcion.getText().toString());
+                refresh();
             }
         });
     }
@@ -145,6 +146,8 @@ public class ActualizarSucursal extends AppCompatActivity
             gotovista_empresario();
         } else if (id == R.id.cerrar_sesion) {
         cerrar_sesion();
+        }else if ( id== R.id.actualizar_sucursal){
+            refresh();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,12 +155,18 @@ public class ActualizarSucursal extends AppCompatActivity
         return true;
     }
 
+    private void refresh() {
+        startActivity(new Intent(this,ActualizarSucursal.class));
+    }
+
     private void gotovista_empresario() {
         Intent intent = new Intent(this, Vista_empresario.class);
+        startActivity(intent);
     }
 
     private void gotoHome() {
         Intent intent = new Intent(this, MapaBusquedaItinerarioActivity.class);
+        startActivity(intent);
     }
 
     private void cerrar_sesion() {

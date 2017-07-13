@@ -17,6 +17,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 
@@ -163,18 +164,23 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
                 return true;
             case R.id.cerrar_avanzada:
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
+                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, BusquedaFragment.newInstance());
                 fragmentTransaction.commit();
+                Log.d("cerro_busqueda_avanzada","cerró");
+                return true;
             case R.id.busqueda_itinerario_avanzada:
                 busquedaItinerarioFragment= BusquedaItinerario.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
+
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaItinerarioFragment);
                 fragmentTransaction.commit();
                 return true;
             case R.id.cerrar_itinerario_avanzada:
+                Log.d("cerro_busqueda_avanzada_itinerio","cerró");
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
                 fragmentTransaction.commit();
+                return true;
 
 
 
@@ -190,8 +196,18 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
     public void onCancelAdvancedSearch() {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, BusquedaFragment.newInstance());
         fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void onCancelAdvancedSearched() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,itinerariosFragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override
@@ -201,6 +217,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario,itinerariosFragment);
         fragmentTransaction.commit();
+        Toast.makeText(this,"Mostrando Resultados...",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -211,6 +228,7 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, busquedaFragment);
         fragmentTransaction.commit();
+        Toast.makeText(this,"Mostrando Resultados...",Toast.LENGTH_SHORT).show();
 
     }
 

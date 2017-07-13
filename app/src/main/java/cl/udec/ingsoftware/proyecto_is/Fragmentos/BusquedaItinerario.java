@@ -25,7 +25,6 @@ import cl.udec.ingsoftware.proyecto_is.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BusquedaItinerario.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link BusquedaItinerario#newInstance} factory method to
  * create an instance of this fragment.
@@ -104,6 +103,8 @@ public class BusquedaItinerario extends Fragment {
                     Toast.makeText(view.getContext(),"Debe rellenar todos los campos",Toast.LENGTH_SHORT).show();
                 }else{
                     mListener.onSearchAdvanced(str_duracion,str_estacion);
+                    Toast.makeText(view.getContext(),"Mostrando Resultados...",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -153,7 +154,7 @@ public class BusquedaItinerario extends Fragment {
      */
 
     public interface OnBusuqedaAvanzadaItinerarioInteractionListener {
-        void onCancelAdvancedSearch();
+        void onCancelAdvancedSearched();
         void onSearchAdvanced(String str_duracion, String str_estacion);
     }
 
