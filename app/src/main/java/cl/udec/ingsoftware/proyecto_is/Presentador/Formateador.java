@@ -350,7 +350,7 @@ public class Formateador {
         consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
     }
 
-    public void guardarServicioSucursal(String servicios){
+/*    public void guardarServicioSucursal(String servicios){
         consultor.guardarServicioSucursal(servicios);
-    }
+    }*/
 }

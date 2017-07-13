@@ -94,8 +94,8 @@ public class PresentadorSucursal implements Serializable {
         formateador.guardarDatosSucursal(nombre, rut, descripcion, comuna);
     }
 
-    public void setServicioSucursal(String servicios){
+/*    public void setServicioSucursal(String servicios){
         formateador.guardarServicioSucursal(servicios);
-    }
+    }*/
 
 }
