@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/titulo_sucursal_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:textSize="20sp"
+        android:text="Titulo sucursal"/>
+
+    <Spinner
+        android:id="@+id/spinner_sucursal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"/>
+
+
+    <ImageButton
+        android:id="@+id/borrar_sucursal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:gravity="end"
+        app:srcCompat="@drawable/ic_close_light"
+        android:background="?android:selectableItemBackground"/>
+
+
+</TableRow>
