@@ -223,4 +223,26 @@ public class Consultor {
                 "insert into log values (default)");
 
     }
+
+    public Boolean eliminarSucursal(String sucursal) throws SQLException {
+        remoto = new DBremoto();
+        boolean eliminado = false;
+        int id=-1;
+        remoto.query("select id from sucursal where nombre = '" + sucursal + "';");
+        if(remoto.getResult().next()){
+            id = remoto.getResult().getInt("id");
+        }
+        remoto = new DBremoto();
+        remoto.query("delete from sucursal_servicio where id_sucursal = "+ id +";");
+        remoto = new DBremoto();
+        remoto.query("delete from sucursal where nombre = '"+ sucursal +"';");
+        remoto = new DBremoto();
+        remoto.query("select * from sucursal where nombre = '" + sucursal + "';");
+        if (!remoto.getResult().next()){
+            remoto = new DBremoto();
+            remoto.query("insert into log values(default)");
+            eliminado = true;
+        }
+        return eliminado;
+    }
 }

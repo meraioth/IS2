@@ -24,9 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.SucursalAdapter;
+import cl.udec.ingsoftware.proyecto_is.Modelo.Sucursal;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Usuario;
 import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
@@ -39,7 +41,6 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
     ArrayAdapter<String> adaptador;
     Catalogo catalogo;
     Button agregar_sucursal_boton;
-    PresentadorSucursal msucursal;
     int id_suc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,6 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_vista_empresario);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -93,12 +92,20 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
                 builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        // How to remove the selected item?
+                        String sucursal = (String) mis_sucursales.getItemAtPosition(position);
+                        try {
+                            catalogo.eliminarSucursal(sucursal);
+                            adaptador.clear();
+                            adaptador.addAll(catalogo.getSucursalesById(usuario.getId()));
+                            adaptador.notifyDataSetChanged();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
 
                     }
 
                 });
-                builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
                             }

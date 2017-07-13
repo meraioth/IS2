@@ -345,4 +345,8 @@ public class Formateador {
         consultor.updateNombreSucursal(id,name);
 
     }
+
+    public Boolean eliminarSucursal(String sucursal) throws SQLException {
+        return consultor.eliminarSucursal(sucursal);
+    }
 }

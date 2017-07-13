@@ -131,10 +131,6 @@ public class AgregarItinerarioFragment extends Fragment implements AdapterView.O
         sucursales.add(mAdapter.getItem(position).toString());
         mSucursalesAgregadas.setAdapter(new ListAdapter(this.getActivity(),sucursales));
         mBusquedaSucursal.setText("");
-
-
-
-
     }
 
     /**
