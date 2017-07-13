@@ -20,12 +20,25 @@ public class PresentadorItinerario {
     Context context;
     ArrayList<Itinerario> itinerarios = new ArrayList<>();
     Formateador formateador;
+    public static PresentadorItinerario instance;
+
+    public static PresentadorItinerario getInstance(Context cont){
+        if (instance == null){
+            try{
+                new PresentadorItinerario(cont);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }
 
 
     public PresentadorItinerario(Context cont) throws SQLException {
         this.context=cont;
         formateador= new Formateador(context);
         itinerarios=formateador.getItinerarios();
+        instance = this;
     }
     public String getNombreItinerario(int idItinerario){
         return findItinerarioById(idItinerario).getNombre();
@@ -122,8 +135,8 @@ public class PresentadorItinerario {
         return fotosSucursales;
     }
 
-    public void crearItinerario(int id, String nombre, int idUsuario, String estacion, int[] idsSucursales, int[] duraciones) throws SQLException {
-        Itinerario itinerario = formateador.crearItinerario(id,nombre,idUsuario,estacion,idsSucursales,duraciones);
+    public void crearItinerario(int id,String nombre, int idUsuario, String estacion, int[] idsSucursales, int[] duraciones) throws SQLException {
+        Itinerario itinerario = formateador.crearItinerario(id, nombre,idUsuario,estacion,idsSucursales,duraciones);
         if (itinerario != null){
             itinerarios.add(itinerario);
         }
