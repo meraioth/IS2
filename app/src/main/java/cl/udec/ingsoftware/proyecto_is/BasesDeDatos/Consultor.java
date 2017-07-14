@@ -201,17 +201,12 @@ public class Consultor {
                         id + "," + idsSucursales[i] + "," + (i+1) + "," + duraciones[i]+");");
                 duracion_total+=duraciones[i];
             }
-            remoto = new DBremoto();
-            remoto.query("update itinerario set duracion = "+duracion_total +" where id = " + id+";");
-            remoto = new DBremoto();
             remoto.query("select * from orden where id_itinerario = " + id + ";");
             if(remoto.getResult().next()){
                 ordenCreado = true;
             }
         }
-        remoto = new DBremoto();
-        remoto.query("insert into log values(default)");
-        return id;
+        return ordenCreado;
     }
 
     public ResultSet getUsuario(String name, String pass) {
@@ -233,28 +228,6 @@ public class Consultor {
         remoto.query("update sucursal set nombre ='"+name+"' where id ="+id+";" +
                 "insert into log values (default)");
 
-    }
-
-    public Boolean eliminarSucursal(String sucursal) throws SQLException {
-        remoto = new DBremoto();
-        boolean eliminado = false;
-        int id=-1;
-        remoto.query("select id from sucursal where nombre = '" + sucursal + "';");
-        if(remoto.getResult().next()){
-            id = remoto.getResult().getInt("id");
-        }
-        remoto = new DBremoto();
-        remoto.query("delete from sucursal_servicio where id_sucursal = "+ id +";");
-        remoto = new DBremoto();
-        remoto.query("delete from sucursal where nombre = '"+ sucursal +"';");
-        remoto = new DBremoto();
-        remoto.query("select * from sucursal where nombre = '" + sucursal + "';");
-        if (!remoto.getResult().next()){
-            remoto = new DBremoto();
-            remoto.query("insert into log values(default)");
-            eliminado = true;
-        }
-        return eliminado;
     }
 
     public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
