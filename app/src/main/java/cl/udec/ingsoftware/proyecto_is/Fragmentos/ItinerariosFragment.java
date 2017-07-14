@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -90,6 +91,7 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         mRecyclerView.setLayoutManager(llm);
         verticalRVAdapter= new VerticalRVAdapter(getContext(),catalogo.getTripletasOfItinerario());
         mRecyclerView.setAdapter(verticalRVAdapter);
+        verticalRVAdapter.notifyDataSetChanged();
         agregarItinerario = (FloatingActionButton) view.findViewById(R.id.nuevo_itinerario);
         agregarItinerario.setOnClickListener(this);
         return view;

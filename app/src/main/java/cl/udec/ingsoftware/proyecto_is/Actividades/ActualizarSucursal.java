@@ -58,6 +58,7 @@ public class ActualizarSucursal extends AppCompatActivity
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        String sucursalEditar = getIntent().getStringExtra("sucursal");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         actualizar = (Button) findViewById(R.id.actualizar);
@@ -71,6 +72,7 @@ public class ActualizarSucursal extends AppCompatActivity
         List<String> sucursales = catalogo.getSucursalesById(usuario.getId());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sucursales);
         mis_sucursales.setAdapter(dataAdapter);
+        mis_sucursales.setSelection(dataAdapter.getPosition(sucursalEditar));
         mis_sucursales.setOnItemSelectedListener(this);
         actualizar.setOnClickListener(new View.OnClickListener() {
             @Override

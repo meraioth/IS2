@@ -90,12 +90,6 @@ public class PresentadorSucursal implements Serializable {
 
     }
 
-    public void setDatosSucursal(String nombre, String rut, String descripcion, String comuna){
-        formateador.guardarDatosSucursal(id, nombre, rut, descripcion, comuna);
-    }
 
-/*    public void setServicioSucursal(int[] idsServicios){
-        formateador.guardarServicioSucursal(id, idsServicios);
-    }*/
 
 }

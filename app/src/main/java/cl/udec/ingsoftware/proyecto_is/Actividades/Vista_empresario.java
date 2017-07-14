@@ -75,7 +75,7 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
                                     int position, long id) {
                 Context context = getApplicationContext();
                 Intent intent = new Intent(context, ActualizarSucursal.class);
-                //intent.putExtra(EXTRA_MESSAGE, message);
+                intent.putExtra("sucursal", (String) mis_sucursales.getItemAtPosition(position));
                 startActivity(intent);
 
             }
@@ -119,6 +119,12 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
 
 
         agregar_sucursal_boton = (Button) findViewById(R.id.agregar_sucursal);
+        agregar_sucursal_boton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),AgregarSucursal.class);
+                startActivity(intent);
+            }
+        });
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

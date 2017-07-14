@@ -12,8 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -78,6 +80,15 @@ public class AgregarSucursal extends AppCompatActivity implements
         rut = (EditText) findViewById(R.id.rut_empresa);
         comuna = (Spinner) findViewById(R.id.listado_comunas);
         servicios = (ListView) findViewById(R.id.listado_servicios);
+        servicios.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         descripcion = (EditText) findViewById(R.id.descripcion_sucursal);
         guardar = (Button) findViewById(R.id.guardar_sucursal);
 
@@ -88,22 +99,29 @@ public class AgregarSucursal extends AppCompatActivity implements
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardar(nombre.getText().toString(),rut.getText().toString(),descripcion.getText().toString(), comuna.getOnItemSelectedListener().toString());
+                //Toast.makeText(getApplicationContext(), comuna.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    guardar(nombre.getText().toString(),rut.getText().toString(),descripcion.getText().toString(), comuna.getSelectedItem().toString());
+                    startActivity(new Intent(getApplicationContext(),Vista_empresario.class));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-/*        servicios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //String listaSeleccion = (String) servicios.getItemAtPosition(position);
-                guardarServicio(servicios.getOnItemClickListener().toString());
-            }
-        });*/
     }
 
-    private void guardar(String nombre, String rut, String descripcion, String comuna){
-        msucursal.setDatosSucursal(nombre, rut, descripcion, comuna);
-        //msucursal.setServicioSucursal(servicios);
+    private void guardar(String nombre, String rut, String descripcion, String comuna) throws SQLException {
+        int idSucursalAgregada = catalogo.setDatosSucursal(nombre, rut, descripcion, comuna);
+        if(idSucursalAgregada!=0){
+            SparseBooleanArray array = servicios.getCheckedItemPositions();
+            ArrayList<Integer> servArray = new ArrayList<>();
+            for (int i = 0; i < servicios.getAdapter().getCount();i++){
+                if(array.get(i)){
+                    servArray.add((Integer) catalogo.getIdsServicios().get(i));
+                }
+            }
+            catalogo.setServicioSucursal(servArray,idSucursalAgregada);
+        }
     }
 
 /*    private void guardarServicio(String servicios) {

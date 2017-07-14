@@ -347,17 +347,15 @@ public class Formateador {
 
     }
 
-    public void guardarDatosSucursal(int id, String nombre, String rut, String descripcion, String comuna){
-        consultor.guardarDatosSucursal(id, nombre, rut, descripcion, comuna);
+    public int guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna) throws SQLException {
+        return consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
+    }
     public Boolean eliminarSucursal(String sucursal) throws SQLException {
         return consultor.eliminarSucursal(sucursal);
     }
 
-    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
-        consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
-    }
 
-/*    public void guardarServicioSucursal(int id, int[] idsServicios){
-        consultor.guardarServicioSucursal(id, idsServicios);
-    }*/
+    public void guardarServicioSucursal(ArrayList<Integer> servicios, int idSucursalAgregada){
+        consultor.guardarServicioSucursal(servicios,idSucursalAgregada);
+    }
 }
