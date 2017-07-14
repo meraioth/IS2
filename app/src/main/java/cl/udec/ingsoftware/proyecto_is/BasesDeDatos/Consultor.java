@@ -235,6 +235,21 @@ public class Consultor {
 
     }
 
+    public int guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna) throws SQLException {
+        remoto = new DBremoto();
+        remoto.query("insert into sucursal (nombre, rut_empresa, descripcion, comuna, sello_de_turismo)" +
+                " values('"+ nombre +"', '"+ rut +"', '"+ descripcion +"', '"+ comuna +"', 0);");
+        remoto = new DBremoto();
+        remoto.query("select id from sucursal where nombre = '" + nombre +"';");
+        int id = 0;
+        if(remoto.getResult()!= null){
+            if(remoto.getResult().next()){
+                id = remoto.getResult().getInt("id");
+            }
+        }
+        return id;
+    }
+
     public Boolean eliminarSucursal(String sucursal) throws SQLException {
         remoto = new DBremoto();
         boolean eliminado = false;
@@ -257,11 +272,7 @@ public class Consultor {
         return eliminado;
     }
 
-    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
-        remoto = new DBremoto();
-        remoto.query("insert into sucursal (nombre, rut_empresa, descripcion, comuna)" +
-                "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
-    }
+
     public void guardarServicioSucursal(ArrayList<Integer> servicios, int idSucursalAgregada){
         remoto = new DBremoto();
         for (Integer servicio :servicios){

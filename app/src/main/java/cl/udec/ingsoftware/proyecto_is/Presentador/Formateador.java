@@ -354,9 +354,6 @@ public class Formateador {
         return consultor.eliminarSucursal(sucursal);
     }
 
-    public void guardarDatosSucursal(String nombre, String rut, String descripcion, String comuna){
-        consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
-    }
 
     public void guardarServicioSucursal(ArrayList<Integer> servicios, int idSucursalAgregada){
         consultor.guardarServicioSucursal(servicios,idSucursalAgregada);
@@ -371,4 +368,8 @@ public class Formateador {
             return false;
         }
     }
+
+/*    public void guardarServicioSucursal(String servicios){
+        consultor.guardarServicioSucursal(servicios);
+    }*/
 }
