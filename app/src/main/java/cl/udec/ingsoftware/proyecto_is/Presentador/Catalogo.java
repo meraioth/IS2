@@ -505,4 +505,11 @@ public class Catalogo implements Serializable {
         }
         return eliminado;
     }
+    public int setDatosSucursal(String nombre, String rut, String descripcion, String comuna) throws SQLException {
+        return formateador.guardarDatosSucursal(nombre, rut, descripcion, comuna);
+    }
+
+    public void setServicioSucursal(ArrayList<Integer> servicios, int idSucursalAgregada){
+        formateador.guardarServicioSucursal(servicios,idSucursalAgregada);
+    }
 }

@@ -262,6 +262,14 @@ public class Consultor {
         remoto.query("insert into sucursal (nombre, rut_empresa, descripcion, comuna)" +
                 "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
     }
+    public void guardarServicioSucursal(ArrayList<Integer> servicios, int idSucursalAgregada){
+        remoto = new DBremoto();
+        for (Integer servicio :servicios){
+            remoto.query("insert into sucursal_servicio values("+idSucursalAgregada+","+servicio+");");
+            remoto = new DBremoto();
+        }
+        remoto.query("insert into log values(default)");
+    }
 
     public boolean eliminarItinerario(int id_itinerario) throws SQLException {
         remoto = new DBremoto();
@@ -279,9 +287,4 @@ public class Consultor {
             return false;
         }
     }
-
-/*    public void guardarServicioSucursal(String servicios){
-        remoto = new DBremoto();
-        remoto.query();
-    }*/
 }
