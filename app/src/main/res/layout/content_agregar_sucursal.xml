@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="cl.udec.ingsoftware.proyecto_is.Actividades.AgregarSucursal">
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar nueva sucursal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="30px"
+        android:textSize="35px"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre sucursal:"
+        android:layout_marginTop="40px"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/nombre_sucursal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:layout_marginLeft="10px"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/rut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rut empresa:"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/rut_empresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/comuna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comuna:"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <Spinner
+        android:id="@+id/listado_comunas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/servicios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Servicios disponibles:"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <ListView
+        android:id="@+id/listado_servicios"
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción sucursal:"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="10px"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/descripcion_sucursal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/guardar_sucursal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:layout_marginTop="50px" />
+
+</LinearLayout>
