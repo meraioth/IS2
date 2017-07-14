@@ -6,7 +6,7 @@
 
         <item
             android:id="@+id/principal"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="Principal" />
         <item
             android:id="@+id/login"
@@ -17,13 +17,5 @@
 
     </item>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Contacto" />
-        </menu>
-    </item>
 
 </menu>

@@ -1,6 +1,8 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +68,20 @@ public class VisualizacionSucursal extends AppCompatActivity {
         mRating = (RatingBar) findViewById(R.id.ratingBar);
         float rating = randomGenerator.nextInt(5);
         mRating.setRating(rating);
+        FloatingActionButton indicacion = (FloatingActionButton) findViewById(R.id.indicacion_sucursal);
+        indicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String lat= String.valueOf(mPresentador.get_latitud());
+                String lon = String.valueOf(mPresentador.get_latitud());
+                Uri gmmIntentUri = Uri.parse("geo:"+lon+"," +lat+"");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
         comentarios = (ListView) findViewById(R.id.comentarios_sucursal);
         ArrayAdapter<String> comments = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2,android.R.id.text1,new String[]{"Usuario : Fernando Galvez\n" +
                 "Lugar Atendido por sus dueños, excelente ambiente, muy acogedor en general un ambiente muy cálido","Usuario : Eduardo Gómez\n" +

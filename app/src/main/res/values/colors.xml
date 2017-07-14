@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303f9f</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorPrimary">#38a327</color>
+    <color name="colorPrimaryDark">#007300</color>
+    <color name="colorPrimaryLight">#6fd558</color>
+    <color name="colorAccent">#C02E39</color>
     <color name="color_fondo_lugar">#2e7107</color>
     <color name="letra_card_sucursal">#ffffff</color>
     <color name="color_icono_visualizacion_sucursal">#ffffff</color>

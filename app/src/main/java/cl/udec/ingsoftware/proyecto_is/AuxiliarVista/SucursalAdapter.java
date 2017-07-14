@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cl.udec.ingsoftware.proyecto_is.Actividades.MapaBusquedaItinerarioActivity;
 import cl.udec.ingsoftware.proyecto_is.Modelo.Tripleta;
 import cl.udec.ingsoftware.proyecto_is.R;
 import cl.udec.ingsoftware.proyecto_is.util.AsyncTaskLoadImage;
@@ -49,6 +50,11 @@ public class SucursalAdapter extends RecyclerView.Adapter<SucursalAdapter.Sucurs
         String url = sucursales.get(position).get_image();
         new AsyncTaskLoadImage(holder.mFoto).execute(url);
         holder.setOnItemClickListener(mListener);
+        if(MapaBusquedaItinerarioActivity.catalogo.getSello(sucursales.get(position).get_name()) == 0 ){
+            holder.mSello.setVisibility(View.INVISIBLE);
+        }else{
+            holder.mSello.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

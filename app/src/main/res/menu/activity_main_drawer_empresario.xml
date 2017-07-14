@@ -4,12 +4,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/principal"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
             android:id="@+id/mis_sucursales"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Mis Sucursales" />
+            android:title="Mis lugares turisticos" />
         <item
             android:id="@+id/actualizar_sucursal"
             android:icon="@android:drawable/ic_menu_upload"
@@ -17,19 +17,10 @@
         <item
             android:id="@+id/cerrar_sesion"
             android:icon="@android:drawable/ic_lock_power_off"
-            android:title="Log Out" />
+            android:title="Cerrar sesión" />
 
 
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Contacto" />
-        </menu>
-    </item>
 
     <item android:title="Itinerarios">
         <menu>

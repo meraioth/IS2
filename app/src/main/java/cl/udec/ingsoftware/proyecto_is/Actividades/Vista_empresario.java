@@ -53,12 +53,7 @@ public class Vista_empresario extends AppCompatActivity implements NavigationVie
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        try {
-            catalogo = new Catalogo(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        catalogo = MapaBusquedaItinerarioActivity.catalogo;
         usuario = getUsuarioSP();
         bienvenido = (TextView) findViewById(R.id.welcometext);
         name = (TextView)findViewById(R.id.name_empresario);

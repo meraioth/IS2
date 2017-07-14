@@ -1,5 +1,6 @@
 package cl.udec.ingsoftware.proyecto_is.Actividades;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 
+import cl.udec.ingsoftware.proyecto_is.AuxiliarVista.MisItinerariosAdapter;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.AgregarItinerarioFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaAvanzadaFragment;
 import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
@@ -34,7 +37,7 @@ import cl.udec.ingsoftware.proyecto_is.Presentador.Catalogo;
 import cl.udec.ingsoftware.proyecto_is.Presentador.PresentadorSucursal;
 import cl.udec.ingsoftware.proyecto_is.R;
 
-public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener, ItinerariosFragment.OnFragmentInteractionListener{
+public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implements BusquedaFragment.OnSucursalSelectedListener, ItinerarioFragment.OnFragmentInteractionListener, BusquedaAvanzadaFragment.OnBusuqedaAvanzadaInteractionListener, SearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener, BusquedaItinerario.OnBusuqedaAvanzadaItinerarioInteractionListener, ItinerariosFragment.OnFragmentInteractionListener, MisItinerariosAdapter.OnInteractionListener{
 
     private BusquedaFragment busquedaFragment;
     private MapaFragment mapaFragment;
@@ -201,9 +204,31 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
                 return true;
 
             case R.id.cancelar_crear_itinerario:
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
-                fragmentTransaction.commit();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(agregarItinerarioFragment.getContext());
+                builder1.setMessage("¿Quiere descartar el itinerario?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Si",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.content_mapa_busqueda_itinerario, itinerariosFragment);
+                                fragmentTransaction.commit();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
                 return true;
 
             case R.id.aceptar_crear_itinerario:
@@ -376,5 +401,43 @@ public class MapaBusquedaItinerarioActivity extends AppCompatActivity  implement
         int id = sp.getInt("id",0);
         Log.d("int id ",id+"");
         return new Usuario(name,email,rol,id);
+    }
+
+    @Override
+    public void modificarItinerario(int id_itinerario) {
+
+    }
+
+
+    public void eliminarItinerario(final int id_itinerario, final String nombre_it) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(misItinerariosFragment.getContext());
+        builder1.setMessage("¿Está seguro de querer borrar el itinerario?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        if(catalogo.eliminarItinerario(id_itinerario)){
+                            Toast.makeText(getApplicationContext(),"Borrado itinerario "+nombre_it,Toast.LENGTH_SHORT).show();
+                            misItinerariosFragment.DataChange(nombre_it);
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Error al eliminar",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

@@ -80,7 +80,8 @@ public class MisItinerariosFragment extends Fragment {
         mItinerarios.setAdapter(mAdapterSucursales);
         return view;
     }
-    public interface OnInteraction{
 
+    public void DataChange(String itinerario) {
+        mAdapterSucursales.addData(itinerario);
     }
 }

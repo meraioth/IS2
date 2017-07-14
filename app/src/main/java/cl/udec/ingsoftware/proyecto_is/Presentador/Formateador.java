@@ -355,6 +355,16 @@ public class Formateador {
         consultor.guardarDatosSucursal(nombre, rut, descripcion, comuna);
     }
 
+    public boolean eliminarItinerario(int id_itinerario) {
+        try {
+            boolean result = consultor.eliminarItinerario(id_itinerario);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 /*    public void guardarServicioSucursal(String servicios){
         consultor.guardarServicioSucursal(servicios);
     }*/

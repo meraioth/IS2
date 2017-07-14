@@ -30,12 +30,21 @@ public class Catalogo implements Serializable {
     private ArrayList<Sucursal> sucursales;
     private ArrayList<Empresa> empresas;
     private Formateador formateador;
+    private HashMap<String, Integer> sellos;
 
     public Catalogo(Context cont) throws SQLException {
         formateador = new Formateador(cont);
+        sellos = new HashMap<>();
         sucursales = formateador.getSucursales();
+        for(Sucursal sucursal: sucursales){
+            sellos.put(sucursal.getNombre(),sucursal.getSello());
+        }
         itinerarios = formateador.getItinerarios();
         empresas = formateador.getEmpresas();
+    }
+
+    public int getSello(String sucursal){
+        return sellos.get(sucursal);
     }
 
     public ArrayList getSucursales(){
@@ -482,5 +491,18 @@ public class Catalogo implements Serializable {
         if(eliminado){
             this.sucursales.remove(pos);
         }
+    }
+
+    public boolean eliminarItinerario(int id_itinerario) {
+        boolean eliminado = formateador.eliminarItinerario(id_itinerario);
+        if(eliminado){
+            for(Itinerario itinerario: itinerarios){
+                if(itinerario.getId() == id_itinerario){
+                    itinerarios.remove(itinerario);
+                    break;
+                }
+            }
+        }
+        return eliminado;
     }
 }

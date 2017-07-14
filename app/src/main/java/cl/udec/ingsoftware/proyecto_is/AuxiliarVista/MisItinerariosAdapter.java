@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cl.udec.ingsoftware.proyecto_is.Fragmentos.BusquedaFragment;
 import cl.udec.ingsoftware.proyecto_is.R;
 
 /**
@@ -26,6 +27,7 @@ public class MisItinerariosAdapter extends ArrayAdapter {
     private ArrayList itinerarios;
     private HashMap<String, Integer> itinerarios_id;
     private Activity context;
+    private OnInteractionListener mListener;
     private ImageButton mas;
 
     public MisItinerariosAdapter(Activity context, ArrayList itinerarios, HashMap<String, Integer> itinerarios_id){
@@ -33,7 +35,18 @@ public class MisItinerariosAdapter extends ArrayAdapter {
         this.itinerarios = itinerarios;
         this.itinerarios_id = itinerarios_id;
         this.context=context;
+        if (context instanceof OnInteractionListener) {
+            mListener = (OnInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnBusuqedaAvanzadaInteractionListener");
+        }
     }
+    public void addData(String itinerario){
+        itinerarios.remove(itinerario);
+        notifyDataSetChanged();
+    }
+
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.lista_mis_itinerarios, null, true);
@@ -48,15 +61,14 @@ public class MisItinerariosAdapter extends ArrayAdapter {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        int id_it = itinerarios_id.get(itinerarios.get(position));
                         switch (item.getItemId()){
                             case R.id.modificar_itinerario_popup:
-                                Toast.makeText(context,"moadificar",Toast.LENGTH_SHORT).show();
+                                mListener.modificarItinerario(id_it);
                                 return true;
-                                //TODO: modificar
                             case R.id.borrar_itinerario:
-                                Toast.makeText(context,"borrar",Toast.LENGTH_SHORT).show();
+                                mListener.eliminarItinerario(id_it, (String) itinerarios.get(position));
                                 return true;
-                                //TODO: borrar
                             default:
                                 return false;
                         }
@@ -66,6 +78,10 @@ public class MisItinerariosAdapter extends ArrayAdapter {
             }
         });
         return rowView;
+    }
+    public interface OnInteractionListener{
+        void modificarItinerario(int id_itinerario);
+        void eliminarItinerario(int id_itinerario, String nombre);
     }
 
 }

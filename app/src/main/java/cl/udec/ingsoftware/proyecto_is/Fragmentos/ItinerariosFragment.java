@@ -67,6 +67,10 @@ public class ItinerariosFragment extends Fragment implements SearchView.OnQueryT
         setHasOptionsMenu(true);
     }
 
+    public void dataChange(){
+        verticalRVAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

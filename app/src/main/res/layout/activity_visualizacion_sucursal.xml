@@ -38,8 +38,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/agregar_itinerario"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_playlist_add_24dp"
@@ -54,8 +54,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/indicacion_sucursal"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_directions_white_24dp"

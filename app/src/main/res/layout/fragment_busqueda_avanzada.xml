@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/busqueda_avanzada_itinerario"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,8 +17,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:layout_weight="4"
-            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/shape_primary"
+            >
 
             <TextView
                 android:id="@+id/comuna_busqueda"
@@ -28,20 +28,23 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="bottom"
                 android:text="@string/comuna_texto_busqueda"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <Spinner
                 android:id="@+id/spinner_comuna"
-                style="@style/spinner_style"
+                app:popupTheme="@style/popupTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:textSize="20dp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -50,7 +53,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:layout_weight="4"
-            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+
+            android:background="@drawable/shape_primary"
+
             android:orientation="vertical">
 
             <TextView
@@ -60,20 +65,23 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="bottom"
                 android:text="@string/categoria_texto_busqueda"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <Spinner
                 android:id="@+id/spinner_categoria_busqueda"
-                style="@style/spinner_style"
+                app:popupTheme="@style/popupTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:textSize="20dp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -82,7 +90,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:layout_weight="4"
-            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:background="@drawable/shape_primary"
             android:orientation="vertical">
 
             <TextView
@@ -92,20 +100,23 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="bottom"
                 android:text="@string/servicio_texto_busqueda"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <Spinner
                 android:id="@+id/spinner_servicio"
-                style="@style/spinner_style"
+                app:popupTheme="@style/popupTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:textSize="20dp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/white"/>
         </LinearLayout>
 
         <FrameLayout
@@ -115,10 +126,13 @@
 
             <Button
                 android:id="@+id/button_busqueda_avanzada"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
+                android:background="@drawable/shape"
+                android:textColor="@color/white"
+
                 android:text="Buscar" />
         </FrameLayout>
 

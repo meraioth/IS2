@@ -263,6 +263,23 @@ public class Consultor {
                 "values("+ nombre +", "+ rut +", "+ descripcion +", "+ comuna +")");
     }
 
+    public boolean eliminarItinerario(int id_itinerario) throws SQLException {
+        remoto = new DBremoto();
+        remoto.query("\n" +
+                "delete from orden where id_itinerario = "+id_itinerario+";\n" +
+                "delete from itinerario where id = "+id_itinerario+";");
+        remoto = new DBremoto();
+        remoto.query("select * from itinerario where id ="+id_itinerario+";\n" +
+                "select * from orden where id_itinerario = "+id_itinerario+";");
+        if(remoto.getResult() == null){
+            remoto = new DBremoto();
+            remoto.query("insert into log values(default)");
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 /*    public void guardarServicioSucursal(String servicios){
         remoto = new DBremoto();
         remoto.query();
