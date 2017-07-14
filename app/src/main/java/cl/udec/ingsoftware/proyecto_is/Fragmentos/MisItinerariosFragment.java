@@ -80,4 +80,7 @@ public class MisItinerariosFragment extends Fragment {
         mItinerarios.setAdapter(mAdapterSucursales);
         return view;
     }
+    public interface OnInteraction{
+
+    }
 }

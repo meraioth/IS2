@@ -139,6 +139,7 @@ public class PresentadorItinerario {
         Itinerario itinerario = formateador.crearItinerario(nombre,idUsuario,estacion,idsSucursales,duraciones);
         if (itinerario != null){
             itinerarios.add(itinerario);
+
         }
     }
 }

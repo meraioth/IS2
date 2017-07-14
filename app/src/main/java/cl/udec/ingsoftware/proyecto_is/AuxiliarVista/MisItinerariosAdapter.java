@@ -50,11 +50,11 @@ public class MisItinerariosAdapter extends ArrayAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.modificar_itinerario_popup:
-                                Toast.makeText(context,"moasdddificar",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"moadificar",Toast.LENGTH_SHORT).show();
                                 return true;
                                 //TODO: modificar
                             case R.id.borrar_itinerario:
-                                Toast.makeText(context,"borrdsaar",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"borrar",Toast.LENGTH_SHORT).show();
                                 return true;
                                 //TODO: borrar
                             default:

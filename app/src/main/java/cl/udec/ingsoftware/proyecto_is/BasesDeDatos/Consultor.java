@@ -193,12 +193,16 @@ public class Consultor {
         }
         if(itinerarioCreado){
             //PARA CADA ID DE SUCURSAL, INSERTAR EN LA BD EL ORDEN CORRESPONDIENTE
+            int duracion_total = 0;
             for(int i = 0; i < idsSucursales.length; i++){
                 remoto = new DBremoto();
                 remoto.query("insert into orden" +
                         " values(" +
-                        id + "," + idsSucursales[i] + "," + i+1 + "," + duraciones[i]+");");
+                        id + "," + idsSucursales[i] + "," + (i+1) + "," + duraciones[i]+");");
+                duracion_total+=duraciones[i];
             }
+            remoto = new DBremoto();
+            remoto.query("update itinerario set duracion = "+duracion_total +" where id = " + id+";");
             remoto = new DBremoto();
             remoto.query("select * from orden where id_itinerario = " + id + ";");
             if(remoto.getResult().next()){
