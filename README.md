@@ -3,4 +3,4 @@ Aplicación para visualizar la oferta turistica de arauco, también se busca cre
 
 ##Video demostrativo
 
-[![Demo](http://img.youtube.com/vi/cvTzfIXoV8M/10.jpg)](https://youtu.be/cvTzfIXoV8M "Demo")
+[![demostracion](http://img.youtube.com/vi/cvTzfIXoV8M/0.jpg)](https://youtu.be/cvTzfIXoV8M "Demo")
